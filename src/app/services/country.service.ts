@@ -12,9 +12,15 @@ export class CountryService {
 
   constructor(private httpService: HttpService) { }
 
-  public getAllCountries(): void {
+  public getAllCountries(): Array<Country> {
     this.httpService.getCountries().subscribe(data => {
-      this.countries = data;
-    });
+      console.log(data);
+      return data;
+
+    }, error => {
+        console.log(error);
+    }
+    );
+    return null;
   }
 }

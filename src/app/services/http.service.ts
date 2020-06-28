@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Country } from '../entities/Country';
 
@@ -12,7 +12,7 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   public getCountries(): Observable<Array<Country>> {
-    return this.http.get<Array<Country>>(this.url + 'countries');
+    return this.http.get<Country[]>(this.url + 'countries/');
   }
 
 }

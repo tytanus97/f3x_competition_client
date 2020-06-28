@@ -1,0 +1,28 @@
+<div class="container-fluid">
+<form [formGroup] = "addPilotForm">
+  <div class="form-group">
+  <label for="piloFirstName">Imie: </label><input type="text" formControlName="firstName" id="piloFirstName" name="piloFirstName"><br>
+  </div>
+  <div class="form-group">
+  <label for="pilotLastName">Nazwisko:  </label><input type="text" formControlName="lastName" id="pilotLastName" name="piloLastName"><br>
+</div>
+  <div class="form-group">
+  <label for="pilotBirthDate">Data urodzenia: </label><input type="date" formControlName="birthDate" id="pilotBirthDate" name="pilotBirthDate"><br>
+</div>
+  <div class="form-group">
+  <label for="pilotEmail">E-mail: </label><input type="text" formControlName="email" id="pilotEmail" name="pilotEmail"><br>
+</div>
+  <div class="form-group">
+  <label for="country">Kraj: </label>
+  <select id="country" formControlName="country"><br>
+    <option *ngFor = "let country of countries" value="{{country}}">
+      {{country.countryName}}
+    </option>
+  </select>
+</div>
+
+<button type="submit"  class="btn brn-primary"></button>
+  {{addPilotForm.value | json }}
+
+</form>
+</div>
