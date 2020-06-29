@@ -3,21 +3,19 @@ import { NgModule } from '@angular/core';
 
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AddPilotService } from './services/add-pilot.service';
+import { PilotService } from './services/pilot.service';
 import { CountryService } from './services/country.service';
-import { HttpService } from './services/http.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { RouteDemoComponent } from './components/route-demo/route-demo.component';
-import { CountryDetailComponent } from './components/country-detail/country-detail.component';
+import { AddPilotComponent } from './components/add-pilot/add-pilot.component';
+import { CountryComponent } from './components/country/country.component';
 
-
+export const components = [routingComponents, AddPilotComponent, CountryComponent];
+export const services = [PilotService, CountryService];
 @NgModule({
   declarations: [
     AppComponent,
-    RouteDemoComponent,
-    routingComponents,
-    CountryDetailComponent
+    components
   ],
   imports: [
     BrowserModule,
@@ -25,7 +23,8 @@ import { CountryDetailComponent } from './components/country-detail/country-deta
     ReactiveFormsModule,
     HttpClientModule
   ],
-  providers: [AddPilotService, CountryService, HttpService, HttpClient],
+  providers: [services, HttpClient],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

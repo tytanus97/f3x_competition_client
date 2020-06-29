@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AddPilotService } from 'src/app/services/add-pilot.service';
+
 import { CountryService } from 'src/app/services/country.service';
-import { Country } from 'src/app/entities/Country';
-import { HttpService } from 'src/app/services/http.service';
+import { Country } from 'src/app/models/Country';
+
 import { FormBuilder, Validators } from '@angular/forms';
 import { invalidEmail } from 'src/app/shared/EmailValidator';
 import { firstNameValidator } from 'src/app/shared/FirstNameValidator';
@@ -16,7 +16,7 @@ export class AddPilotComponent implements OnInit {
 
   public countries: Array<Country>;
 
-  constructor(private fb: FormBuilder, private httpService: HttpService, public countryService: CountryService){ }
+  constructor(private fb: FormBuilder, public countryService: CountryService){ }
 
   public pilotForm = this.fb.group({
     firstName: ['', [Validators.required, Validators.minLength(3), firstNameValidator(/Pawel/)]],
@@ -28,9 +28,7 @@ export class AddPilotComponent implements OnInit {
 
   ngOnInit(): void {
 
-      this.httpService.getCountries().subscribe(data => {
-        this.countries = data;
-      });
+
   }
 
   get firstName() {
