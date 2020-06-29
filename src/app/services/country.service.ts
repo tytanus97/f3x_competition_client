@@ -1,26 +1,18 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { HttpService } from './http.service';
-import { Country } from '../entities/Country';
+import { Observable } from 'rxjs';
+import { Country } from '../models/Country';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CountryService {
-
+  private _url = 'http://localhost:8080/api/countries/';
   private countries: Array<Country>;
 
-  constructor(private httpService: HttpService) { }
+  constructor(private http: HttpClient) { }
 
-  public getAllCountries(): Array<Country> {
-    this.httpService.getCountries().subscribe(data => {
-      console.log(data);
-      return data;
-
-    }, error => {
-        console.log(error);
-    }
-    );
-    return null;
+  public getAllCountries(): Observable<Array<Country>> {
+      return this.http.get<Array<Country>>(this._url);
   }
 }

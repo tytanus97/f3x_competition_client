@@ -27,8 +27,11 @@ export class AddPilotComponent implements OnInit {
   });
 
   ngOnInit(): void {
-
-
+    this.countryService.getAllCountries().subscribe(data => {
+      this.countries = data;
+    }, (error) => {
+        console.error(error);
+    });
   }
 
   get firstName() {
@@ -37,6 +40,10 @@ export class AddPilotComponent implements OnInit {
 
   get Email() {
     return this.pilotForm.get('email');
+  }
+
+  get LastName() {
+    return this.pilotForm.get('lastName');
   }
 
 }

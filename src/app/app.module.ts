@@ -9,13 +9,26 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AddPilotComponent } from './components/add-pilot/add-pilot.component';
 import { CountryComponent } from './components/country/country.component';
+import { NavigationComponent } from './components/navigation/navigation.component';
+import { PilotComponent } from './components/pilot/pilot.component';
+import { EventComponent } from './components/event/event.component';
+import { PlaneComponent } from './components/plane/plane.component';
+import { LocationComponent } from './components/location/location.component';
 
-export const components = [routingComponents, AddPilotComponent, CountryComponent];
+
 export const services = [PilotService, CountryService];
+
 @NgModule({
   declarations: [
     AppComponent,
-    components
+    EventComponent,
+    PlaneComponent,
+    LocationComponent,
+    AddPilotComponent,
+    PilotComponent,
+    CountryComponent,
+    NavigationComponent
+
   ],
   imports: [
     BrowserModule,
