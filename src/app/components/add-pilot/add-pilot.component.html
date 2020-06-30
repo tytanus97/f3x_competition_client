@@ -30,8 +30,6 @@
   <div *ngIf = "Email.errors && Email.touched">
     <small *ngIf="Email.errors?.invalidEmail" class="text-danger">Nieprawidłowy email</small>
     <small *ngIf="Email.errors?.duplicateEmail" class="text-danger">Email zajęty</small>
-    {{Email.errors | json}}
-
   </div>
 </div>
   <div class="form-group">

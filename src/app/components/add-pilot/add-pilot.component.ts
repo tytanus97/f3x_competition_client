@@ -61,7 +61,9 @@ get birthDate() {
 
 pilotFormSubmit() {
   if (this.pilotForm.valid) {
-    const country = this.countries.find(c => c.countryName === this.pilotForm.get('country').value);
+    console.log('kraj1 ' + this.pilotForm.get('country').value);
+    const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
+    console.log('kraj ' + country);
     const pilot = new Pilot(0, this.firstName.value, this.lastName.value, country, this.Email.value, this.birthDate.value);
     console.log(pilot);
     this.pilotService.addPilot(pilot).subscribe(response => {
