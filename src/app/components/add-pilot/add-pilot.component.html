@@ -1,8 +1,8 @@
 <div class="container-fluid">
-<form [formGroup] = "pilotForm">
+<form [formGroup] = "pilotForm" (ngSubmit) = "pilotFormSubmit()">
   <div class="form-group">
   <label>Imie: </label>
-  <input type="text" [class.is-invalid] = "firstName.errors && firstName.touched" class=" form-control" formControlName="firstName"><br>
+  <input type="text" [class.is-invalid] = "firstName.errors && firstName.touched" class="form-control" formControlName="firstName">
   <div *ngIf = "firstName.invalid && firstName.touched">
   <small *ngIf="firstName.errors?.required" class="text-danger">Imie jest wymagane</small>
   <small *ngIf="firstName.errors?.minlength" class="text-danger">Imie musi posiadać przynajmniej 3 znaki</small>
@@ -11,49 +11,37 @@
   </div>
   <div class="form-group">
   <label for="pilotLastName">Nazwisko:  </label>
-  <input type="text"  class="form-control" formControlName="lastName" id="pilotLastName" name="piloLastName"><br>
-
+  <input type="text" [class.is-invalid] = "lastName.errors && lastName.touched" class="form-control" formControlName="lastName" id="pilotLastName" name="piloLastName">
+  <div *ngIf = "lastName.invalid && lastName.touched">
+    <small *ngIf="lastName.errors?.required" class="text-danger">Nazwisko jest wymagane</small>
+    </div>
 </div>
   <div class="form-group">
   <label for="pilotBirthDate">Data urodzenia: </label>
-  <input type="date"  class="form-control" formControlName="birthDate" id="pilotBirthDate" name="pilotBirthDate"><br>
+  <input type="date"  class="form-control" formControlName="birthDate" value = "birthDate.value" id="pilotBirthDate" name="pilotBirthDate">
+  <div *ngIf = "birthDate.invalid && birthDate.touched">
+    <small *ngIf="birthDate.errors?.required" class="text-danger">Data urodzenia jest wymagana</small>
+    </div>
 </div>
   <div class="form-group">
   <label for="pilotEmail">E-mail: </label>
-  <input type="text"  class="form-control" formControlName="email"><br>
-  <div *ngIf = "Email.invalid && Email.touched">
+  <input type="text"  [class.is-invalid] = "(Email.invalidEmail || Email.duplicateEmail)
+  && Email.touched" class="form-control" formControlName="email">
+  <div *ngIf = "Email.errors && Email.touched">
     <small *ngIf="Email.errors?.invalidEmail" class="text-danger">Nieprawidłowy email</small>
+    <small *ngIf="Email.errors?.duplicateEmail" class="text-danger">Email zajęty</small>
+    {{Email.errors | json}}
+
   </div>
 </div>
   <div class="form-group">
   <label for="country" >Kraj: </label>
-  <select id="country" class="form-control" formControlName="country"><br>
+  <select id="country" class="form-control" formControlName="country">
     <option *ngFor = "let country of countries" value="{{country.countryId}}">
       {{country.countryName}}
     </option>
   </select>
 </div>
-
-
-<br>
-  {{pilotForm.value | json }}
-
+<button class="btn btn-secondary">Dodaj pilota</button>
 </form>
 
-<form [formGroup] = "">
-  <div class="form-group">
-    <label for="exampleInputEmail1">Email address</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-    <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">Password</label>
-    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-  </div>
-  <div class="form-check">
-    <input type="checkbox" class="form-check-input" id="exampleCheck1">
-    <label class="form-check-label" for="exampleCheck1">Check me out</label>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-</div>

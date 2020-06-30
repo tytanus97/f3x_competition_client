@@ -1,6 +1,5 @@
 export class Country {
-
-  constructor( countryId: number,  countryName: string,  countryCode: string) {
+  constructor(public countryId: number, public countryName: string, public countryCode: string) {
 
   }
 }

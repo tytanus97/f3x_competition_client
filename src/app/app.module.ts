@@ -16,7 +16,8 @@ import { PlaneComponent } from './components/plane/plane.component';
 import { LocationComponent } from './components/location/location.component';
 
 
-export const services = [PilotService, CountryService];
+
+export const services = [ PilotService, CountryService, ];
 
 @NgModule({
   declarations: [

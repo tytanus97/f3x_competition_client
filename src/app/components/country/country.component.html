@@ -1,5 +1,5 @@
 <div>
   <ul>
-    <li (click) = "selectCountry(country)" *ngFor="let country of Countries">{{country.id}} {{country.name}} {{country.code}}</li>
+    <li routerLink="pilotForm" *ngFor="let country of Countries">{{country.id}} {{country.name}} {{country.code}}</li>
   </ul>
 </div>

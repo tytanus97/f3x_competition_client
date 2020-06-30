@@ -11,7 +11,8 @@ import { LocationComponent } from './components/location/location.component';
 
 
 const routes: Routes = [
-  {path: 'pilots', component: PilotComponent },
+  {path: 'pilots', component: PilotComponent},
+  {path: 'pilotForm', component: AddPilotComponent},
   {path: 'events', component: EventComponent },
   {path: 'planes', component: PlaneComponent },
   {path: 'locations', component: LocationComponent },

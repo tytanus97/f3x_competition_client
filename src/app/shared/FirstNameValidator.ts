@@ -1,4 +1,4 @@
-import { ValidatorFn, AbstractControl } from "@angular/forms";
+/* import { ValidatorFn, AbstractControl } from "@angular/forms";
 
 
 export function firstNameValidator(regex: RegExp): ValidatorFn {
@@ -7,3 +7,4 @@ export function firstNameValidator(regex: RegExp): ValidatorFn {
     return valid ? {invalidFirstName: control.value} : null;
   };
 }
+ */

@@ -13,8 +13,6 @@ export class NavigationComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  navigate(target: string) {
-    this.router.navigate([target]);
-  }
+
 
 }

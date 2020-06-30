@@ -1,49 +1,80 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Inject } from '@angular/core';
 
 import { CountryService } from 'src/app/services/country.service';
-import { Country } from 'src/app/models/Country';
+
 
 import { FormBuilder, Validators } from '@angular/forms';
-import { invalidEmail } from 'src/app/shared/EmailValidator';
-import { firstNameValidator } from 'src/app/shared/FirstNameValidator';
+/* import { invalidEmail, emailTaken } from 'src/app/shared/EmailValidator';
+import { firstNameValidator } from 'src/app/shared/FirstNameValidator'; */
+import { formatDate } from '@angular/common';
+import { PilotService } from 'src/app/services/pilot.service';
+import { Pilot } from 'src/app/models/Pilot';
+import { Country } from 'src/app/models/Country';
+import { invalidEmail, emailTaken } from 'src/app/shared/EmailValidator';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-pilot',
   templateUrl: './add-pilot.component.html',
   styleUrls: ['./add-pilot.component.css']
 })
-export class AddPilotComponent implements OnInit {
+export class AddPilotComponent implements OnInit{
 
   public countries: Array<Country>;
+  public pilotForm;
 
-  constructor(private fb: FormBuilder, public countryService: CountryService){ }
+  constructor(private fb: FormBuilder, private countryService: CountryService,
+              private pilotService: PilotService, private router: Router) {
 
-  public pilotForm = this.fb.group({
-    firstName: ['', [Validators.required, Validators.minLength(3), firstNameValidator(/Pawel/)]],
-    lastName: [''],
-    email: ['', [Validators.required, invalidEmail]],
-    birthDate: [],
-    country: ['']
-  });
-
-  ngOnInit(): void {
-    this.countryService.getAllCountries().subscribe(data => {
-      this.countries = data;
-    }, (error) => {
-        console.error(error);
+    this.pilotForm = this.fb.group({
+      firstName: ['', [Validators.required, Validators.minLength(3)]],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, invalidEmail], [ emailTaken(pilotService)]],
+      birthDate: [formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en'), [Validators.required]],
+      country: ['', [Validators.required]]
     });
   }
 
-  get firstName() {
-    return this.pilotForm.get('firstName');
-  }
+ngOnInit(): void {
+  this.countryService.getAllCountries().subscribe(data => {
+    this.countries = data;
+  }, (error) => {
+    console.error(error);
+  });
+}
 
-  get Email() {
-    return this.pilotForm.get('email');
-  }
+get firstName() {
+  return this.pilotForm.get('firstName');
 
-  get LastName() {
-    return this.pilotForm.get('lastName');
+}
+
+get Email() {
+  return this.pilotForm.get('email');
+}
+
+get lastName() {
+  return this.pilotForm.get('lastName');
+}
+get birthDate() {
+  return this.pilotForm.get('birthDate');
+}
+
+pilotFormSubmit() {
+  if (this.pilotForm.valid) {
+    const country = this.countries.find(c => c.countryName === this.pilotForm.get('country').value);
+    const pilot = new Pilot(0, this.firstName.value, this.lastName.value, country, this.Email.value, this.birthDate.value);
+    console.log(pilot);
+    this.pilotService.addPilot(pilot).subscribe(response => {
+      console.log(response.status);
+
+    }
+      , error => {
+        console.error(error);
+      });
+    this.pilotForm.reset({birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en')});
+  } else {
+    alert('Wypełnij formularz prawidłowo!');
   }
+}
 
 }

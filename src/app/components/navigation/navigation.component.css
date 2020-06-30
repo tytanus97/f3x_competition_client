@@ -31,7 +31,9 @@ nav>ul>li:nth-child(3){
 
   border-right: 1px solid white;
 }
-
+nav>ul>li.active {
+  background-color: cornflowerblue;
+}
 nav>ul>li:hover {
 background-color: cornflowerblue;
 cursor: pointer;
