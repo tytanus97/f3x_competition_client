@@ -14,6 +14,8 @@ import { PilotComponent } from './components/pilot/pilot.component';
 import { EventComponent } from './components/event/event.component';
 import { PlaneComponent } from './components/plane/plane.component';
 import { LocationComponent } from './components/location/location.component';
+import { AllPilotsComponent } from './components/all-pilots/all-pilots.component';
+import { PilotDetailsComponent } from './components/pilot-details/pilot-details.component';
 
 
 
@@ -28,7 +30,9 @@ export const services = [ PilotService, CountryService, ];
     AddPilotComponent,
     PilotComponent,
     CountryComponent,
-    NavigationComponent
+    NavigationComponent,
+    AllPilotsComponent,
+    PilotDetailsComponent
 
   ],
   imports: [

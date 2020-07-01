@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
+
 @Component({
   selector: 'app-pilot',
   templateUrl: './pilot.component.html',
@@ -15,5 +16,8 @@ export class PilotComponent implements OnInit {
 
   navigate(target: string) {
     this.router.navigate([target]);
+  }
+  navigateChild(target: string) {
+    this.router.navigate([target], { relativeTo: this.route});
   }
 }

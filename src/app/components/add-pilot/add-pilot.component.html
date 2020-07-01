@@ -1,4 +1,6 @@
 <div class="container-fluid">
+  <button routerLink="/pilots" class="btn btn-info">Wstecz</button>
+  <br>
 <form [formGroup] = "pilotForm" (ngSubmit) = "pilotFormSubmit()">
   <div class="form-group">
   <label>Imie: </label>
@@ -18,7 +20,7 @@
 </div>
   <div class="form-group">
   <label for="pilotBirthDate">Data urodzenia: </label>
-  <input type="date"  class="form-control" formControlName="birthDate" value = "birthDate.value" id="pilotBirthDate" name="pilotBirthDate">
+  <input type="date"  class="form-control" max="3000-01-01" min="1900-01-01" formControlName="birthDate" value = "birthDate.value" id="pilotBirthDate" name="pilotBirthDate">
   <div *ngIf = "birthDate.invalid && birthDate.touched">
     <small *ngIf="birthDate.errors?.required" class="text-danger">Data urodzenia jest wymagana</small>
     </div>

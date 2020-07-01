@@ -1,0 +1,24 @@
+<div class='container'>
+  <table id="pilotTable" class="table table-striped">
+    <thead>
+      <tr>
+        <td scope="col">#</td>
+        <th scope="col">Imię</th>
+        <th scope="col">Nazwisko</th>
+        <th scope="col">Kraj</th>
+        <th scope="col">Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr (click) = "showPilotDetails(pilot.pilotId)" *ngFor="let pilot of pilots; let i = index;">
+        <td>{{i + 1}}</td>
+        <td>{{pilot.pilotFirstName}}</td>
+        <td>{{pilot.pilotLastName}}</td>
+        <td>{{pilot.country.countryName}}</td>
+        <td>{{pilot.pilotRating}} pkt.</td>
+      </tr>
+    </tbody>
+  </table>
+
+
+</div>

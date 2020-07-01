@@ -7,11 +7,18 @@ import { AppComponent } from './app.component';
 import { EventComponent } from './components/event/event.component';
 import { PlaneComponent } from './components/plane/plane.component';
 import { LocationComponent } from './components/location/location.component';
+import { AllPilotsComponent } from './components/all-pilots/all-pilots.component';
+import { PilotDetailsComponent } from './components/pilot-details/pilot-details.component';
 
 
 
 const routes: Routes = [
-  {path: 'pilots', component: PilotComponent},
+  {path: 'pilots', component: PilotComponent,
+  children: [
+    {path: 'allPilots', component: AllPilotsComponent},
+    {path: 'pilotDetails', component: PilotDetailsComponent}
+  ]
+  },
   {path: 'pilotForm', component: AddPilotComponent},
   {path: 'events', component: EventComponent },
   {path: 'planes', component: PlaneComponent },
