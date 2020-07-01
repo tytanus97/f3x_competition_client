@@ -29,4 +29,8 @@ export class PilotService {
     this.currentPilot.next(pilot);
   }
 
+  deletePilot(pilotId: number) {
+    return this.http.delete(this._url + `${pilotId}`, {observe: 'response'});
+  }
+
 }

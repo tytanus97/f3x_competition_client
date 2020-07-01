@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges } from '@angular/core';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './pilot-details.component.html',
   styleUrls: ['./pilot-details.component.css']
 })
-export class PilotDetailsComponent implements OnInit {
+export class PilotDetailsComponent implements OnInit{
 
   public currentPilot;
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
@@ -19,5 +19,14 @@ export class PilotDetailsComponent implements OnInit {
       console.log(this.currentPilot);
     });
    // this.pilotService.currentPilot.subscribe(pilot => this.currentPilot = pilot);
+  }
+
+
+
+  deletePilot(pilotId: number) {
+    if (confirm('Usunąć pilota?')) {
+      this.pilotService.deletePilot(pilotId).subscribe(response => console.log(response));
+      this.router.navigate(['../allPilots'], {relativeTo: this.route});
+    }
   }
 }

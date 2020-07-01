@@ -13,5 +13,18 @@
         <td class="header"><b>Kraj</b></td>
         <td>{{currentPilot?.country.countryName}}</td>
       </tr>
+      <tr scope="col">
+        <td class="header"><b>Data urodzenia</b></td>
+        <td>{{currentPilot?.pilotBirthDate}}</td>
+      </tr>
+      <tr scope="col">
+        <td class="header"><b>Email</b></td>
+        <td>{{currentPilot?.pilotEmail}}</td>
+      </tr>
   </table>
+  <div class="action">
+    <button class="btn btn-secondary">Edytuj</button>
+    <button class="btn btn-"
+    <button (click) = "deletePilot(currentPilot.pilotId)" class="btn btn-danger">Usuń pilota</button>
+  </div>
 </div>
