@@ -26,8 +26,12 @@ export class PilotDetailsComponent implements OnInit{
 
   deletePilot(pilotId: number) {
     if (confirm('Usunąć pilota?')) {
-      this.pilotService.deletePilot(pilotId).subscribe(response => console.log(response));
-      this.router.navigate(['../allPilots'], {relativeTo: this.route});
+      this.pilotService.deletePilot(pilotId).subscribe(response => {
+        if (response.status ===  200) {
+          this.router.navigate(['../allPilots'], {relativeTo: this.route});
+        }
+      });
+
     }
   }
 

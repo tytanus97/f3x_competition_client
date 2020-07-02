@@ -15,11 +15,14 @@ export class AllPilotsComponent implements OnInit {
 
   ngOnInit(): void {
     this.pilotService.getAllPilots().subscribe(data => {
-      data.sort((a, b) => a.pilotRating - b.pilotRating);
+
+    //  data.sort((a, b) => a.pilotRating - b.pilotRating);
       this.pilots = data;
       console.log(data);
     });
   }
+
+
 
   showPilotDetails(pilotId) {
     this.router.navigate(['../pilotDetails', { id: pilotId}], { relativeTo: this.route});
