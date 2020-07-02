@@ -3,28 +3,29 @@
   <table class="table table-striped">
       <tr scope="col">
         <td class="header"><b>Imię</b></td>
-        <td>{{currentPilot?.pilotFirstName}}</td>
+        <td class="input"><input class="table-input"  disabled type="text" value="{{currentPilot?.pilotFirstName}}"></td>
+
       </tr>
       <tr scope="col">
         <td class="header"><b>Nazwisko</b></td>
-        <td>{{currentPilot?.pilotLastName}}</td>
+        <td class="input"><input class="table-input" disabled type="text" value="{{currentPilot?.pilotLastName}}"></td>
       </tr>
       <tr scope="col">
         <td class="header"><b>Kraj</b></td>
-        <td>{{currentPilot?.country.countryName}}</td>
+        <td class="input"><input class="table-input" disabled type="text" value="{{currentPilot?.country.countryName}}"></td>
       </tr>
       <tr scope="col">
         <td class="header"><b>Data urodzenia</b></td>
-        <td>{{currentPilot?.pilotBirthDate}}</td>
+        <td class="input"><input class="table-input" disabled type="text" value="{{currentPilot?.pilotBirthDate}}"></td>
       </tr>
       <tr scope="col">
         <td class="header"><b>Email</b></td>
-        <td>{{currentPilot?.pilotEmail}}</td>
+        <td class="input"><input class="table-input" disabled type="text" value="{{currentPilot?.pilotEmail}}"></td>
       </tr>
   </table>
   <div class="action">
-    <button class="btn btn-secondary">Edytuj</button>
-    <button class="btn btn-"
-    <button (click) = "deletePilot(currentPilot.pilotId)" class="btn btn-danger">Usuń pilota</button>
+    <button type='button'  (click) = "navigate('allPilots')" class="btn btn-dark">Wstecz</button>
+    <button  type='button'(click) = "updatePilot()" class="btn btn-secondary">Edytuj</button>
+    <button type='button' (click) = "deletePilot(currentPilot.pilotId)" class="btn btn-danger">Usuń pilota</button>
   </div>
 </div>

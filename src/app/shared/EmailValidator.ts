@@ -7,12 +7,11 @@ export function invalidEmail(control: AbstractControl) {
   return !invalid ? { invalidEmail: { value: control.value } } : null;
 }
 
-export function emailTaken(pilotService: PilotService): ValidatorFn {
+export function emailTaken(pilotService: PilotService, currPilotId: number): ValidatorFn {
   return (control: AbstractControl): { [key: string]: any } | null  => {
     return pilotService.getAllPilots().toPromise().then(data => {
-      const pilots = data.find(p => p.pilotEmail === control.value);
-      console.log(typeof pilots);
-      console.log(typeof pilots !== 'undefined');
+      const pilots = data.find(p => { p.pilotEmail === control.value && p.pilotId !== currPilotId;
+      });
       return (typeof pilots) !== 'undefined' ? { duplicateEmail: {value: control.value } } : null;
     });
   };

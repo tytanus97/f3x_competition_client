@@ -1,6 +1,5 @@
+<div class="container">
 <div class="container-fluid">
-  <button routerLink="/pilots" class="btn btn-info">Wstecz</button>
-  <br>
 <form [formGroup] = "pilotForm" (ngSubmit) = "pilotFormSubmit()">
   <div class="form-group">
   <label>Imie: </label>
@@ -42,6 +41,10 @@
     </option>
   </select>
 </div>
-<button class="btn btn-secondary">Dodaj pilota</button>
+<input type="submit" class="btn btn-secondary" value="{{addBtnLabel}}">
+<button routerLink="/pilots" class="btn btn-info btn-back">Wstecz</button>
 </form>
+</div>
+</div>
+
 

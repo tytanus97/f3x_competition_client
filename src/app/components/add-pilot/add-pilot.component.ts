@@ -9,8 +9,7 @@ import { PilotService } from 'src/app/services/pilot.service';
 import { Pilot } from 'src/app/models/Pilot';
 import { Country } from 'src/app/models/Country';
 import { invalidEmail, emailTaken } from 'src/app/shared/EmailValidator';
-import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-pilot',
@@ -21,17 +20,33 @@ export class AddPilotComponent implements OnInit {
 
   public countries: Array<Country>;
   public pilotForm;
+  public pilot;
+  public addBtnLabel = 'Dodaj pilota';
 
   constructor(private fb: FormBuilder, private countryService: CountryService,
-    private pilotService: PilotService, private router: Router) {
+              private pilotService: PilotService, private router: Router, private route: ActivatedRoute) {
 
-    this.pilotForm = this.fb.group({
-      firstName: ['', [Validators.required, Validators.minLength(3)]],
-      lastName: ['', Validators.required],
-      email: ['', [Validators.required, invalidEmail], [emailTaken(pilotService)]],
-      birthDate: [formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en'), [Validators.required]],
-      country: ['', [Validators.required]]
-    });
+    this.pilotService.currentPilot.subscribe(pilot => {
+      this.pilot = pilot;
+      console.log('otrzymane pilot id ' + this.pilot.pilotId);
+
+      this.pilotForm = this.fb.group({
+        firstName: [this.pilot.pilotFirstName, [Validators.required, Validators.minLength(3)]],
+        lastName: [this.pilot.pilotLastName, Validators.required],
+        email: [this.pilot.pilotEmail, [Validators.required, invalidEmail], [emailTaken(pilotService, 0)]],
+        birthDate: [formatDate(typeof this.pilot.pilotBirthDate === 'undefined' ? '2000-01-01' : this.pilot.pilotBirthDate,
+          'yyyy-MM-dd', 'en'), [Validators.required]],
+        country: [typeof this.pilot.country === 'undefined' ? 1 : this.pilot.country.countryId
+          , [Validators.required]]
+      });
+
+      if(typeof this.pilot.pilotId !== 'undefined') {
+        this.addBtnLabel = 'Zauktualizuj';
+      }
+
+
+    }
+    );
   }
 
   ngOnInit(): void {
@@ -40,11 +55,41 @@ export class AddPilotComponent implements OnInit {
     }, (error) => {
       console.error(error);
     });
+
+
+
+  }
+
+  pilotFormSubmit() {
+    if (this.pilotForm.valid) {
+      const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
+      console.log('otrzymane pilot id w submicie ' + this.pilot.pilotId);
+      const pilot = new Pilot(this.pilot.pilotId, this.firstName.value, this.lastName.value,
+        country, this.Email.value, this.birthDate.value, this.pilot.pilotRating);
+      this.pilotService.addPilot(pilot).subscribe(response => {
+        switch (response.status) {
+          case 201: {
+            console.log('Success!');
+            console.log(response.body);
+          }         break;
+          case 406: {
+            console.log('Błąd!');
+            console.log(response);
+          }          break;
+        }
+
+      }
+        , error => {
+          console.error(error);
+        });
+      this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
+    } else {
+      alert('Wypełnij formularz prawidłowo!');
+    }
   }
 
   get firstName() {
     return this.pilotForm.get('firstName');
-
   }
 
   get Email() {
@@ -56,35 +101,6 @@ export class AddPilotComponent implements OnInit {
   }
   get birthDate() {
     return this.pilotForm.get('birthDate');
-  }
-
-  pilotFormSubmit() {
-    if (this.pilotForm.valid) {
-      console.log('kraj1 ' + this.pilotForm.get('country').value);
-      const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
-      console.log('kraj ' + country);
-      const pilot = new Pilot(0, this.firstName.value, this.lastName.value, country, this.Email.value, this.birthDate.value, 0);
-      console.log(pilot);
-      this.pilotService.addPilot(pilot).subscribe(response => {
-        switch (response.status) {
-          case 201: {
-            console.log('Success!');
-            console.log(response.body);
-          }         break;
-          case 406: {
-            console.log('Błąd!');
-            console.log(response);
-          }
-        }
-
-      }
-        , error => {
-          console.error(error);
-        });
-      this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
-    } else {
-      alert('Wypełnij formularz prawidłowo!');
-    }
   }
 
 }

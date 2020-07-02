@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Pilot } from 'src/app/models/Pilot';
+import { PilotService } from 'src/app/services/pilot.service';
 
 
 @Component({
@@ -9,13 +11,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class PilotComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute, private router: Router) { }
+  constructor(private pilotService: PilotService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
   }
 
-  navigate(target: string) {
-    this.router.navigate([target]);
+  addPilot() {
+    this.pilotService.changeCurrentPilot(new Pilot());
+    this.router.navigate(['pilotForm']);
   }
   navigateChild(target: string) {
     this.router.navigate([target], { relativeTo: this.route});

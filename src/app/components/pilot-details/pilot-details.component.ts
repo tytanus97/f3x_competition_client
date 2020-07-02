@@ -1,6 +1,7 @@
 import { Component, OnInit, OnChanges } from '@angular/core';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Pilot } from 'src/app/models/Pilot';
 
 @Component({
   selector: 'app-pilot-details',
@@ -28,5 +29,14 @@ export class PilotDetailsComponent implements OnInit{
       this.pilotService.deletePilot(pilotId).subscribe(response => console.log(response));
       this.router.navigate(['../allPilots'], {relativeTo: this.route});
     }
+  }
+
+  navigate(target: string) {
+    this.router.navigate([`../${target}`], {relativeTo: this.route});
+  }
+
+  updatePilot() {
+    this.pilotService.changeCurrentPilot(this.currentPilot);
+    this.router.navigate(['../pilotForm']);
   }
 }

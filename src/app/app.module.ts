@@ -5,7 +5,7 @@ import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PilotService } from './services/pilot.service';
 import { CountryService } from './services/country.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { AddPilotComponent } from './components/add-pilot/add-pilot.component';
 import { CountryComponent } from './components/country/country.component';
@@ -16,10 +16,11 @@ import { PlaneComponent } from './components/plane/plane.component';
 import { LocationComponent } from './components/location/location.component';
 import { AllPilotsComponent } from './components/all-pilots/all-pilots.component';
 import { PilotDetailsComponent } from './components/pilot-details/pilot-details.component';
+import { FormsModule } from '@angular/forms';
 
 
 
-export const services = [ PilotService, CountryService, ];
+export const services = [ PilotService, CountryService ];
 
 @NgModule({
   declarations: [
@@ -39,6 +40,7 @@ export const services = [ PilotService, CountryService, ];
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [services, HttpClient],
