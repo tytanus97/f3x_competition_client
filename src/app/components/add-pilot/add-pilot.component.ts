@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
 
 import { CountryService } from 'src/app/services/country.service';
 
@@ -10,13 +10,18 @@ import { Pilot } from 'src/app/models/Pilot';
 import { Country } from 'src/app/models/Country';
 import { invalidEmail, emailTakenValidator } from 'src/app/shared/EmailValidator';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-pilot',
   templateUrl: './add-pilot.component.html',
   styleUrls: ['./add-pilot.component.css']
 })
-export class AddPilotComponent implements OnInit {
+export class AddPilotComponent implements OnInit,OnDestroy {
+
+  private readonly onDestroy = new Subject<void>();
+
 
   public countries: Array<Country>;
   public pilotForm;
@@ -27,7 +32,7 @@ export class AddPilotComponent implements OnInit {
               private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
               private cd: ChangeDetectorRef) {
 
-    this.pilotService.currentPilot.subscribe(pilot => {
+    this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => {
       this.pilot = pilot;
       console.log('otrzymane pilot id ' + this.pilot.pilotId);
 
@@ -35,7 +40,7 @@ export class AddPilotComponent implements OnInit {
         firstName: [this.pilot.pilotFirstName, [Validators.required, Validators.minLength(3)]],
         lastName: [this.pilot.pilotLastName, Validators.required],
         email: [this.pilot.pilotEmail, { validators: [Validators.required, invalidEmail],
-           asyncValidators: [emailTakenValidator(pilotService, 0)], updateOn: 'blur'}],
+           asyncValidators: [emailTakenValidator(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)], updateOn: 'blur'}],
         birthDate: [formatDate(typeof this.pilot.pilotBirthDate === 'undefined' ? '2000-01-01' : this.pilot.pilotBirthDate,
           'yyyy-MM-dd', 'en'), [Validators.required]],
         country: [typeof this.pilot.country === 'undefined' ? 1 : this.pilot.country.countryId
@@ -48,19 +53,16 @@ export class AddPilotComponent implements OnInit {
     }
     );
 
-    this.pilotForm.statusChanges.subscribe(() => cd.markForCheck());
-
-
+    this.pilotForm.statusChanges.pipe(takeUntil(this.onDestroy)).subscribe(() => cd.markForCheck());
   }
 
+
   ngOnInit(): void {
-    this.countryService.getAllCountries().subscribe(data => {
+    this.countryService.getAllCountries().pipe(takeUntil(this.onDestroy)).subscribe(data => {
       this.countries = data;
     }, (error) => {
       console.error(error);
     });
-
-
 
   }
 
@@ -68,9 +70,9 @@ export class AddPilotComponent implements OnInit {
     if (this.pilotForm.valid && !this.pilotForm.pending) {
       const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
       console.log('otrzymane pilot id w submicie ' + this.pilot.pilotId);
-      const pilot = new Pilot(this.pilot.pilotId, this.firstName.value, this.lastName.value,
+      const pilot = new Pilot(this.pilot.pilotId, this.firstName.value.trim(), this.lastName.value.trim(),
         country, this.Email.value, this.birthDate.value, this.pilot.pilotRating);
-      this.pilotService.addPilot(pilot).subscribe(response => {
+      this.pilotService.addPilot(pilot).pipe(takeUntil(this.onDestroy)).subscribe(response => {
         switch (response.status) {
           case 201: {
             console.log('Success!');
@@ -104,6 +106,10 @@ export class AddPilotComponent implements OnInit {
   }
   get birthDate() {
     return this.pilotForm.get('birthDate');
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy.next();
   }
 
 }
