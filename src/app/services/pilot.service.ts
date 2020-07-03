@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Pilot } from '../models/Pilot';
 import { Observable, BehaviorSubject } from 'rxjs';
 
@@ -19,6 +19,13 @@ export class PilotService {
   }
   getAllPilots() {
     return this.http.get<Array<Pilot>>(this._url);
+  }
+
+  getAllByEmail(email: string) {
+
+    let param = new HttpParams();
+    param = param.append('email', email);
+    return this.http.get<Array<Pilot>>(this._url + 'email', {params: param});
   }
 
   getPilotById(pilotId: number) {

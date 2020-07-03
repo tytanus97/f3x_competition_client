@@ -2,6 +2,7 @@ import { Component, OnInit, OnChanges } from '@angular/core';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Pilot } from 'src/app/models/Pilot';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pilot-details',
@@ -37,6 +38,7 @@ export class PilotDetailsComponent implements OnInit{
 
   navigate(target: string) {
     this.router.navigate([`../${target}`], {relativeTo: this.route});
+
   }
 
   updatePilot() {

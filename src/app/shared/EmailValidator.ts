@@ -1,20 +1,26 @@
-import { AbstractControl, ValidatorFn } from '@angular/forms';
+import { AbstractControl, ValidatorFn, AsyncValidatorFn, AsyncValidator, ValidationErrors } from '@angular/forms';
 import { PilotService } from '../services/pilot.service';
+import { Observable, of,  } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 export function invalidEmail(control: AbstractControl) {
   const invalid = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(control.value);
   return !invalid ? { invalidEmail: { value: control.value } } : null;
 }
 
-export function emailTaken(pilotService: PilotService, currentPilotId: number): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: any } | null  => {
-    return pilotService.getAllPilots().toPromise().then(data => {
+export function emailTakenValidator(ps: PilotService, pId: number): AsyncValidatorFn {
+  return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
+    console.log(c.value);
+    return ps.getAllByEmail(c.value).pipe(map((pilots) => {
 
-      const pilots = data.find(p => {return p.pilotEmail === control.value && p.pilotId !== currentPilotId});
-      console.log(typeof pilots);
-      console.log(typeof pilots !== 'undefined');
-      return (typeof pilots) !== 'undefined' ? { duplicateEmail: {value: control.value } } : null;
-    });
+      console.log(pId);
+      console.log(pilots);
+      console.log((pilots && pilots.length > 0) && !pilots.map(pilot => pilot.pilotId).includes(pId));
+      return ((pilots && pilots.length > 0) && !pilots.map(pilot => pilot.pilotId).includes(pId))
+       ? { duplicateEmail: c.value } : null;
+    })
+    );
   };
 }
+
 

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, Inject } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Inject, ChangeDetectorRef } from '@angular/core';
 
 import { CountryService } from 'src/app/services/country.service';
 
@@ -8,7 +8,7 @@ import { formatDate } from '@angular/common';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Pilot } from 'src/app/models/Pilot';
 import { Country } from 'src/app/models/Country';
-import { invalidEmail, emailTaken } from 'src/app/shared/EmailValidator';
+import { invalidEmail, emailTakenValidator } from 'src/app/shared/EmailValidator';
 import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -24,7 +24,8 @@ export class AddPilotComponent implements OnInit {
   public addBtnLabel = 'Dodaj pilota';
 
   constructor(private fb: FormBuilder, private countryService: CountryService,
-              private pilotService: PilotService, private router: Router, private route: ActivatedRoute) {
+              private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
+              private cd: ChangeDetectorRef) {
 
     this.pilotService.currentPilot.subscribe(pilot => {
       this.pilot = pilot;
@@ -33,7 +34,8 @@ export class AddPilotComponent implements OnInit {
       this.pilotForm = this.fb.group({
         firstName: [this.pilot.pilotFirstName, [Validators.required, Validators.minLength(3)]],
         lastName: [this.pilot.pilotLastName, Validators.required],
-        email: [this.pilot.pilotEmail, [Validators.required, invalidEmail], [emailTaken(pilotService, 0)]],
+        email: [this.pilot.pilotEmail, { validators: [Validators.required, invalidEmail],
+           asyncValidators: [emailTakenValidator(pilotService, 0)], updateOn: 'blur'}],
         birthDate: [formatDate(typeof this.pilot.pilotBirthDate === 'undefined' ? '2000-01-01' : this.pilot.pilotBirthDate,
           'yyyy-MM-dd', 'en'), [Validators.required]],
         country: [typeof this.pilot.country === 'undefined' ? 1 : this.pilot.country.countryId
@@ -43,10 +45,12 @@ export class AddPilotComponent implements OnInit {
       if(typeof this.pilot.pilotId !== 'undefined') {
         this.addBtnLabel = 'Zauktualizuj';
       }
-
-
     }
     );
+
+    this.pilotForm.statusChanges.subscribe(() => cd.markForCheck());
+
+
   }
 
   ngOnInit(): void {
@@ -61,7 +65,7 @@ export class AddPilotComponent implements OnInit {
   }
 
   pilotFormSubmit() {
-    if (this.pilotForm.valid) {
+    if (this.pilotForm.valid && !this.pilotForm.pending) {
       const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
       console.log('otrzymane pilot id w submicie ' + this.pilot.pilotId);
       const pilot = new Pilot(this.pilot.pilotId, this.firstName.value, this.lastName.value,
@@ -77,7 +81,6 @@ export class AddPilotComponent implements OnInit {
             console.log(response);
           }          break;
         }
-
       }
         , error => {
           console.error(error);
