@@ -1,3 +1,31 @@
 <div class="container">
-  
+ <h2>{{currentPilot?.pilotFirstName}} {{currentPilot?.pilotLastName}}</h2>
+<div class="plane-container" *ngIf="pilotPlaneList?.length > 0; else noPlanes">
+  <div class="plane-item" *ngFor="let plane of pilotPlaneList">
+    <table>
+      <tr scope="col">
+        <td><b>Nazwa Samolotu:</b></td>
+        <td class="data"><span>{{plane.planeName}}</span></td>
+      </tr>
+      <tr scope="col">
+        <td><b>Kolor samolotu:</b></td>
+        <td class="data"> <span>{{plane.planeColor}}</span></td>
+      </tr>
+      <tr scope="col">
+        <td><b>Rozpiętość:</b></td>
+        <td class="data"> <span>{{plane.planeWingSpan}} m</span></td>
+      </tr>
+      <tr scope="col">
+        <td><b>Waga:</b></td>
+        <td class="data"> <span>{{plane.planeWeight}} kg</span></td>
+      </tr>
+  </table>
+  </div>
 </div>
+</div>
+
+<ng-template #noPlanes>
+  <div class="alert alert-warning" role="alert">
+    Pilot nie posiada aktualnie samolotów.
+  </div>
+</ng-template>

@@ -77,6 +77,8 @@ export class AddPilotComponent implements OnInit,OnDestroy {
           case 201: {
             console.log('Success!');
             console.log(response.body);
+            this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
+            this.router.navigate(['../pilots/allPilots']);
           }         break;
           case 406: {
             console.log('Błąd!');
@@ -87,7 +89,7 @@ export class AddPilotComponent implements OnInit,OnDestroy {
         , error => {
           console.error(error);
         });
-      this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
+
     } else {
       alert('Wypełnij formularz prawidłowo!');
     }

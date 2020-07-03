@@ -4,4 +4,5 @@
 
 #pilotTable>tbody>tr:hover {
   background-color:honeydew;
+  cursor: pointer;
 }

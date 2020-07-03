@@ -30,17 +30,24 @@ export class PilotDetailsComponent implements OnInit, OnDestroy{
 
   deletePilot(pilotId: number) {
     if (confirm('Usunąć pilota?')) {
-      this.pilotService.deletePilot(pilotId).pipe( tap(response => {
+      this.pilotService.deletePilot(pilotId).pipe(takeUntil(this.onDestroy)).subscribe(response => {
+        console.log(response);
         if (response.status ===  200) {
           this.router.navigate(['../allPilots'], {relativeTo: this.route});
         }
-      }));
+      });
 
     }
   }
 
   navigate(target: string) {
     this.router.navigate([`../${target}`], {relativeTo: this.route});
+  }
+
+  navigateToPilotPlanes(target: string) {
+
+    this.router.navigate(['../' + target, {pilotId: this.currentPilot.pilotId}], {relativeTo: this.route});
+
   }
   updatePilot() {
     this.pilotService.changeCurrentPilot(this.currentPilot);

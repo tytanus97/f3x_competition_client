@@ -1,0 +1,18 @@
+.container {
+  margin-top:10px;
+}
+
+.container h2 {
+  text-align:center;
+  background-color:lavenderblush;
+}
+
+.plane-item {
+  border-bottom:1px solid lavenderblush ;
+}
+
+td>span {
+  margin-left:10px;
+  text-align:center;
+}
+
