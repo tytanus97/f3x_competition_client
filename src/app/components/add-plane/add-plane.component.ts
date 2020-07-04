@@ -1,14 +1,23 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
+import { Plane } from 'src/app/models/Plane';
+import { PilotService } from 'src/app/services/pilot.service';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-plane',
   templateUrl: './add-plane.component.html',
   styleUrls: ['./add-plane.component.css']
 })
-export class AddPlaneComponent implements OnInit {
+export class AddPlaneComponent implements OnInit,OnDestroy {
   public planeForm;
-  constructor(private fb: FormBuilder) {
+  private readonly onDestroy = new Subject<void>();
+  private pilotId;
+
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private pilotService: PilotService) {
+
 
     this.planeForm = this.fb.group({
       planeName: ['', { validators: [Validators.required, Validators.minLength(1), Validators.maxLength(50)], updateOn: 'blur' }],
@@ -19,10 +28,26 @@ export class AddPlaneComponent implements OnInit {
 
   }
 
+
   ngOnInit(): void {
+
+    this.pilotId = this.route.snapshot.paramMap.get('pilotId');
+
   }
 
   planeFormSubmit() {
+
+    if(this.planeForm.valid && !this.planeForm.pending) {
+      const plane = new Plane(0, this.planeWingSpan.value, this.planeColor.value, this.planeName.value, this.planeWeight.value, null);
+      this.pilotService.addPlaneToPilot(this.pilotId, plane).pipe(takeUntil(this.onDestroy)).subscribe(response => {
+          if (response.status === 200) {
+            console.log('udalo sie dodac samolot do pilota');
+            this.planeForm.reset();
+          }
+      }, error => {
+        console.error(error);
+      });
+    }
 
   }
 
@@ -40,6 +65,10 @@ export class AddPlaneComponent implements OnInit {
 
   get planeWeight() {
     return this.planeForm.get('planeWeight');
+  }
+
+  ngOnDestroy(): void {
+    this.onDestroy.next();
   }
 
 }
