@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterContentInit, Inject, ChangeDetectorRef, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterContentInit, Inject, ChangeDetectorRef, OnDestroy, Input } from '@angular/core';
 
 import { CountryService } from 'src/app/services/country.service';
 
@@ -21,7 +21,6 @@ import { takeUntil } from 'rxjs/operators';
 export class AddPilotComponent implements OnInit,OnDestroy {
 
   private readonly onDestroy = new Subject<void>();
-
 
   public countries: Array<Country>;
   public pilotForm;
