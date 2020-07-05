@@ -17,6 +17,8 @@ import { LocationComponent } from './components/location/location.component';
 import { AllPilotsComponent } from './components/all-pilots/all-pilots.component';
 import { PilotDetailsComponent } from './components/pilot-details/pilot-details.component';
 import { FormsModule } from '@angular/forms';
+import { PilotPlanesComponent } from './components/pilot-planes/pilot-planes.component';
+import { AddPlaneComponent } from './components/add-plane/add-plane.component';
 
 
 
@@ -33,7 +35,9 @@ export const services = [ PilotService, CountryService ];
     CountryComponent,
     NavigationComponent,
     AllPilotsComponent,
-    PilotDetailsComponent
+    PilotDetailsComponent,
+    PilotPlanesComponent,
+    AddPlaneComponent
 
   ],
   imports: [

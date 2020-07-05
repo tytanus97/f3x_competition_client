@@ -1,6 +1,7 @@
 import { Pilot } from './Pilot';
 
 export class Plane {
-  constructor(planeId: number, planeWingSpan: number, planeColor: string, planeName: string, pilot?: Pilot) {
+  constructor(public planeId: number, public planeWingSpan: number,public planeColor: string,
+              public planeName: string, public planeWeight: number, public pilot?: Pilot) {
   }
 }

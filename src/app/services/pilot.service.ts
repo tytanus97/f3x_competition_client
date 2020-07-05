@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
 import { Pilot } from '../models/Pilot';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { Plane } from '../models/Plane';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class PilotService {
   private _url = 'http://localhost:8080/api/pilots/';
 
   constructor(private http: HttpClient) {
+
   }
 
   addPilot(pilot: Pilot){
@@ -22,7 +24,6 @@ export class PilotService {
   }
 
   getAllByEmail(email: string) {
-
     let param = new HttpParams();
     param = param.append('email', email);
     return this.http.get<Array<Pilot>>(this._url + 'email', {params: param});
@@ -32,8 +33,16 @@ export class PilotService {
     return this.http.get<Pilot>(this._url + `${pilotId}`, {observe: 'response'});
   }
 
+  getPilotPlanes(pilotId: number) {
+    return this.http.get<Array<Plane>>(this._url + `${pilotId}/planes`);
+  }
+
   changeCurrentPilot(pilot: Pilot) {
     this.currentPilot.next(pilot);
+  }
+
+  addPlaneToPilot(pilotId: number, plane: Plane) {
+    return this.http.post(this._url + `${pilotId}/planes`, plane, {observe: 'response'});
   }
 
   deletePilot(pilotId: number) {

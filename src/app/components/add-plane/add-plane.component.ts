@@ -1,7 +1,7 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Plane } from 'src/app/models/Plane';
 import { PilotService } from 'src/app/services/pilot.service';
 import { takeUntil } from 'rxjs/operators';
@@ -15,8 +15,9 @@ export class AddPlaneComponent implements OnInit,OnDestroy {
   public planeForm;
   private readonly onDestroy = new Subject<void>();
   private pilotId;
+  @Output() planeAdded = new EventEmitter<Plane>();
 
-  constructor(private fb: FormBuilder, private route: ActivatedRoute, private pilotService: PilotService) {
+  constructor(private fb: FormBuilder, private route: ActivatedRoute, private router: Router, private pilotService: PilotService) {
 
 
     this.planeForm = this.fb.group({
@@ -43,6 +44,7 @@ export class AddPlaneComponent implements OnInit,OnDestroy {
           if (response.status === 200) {
             console.log('udalo sie dodac samolot do pilota');
             this.planeForm.reset();
+            this.planeAdded.emit(response.body as Plane);
           }
       }, error => {
         console.error(error);

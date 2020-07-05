@@ -24,7 +24,7 @@
 </div>
 <button #planeAddBtn class = "btn btn-success" (click) = 'setShowForm()' ></button>
 <div class="plane-form">
-  <app-add-plane *ngIf="showPlaneForm"></app-add-plane>
+  <app-add-plane *ngIf="showPlaneForm" (planeAdded) = "addPlaneToLocalList($event)"></app-add-plane>
 </div>
 </div>
 <ng-template #noPlanes>

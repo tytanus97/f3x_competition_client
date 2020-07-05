@@ -23,26 +23,31 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
     const pilotId = this.route.snapshot.paramMap.get('pilotId');
-    this.pilotService.getPilotById(parseInt(pilotId)).pipe(takeUntil(this.onDestroy)).subscribe(pilot => this.currentPilot = pilot.body);
-    this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => this.currentPilot = pilot);
-    this.pilotService.getPilotPlanes(parseInt(pilotId)).pipe(takeUntil(this.onDestroy)).subscribe(planes => this.pilotPlaneList = planes);
+    this.pilotService.getPilotById(parseInt(pilotId)).pipe(takeUntil(this.onDestroy))
+    .subscribe(pilot => this.currentPilot = pilot.body);
+
+    this.pilotService.getPilotPlanes(parseInt(pilotId)).pipe(takeUntil(this.onDestroy))
+    .subscribe(planes => this.pilotPlaneList = planes);
   }
 
   ngAfterViewInit(): void {
-    this.planeAddBtn.nativeElement.innerText = 'Pokaz formularz';
+    this.planeAddBtn.nativeElement.innerText = 'Dodaj samolot';
     console.log(this.planeAddBtn);
   }
 
 
   navigate(target: string) {
-    this.router
   }
 
   setShowForm() {
     this.showPlaneForm = !this.showPlaneForm;
-    this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Pokaz formularz';
+    this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Dodaj samolot';
     this.planeAddBtn.nativeElement.className = this.showPlaneForm ? 'btn btn-warning' : 'btn btn-success';
     console.log('asdasd');
+  }
+
+  addPlaneToLocalList(plane: Plane) {
+    this.pilotPlaneList.push(plane);
   }
 
   ngOnDestroy(): void {

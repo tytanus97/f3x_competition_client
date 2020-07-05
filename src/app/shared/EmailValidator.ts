@@ -10,12 +10,7 @@ export function invalidEmail(control: AbstractControl) {
 
 export function emailTakenValidator(ps: PilotService, pId: number): AsyncValidatorFn {
   return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-    console.log(c.value);
     return ps.getAllByEmail(c.value).pipe(map((pilots) => {
-
-      console.log(pId);
-      console.log(pilots);
-      console.log((pilots && pilots.length > 0) && !pilots.map(pilot => pilot.pilotId).includes(pId));
       return ((pilots && pilots.length > 0) && !pilots.map(pilot => pilot.pilotId).includes(pId))
        ? { duplicateEmail: c.value } : null;
     })
