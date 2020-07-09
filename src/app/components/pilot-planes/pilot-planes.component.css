@@ -9,6 +9,9 @@
 
 .plane-item {
   border-bottom:1px solid lavenderblush ;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 td>span {

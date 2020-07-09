@@ -45,6 +45,10 @@ export class PilotService {
     return this.http.post(this._url + `${pilotId}/planes`, plane, {observe: 'response'});
   }
 
+  deletePlane(planeId: number) {
+    return this.http.delete(this._url + `planes/${planeId}`, {observe: 'response'});
+  }
+
   deletePilot(pilotId: number) {
     return this.http.delete(this._url + `${pilotId}`, {observe: 'response'});
   }

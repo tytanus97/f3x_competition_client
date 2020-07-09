@@ -20,6 +20,9 @@
         <td class="data"> <span>{{plane.planeWeight}} kg</span></td>
       </tr>
   </table>
+  <div class="action">
+    <button class="btn btn-danger" (click) = "deletePlane(plane) ">X</button>
+  </div>
   </div>
 </div>
 <button #planeAddBtn class = "btn btn-success" (click) = 'setShowForm()' ></button>

@@ -48,6 +48,15 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   addPlaneToLocalList(plane: Plane) {
     this.pilotPlaneList.push(plane);
+    this.showPlaneForm = false;
+  }
+
+  deletePlane(plane: Plane) {
+    this.pilotService.deletePlane(plane.planeId).pipe(takeUntil(this.onDestroy)).subscribe(response => {
+      if(response.status === 200) {
+        this.pilotPlaneList.splice(this.pilotPlaneList.indexOf(plane), 1);
+      }
+    });
   }
 
   ngOnDestroy(): void {
