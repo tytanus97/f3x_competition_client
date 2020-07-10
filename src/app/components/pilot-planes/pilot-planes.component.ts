@@ -49,6 +49,8 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
   addPlaneToLocalList(plane: Plane) {
     this.pilotPlaneList.push(plane);
     this.showPlaneForm = false;
+    this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Dodaj samolot';
+    this.planeAddBtn.nativeElement.className = this.showPlaneForm ? 'btn btn-warning' : 'btn btn-success';
   }
 
   deletePlane(plane: Plane) {

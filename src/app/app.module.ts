@@ -19,10 +19,14 @@ import { PilotDetailsComponent } from './components/pilot-details/pilot-details.
 import { FormsModule } from '@angular/forms';
 import { PilotPlanesComponent } from './components/pilot-planes/pilot-planes.component';
 import { AddPlaneComponent } from './components/add-plane/add-plane.component';
+import { EventService } from './services/event.service';
+import { LocationService } from './services/location.service';
+import { AddLocationComponent } from './components/add-location/add-location.component';
+import { LocationHomeComponent } from './components/location-home/location-home.component';
 
 
 
-export const services = [ PilotService, CountryService ];
+export const services = [ PilotService, CountryService, EventService, LocationService ];
 
 @NgModule({
   declarations: [
@@ -37,7 +41,9 @@ export const services = [ PilotService, CountryService ];
     AllPilotsComponent,
     PilotDetailsComponent,
     PilotPlanesComponent,
-    AddPlaneComponent
+    AddPlaneComponent,
+    AddLocationComponent,
+    LocationHomeComponent
 
   ],
   imports: [

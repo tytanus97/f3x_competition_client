@@ -1,8 +1,7 @@
 import { Location } from './Location';
-import { CompetitionClass } from './CompetitionClass';
 
 export class Event {
-  constructor(eventId: number, eventRoundCount: number,
-              eventName: string, location: Location,
-              competitionClass: CompetitionClass, startDate: Date, endDate: Date) { }
+  constructor(public eventId: number, public eventRoundCount: number,
+              public eventName: string, public location: Location,
+              public competitionClass: string, public startDate: Date, public endDate: Date, public eventPilotCount: number) { }
 }
