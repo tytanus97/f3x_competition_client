@@ -6,6 +6,8 @@ import { Plane } from 'src/app/models/Plane';
 import { PilotService } from 'src/app/services/pilot.service';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { ChangeDetectionStrategy } from '@angular/compiler/src/compiler_facade_interface';
+import { ImageMaxValidator } from 'src/app/shared/CustomValidators';
+
 
 @Component({
   selector: 'app-add-plane',
@@ -28,7 +30,7 @@ export class AddPlaneComponent implements OnInit, OnDestroy {
       planeColor: ['', { validators: [Validators.required, Validators.minLength(3), Validators.maxLength(25)], updateOn: 'blur' }],
       planeWingSpan: ['', { validators: [Validators.required, Validators.min(0.1), Validators.max(5)], updateOn: 'blur' }],
       planeWeight: ['', { validators: [Validators.required, Validators.min(0), Validators.max(5)], updateOn: 'blur' }],
-      planeImages: [null]
+      planeImages: [null, ImageMaxValidator]
     });
 
   }
@@ -48,7 +50,7 @@ export class AddPlaneComponent implements OnInit, OnDestroy {
       // console.log(this.planeForm.get('planeImages').value);
       // const images: FileList = this.planeForm.get('planeImages').value;
       const images: Array<File> = Array.from(this.planeForm.get('planeImages').value);
-      for(let image of images) {
+      for (let image of images) {
         formData.append('images', image);
       }
       formData.append('planeBody', JSON.stringify(plane));
@@ -58,25 +60,8 @@ export class AddPlaneComponent implements OnInit, OnDestroy {
         this.planeForm.reset();
         console.log(response as Plane);
       });
-
-
-      /* .subscribe(response => {
-        if (response.status === 200) {
-          const addedPlane = response.body as Plane;
-          const formData = new FormData();
-          formData.append('planeImages', this.planeForm.get('planeImages').value);
-          this.pilotService.sendPlaneImages(formData, addedPlane.planeId).pipe(takeUntil(this.onDestroy)).subscribe(responseImgUri => {
-            addedPlane.imageListUri = new Array<string>();
-            console.log(Array.isArray(responseImgUri));
-            console.log(responseImgUri);
-            addedPlane.imageListUri.push(responseImgUri.toString());
-            this.planeForm.reset();
-            this.planeAdded.emit(response.body as Plane);
-          });
-        }
-      }, error => {
-        console.error(error);
-      }); */
+    } else {
+      alert('Wypełnij formularz poprawnie!');
     }
 
   }
