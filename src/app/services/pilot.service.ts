@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpResponse, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Pilot } from '../models/Pilot';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
 import { Plane } from '../models/Plane';
 
 @Injectable({
@@ -37,12 +38,21 @@ export class PilotService {
     return this.http.get<Array<Plane>>(this._url + `${pilotId}/planes`);
   }
 
+
   changeCurrentPilot(pilot: Pilot) {
     this.currentPilot.next(pilot);
   }
 
-  addPlaneToPilot(pilotId: number, plane: Plane) {
-    return this.http.post(this._url + `${pilotId}/planes`, plane, {observe: 'response'});
+  addPlaneToPilot(pilotId: number, fd: FormData) {
+
+const httpOptions = {
+      headers: new HttpHeaders({
+      'Access-Control-Allow-Origin': '*',
+    }),
+    options: {
+      observe: 'response'
+    }};
+return this.http.post(this._url + `${pilotId}/planes`, fd , httpOptions);
   }
 
   deletePlane(planeId: number) {

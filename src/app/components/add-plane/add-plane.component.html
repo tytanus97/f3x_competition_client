@@ -33,6 +33,11 @@
 
         </div>
       </div>
+      <div class="form-group">
+        <label for="planeWeight">Zdjęcia: </label>
+        <input type="file" class="file-input" name="images" (change)="onFileChanged($event)"
+        accept="image/x-png,image/jpeg" formControllName = "planeImages"multiple>
+      </div>
       <input type="submit" class="btn btn-secondary" value="Dodaj">
     </form>
 

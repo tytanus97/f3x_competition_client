@@ -46,7 +46,7 @@ export class AddPilotComponent implements OnInit,OnDestroy {
           , [Validators.required]]
       });
 
-      if(typeof this.pilot.pilotId !== 'undefined') {
+      if (typeof this.pilot.pilotId !== 'undefined') {
         this.addBtnLabel = 'Zauktualizuj';
       }
     }

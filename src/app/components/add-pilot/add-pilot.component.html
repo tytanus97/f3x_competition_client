@@ -8,6 +8,7 @@
   <small *ngIf="firstName.errors?.required" class="text-danger">Imie jest wymagane</small>
   <small *ngIf="firstName.errors?.minlength" class="text-danger">Imie musi posiadać przynajmniej 3 znaki</small>
   <small *ngIf="firstName.errors?.invalidFirstName" class="text-danger">Imię {{firstName.errors?.invalidFirstName}} jest nieprawidłowe</small>
+
   </div>
   </div>
   <div class="form-group">
