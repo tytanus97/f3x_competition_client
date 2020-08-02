@@ -58,7 +58,6 @@ export class AddPlaneComponent implements OnInit, OnDestroy {
       this.pilotService.addPlaneToPilot(this.pilotId, formData).pipe(takeUntil(this.onDestroy)).subscribe(response => {
         this.planeAdded.emit(response as Plane);
         this.planeForm.reset();
-        console.log(response as Plane);
       });
     } else {
       alert('Wypełnij formularz poprawnie!');

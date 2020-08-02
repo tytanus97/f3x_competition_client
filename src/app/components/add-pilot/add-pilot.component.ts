@@ -8,17 +8,17 @@ import { formatDate } from '@angular/common';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Pilot } from 'src/app/models/Pilot';
 import { Country } from 'src/app/models/Country';
-import { invalidEmail, emailTakenValidator } from 'src/app/shared/EmailValidator';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { passwordMatch, emailTakenValidator, invalidEmail, usernameTaken } from 'src/app/shared/CustomValidators';
 
 @Component({
   selector: 'app-add-pilot',
   templateUrl: './add-pilot.component.html',
   styleUrls: ['./add-pilot.component.css']
 })
-export class AddPilotComponent implements OnInit,OnDestroy {
+export class AddPilotComponent implements OnInit, OnDestroy {
 
   private readonly onDestroy = new Subject<void>();
 
@@ -38,13 +38,21 @@ export class AddPilotComponent implements OnInit,OnDestroy {
       this.pilotForm = this.fb.group({
         firstName: [this.pilot.pilotFirstName, [Validators.required, Validators.minLength(3)]],
         lastName: [this.pilot.pilotLastName, Validators.required],
-        email: [this.pilot.pilotEmail, { validators: [Validators.required, invalidEmail],
-           asyncValidators: [emailTakenValidator(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)], updateOn: 'blur'}],
+        username: ['', {
+          validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
+          asyncValidators: [usernameTaken(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)]
+        }],
+        password: ['', {validators: [Validators.required, Validators.minLength(8)]}],
+        confirmPassword: ['', {validators: [Validators.required]}],
+        email: [this.pilot.pilotEmail, {
+          validators: [Validators.required, invalidEmail],
+          asyncValidators: [emailTakenValidator(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)], updateOn: 'blur'
+        }],
         birthDate: [formatDate(typeof this.pilot.pilotBirthDate === 'undefined' ? '2000-01-01' : this.pilot.pilotBirthDate,
           'yyyy-MM-dd', 'en'), [Validators.required]],
         country: [typeof this.pilot.country === 'undefined' ? 1 : this.pilot.country.countryId
           , [Validators.required]]
-      });
+      }, { validators: passwordMatch('password', 'confirmPassword') });
 
       if (typeof this.pilot.pilotId !== 'undefined') {
         this.addBtnLabel = 'Zauktualizuj';
@@ -78,11 +86,11 @@ export class AddPilotComponent implements OnInit,OnDestroy {
             console.log(response.body);
             this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
             this.router.navigate(['../pilots/allPilots']);
-          }         break;
+          } break;
           case 406: {
             console.log('Błąd!');
             console.log(response);
-          }          break;
+          } break;
         }
       }
         , error => {
@@ -98,6 +106,17 @@ export class AddPilotComponent implements OnInit,OnDestroy {
     return this.pilotForm.get('firstName');
   }
 
+  get username() {
+    return this.pilotForm.get('username');
+  }
+
+  get password() {
+    return this.pilotForm.get('password');
+  }
+  get confirmPassword() {
+    return this.pilotForm.get('confirmPassword');
+  }
+
   get Email() {
     return this.pilotForm.get('email');
   }
@@ -107,6 +126,10 @@ export class AddPilotComponent implements OnInit,OnDestroy {
   }
   get birthDate() {
     return this.pilotForm.get('birthDate');
+  }
+
+  get form() {
+    return this.pilotForm;
   }
 
   ngOnDestroy(): void {

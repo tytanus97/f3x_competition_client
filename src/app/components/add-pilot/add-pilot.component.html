@@ -25,6 +25,34 @@
     <small *ngIf="birthDate.errors?.required" class="text-danger">Data urodzenia jest wymagana</small>
     </div>
 </div>
+<div class="form-group">
+  <label for="username">Nazwa użytkownika:  </label>
+  <input type="text" [class.is-invalid] = "username.errors && username.touched" class="form-control" formControlName="username" id="username" name="username">
+  <div *ngIf = "username.invalid && username.touched">
+    <small *ngIf="username.errors?.required" class="text-danger">Nazwa użytkownika jest wymagana</small>
+    <small *ngIf="username.errors?.minlength" class="text-danger">Nazwa użytkownika musi mieć przynajmniej {{username.errors?.minlength.requiredLength}} znaki</small>
+    <small *ngIf="username.errors?.maxlength" class="text-danger">Nazwa użytkownika musi mieć conajwyżej {{username.errors?.maxlength.requiredLength}} znaki</small>
+    <small *ngIf="username.errors?.usernameTaken" class="text-danger">Nazwa użytkownika jest</small>
+
+    </div>
+</div>
+<div class="form-group">
+  <label for="password">Hasło:  </label>
+  <input type="password" [class.is-invalid] = "password.errors && password.touched" class="form-control" formControlName="password" id="password" name="password">
+  <div *ngIf = "password.invalid && password.touched">
+    <small *ngIf="password.errors?.required" class="text-danger">Hasło jest wymagane</small>
+    <small *ngIf="password.errors?.minlength" class="text-danger">Hasło musi mieć przynajmniej {{password.errors?.minlength.requiredLength}} znaki</small>
+    </div>
+</div>
+<div class="form-group">
+  <label for="confirmPassword">Powtórz hasło:  </label>
+  <input type="password" [class.is-invalid] = "confirmPassword.errors && confirmPassword.touched" class="form-control" formControlName="confirmPassword" id="confirmPassword" name="confirmPassword">
+  <div *ngIf = "confirmPassword.invalid && confirmPassword.touched">
+    <small *ngIf="confirmPassword.errors?.required" class="text-danger">Potwierdzenie hasła jest wymagane</small>
+    <small *ngIf="confirmPassword.errors?.mustMatch" class="text-danger">Hasła muszą być takie same</small>
+
+    </div>
+</div>
   <div class="form-group">
   <label for="pilotEmail">E-mail: </label>
   <input type="text"  [class.is-invalid] = "(Email.invalidEmail || Email.duplicateEmail)

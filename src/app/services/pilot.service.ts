@@ -24,10 +24,10 @@ export class PilotService {
     return this.http.get<Array<Pilot>>(this._url);
   }
 
-  getAllByEmail(email: string) {
+  getByEmail(email: string): Observable<Pilot> {
     let param = new HttpParams();
     param = param.append('email', email);
-    return this.http.get<Array<Pilot>>(this._url + 'email', {params: param});
+    return this.http.get<Pilot>(this._url + 'email', {params: param});
   }
 
   getPilotById(pilotId: number) {
@@ -36,6 +36,13 @@ export class PilotService {
 
   getPilotPlanes(pilotId: number) {
     return this.http.get<Array<Plane>>(this._url + `${pilotId}/planes`);
+  }
+
+  getByUsername(usrnm: string): Observable<Pilot> {
+
+    let param = new HttpParams();
+    param = param.append('username',usrnm);
+    return this.http.get<Pilot>(this._url + 'username', {params: param});
   }
 
 

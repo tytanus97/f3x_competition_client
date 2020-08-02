@@ -21,7 +21,7 @@
         </tr>
       </table>
       <div class="plane-images">
-        <img *ngFor="let image of plane.imageList" src="{{image.imageURI}}"/>
+        <img *ngFor="let image of plane.imageList" [src]="image.imageURI" />
       </div>
       <div class="action">
         <button class="btn btn-danger" (click)="deletePlane(plane) ">X</button>
