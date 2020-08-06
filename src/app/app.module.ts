@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { PilotService } from './services/pilot.service';
 import { CountryService } from './services/country.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AddPilotComponent } from './components/add-pilot/add-pilot.component';
 import { CountryComponent } from './components/country/country.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
@@ -23,6 +23,9 @@ import { EventService } from './services/event.service';
 import { LocationService } from './services/location.service';
 import { AddLocationComponent } from './components/add-location/add-location.component';
 import { LocationHomeComponent } from './components/location-home/location-home.component';
+import { HomeComponent } from './components/home/home.component';
+import { AutheticationComponent } from './components/authetication/authetication.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 
 
@@ -43,7 +46,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     PilotPlanesComponent,
     AddPlaneComponent,
     AddLocationComponent,
-    LocationHomeComponent
+    LocationHomeComponent,
+    HomeComponent,
+    AutheticationComponent
 
   ],
   imports: [
@@ -53,7 +58,11 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     FormsModule,
     HttpClientModule
   ],
-  providers: [services, HttpClient],
+  providers: [services, HttpClient,
+  {provide: HTTP_INTERCEPTORS,
+  useClass: AuthInterceptorService,
+  multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

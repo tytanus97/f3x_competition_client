@@ -1,0 +1,11 @@
+<div class="container">
+<header>F3X Competition</header>
+<div class="action">
+
+</div>
+<div class="content">
+  <button class="btn btn-primary" (click) = "navigate('login')">Zaloguj</button>
+  <button class="btn btn-primary" (click) = "navigate('register')">Zarejestruj</button>
+  <button *ngIf="isLogged()" class="btn btn-primary">Profil</button>
+</div>
+</div>

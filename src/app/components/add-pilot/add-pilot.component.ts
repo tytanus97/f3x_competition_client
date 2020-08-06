@@ -10,8 +10,9 @@ import { Pilot } from 'src/app/models/Pilot';
 import { Country } from 'src/app/models/Country';
 import { Router, ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, switchMap } from 'rxjs/operators';
 import { passwordMatch, emailTakenValidator, invalidEmail, usernameTaken } from 'src/app/shared/CustomValidators';
+import { PilotCredentials } from 'src/app/models/PilotCredentials';
 
 @Component({
   selector: 'app-add-pilot',
@@ -75,22 +76,29 @@ export class AddPilotComponent implements OnInit, OnDestroy {
 
   pilotFormSubmit() {
     if (this.pilotForm.valid && !this.pilotForm.pending) {
+
       const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
-      console.log('otrzymane pilot id w submicie ' + this.pilot.pilotId);
+
       const pilot = new Pilot(this.pilot.pilotId, this.firstName.value.trim(), this.lastName.value.trim(),
         country, this.Email.value, this.birthDate.value, this.pilot.pilotRating);
-      this.pilotService.addPilot(pilot).pipe(takeUntil(this.onDestroy)).subscribe(response => {
+
+      const pilotCredentials = new PilotCredentials(this.username.value.trim(), this.password.value);
+
+      this.pilotService.addPilot(pilot).pipe(switchMap(result => {
+          return this.pilotService.addPilotCredentials(result.body.pilotId, pilotCredentials);
+      }),takeUntil(this.onDestroy))
+      .subscribe(response => {
         switch (response.status) {
           case 201: {
             console.log('Success!');
             console.log(response.body);
             this.pilotForm.reset({ birthDate: formatDate(new Date('2000-01-01'), 'yyyy-MM-dd', 'en') });
             this.router.navigate(['../pilots/allPilots']);
-          } break;
+          }         break;
           case 406: {
             console.log('Błąd!');
             console.log(response);
-          } break;
+          }         break;
         }
       }
         , error => {

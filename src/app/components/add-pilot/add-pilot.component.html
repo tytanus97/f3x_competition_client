@@ -4,6 +4,7 @@
   <div class="form-group">
   <label>Imie: </label>
   <input type="text" [class.is-invalid] = "firstName.errors && firstName.touched" class="form-control" formControlName="firstName">
+  <p>{{firstName.errors |json }}</p>
   <div *ngIf = "firstName.invalid && firstName.touched">
   <small *ngIf="firstName.errors?.required" class="text-danger">Imie jest wymagane</small>
   <small *ngIf="firstName.errors?.minlength" class="text-danger">Imie musi posiadać przynajmniej 3 znaki</small>
@@ -14,6 +15,7 @@
   <div class="form-group">
   <label for="pilotLastName">Nazwisko:  </label>
   <input type="text" [class.is-invalid] = "lastName.errors && lastName.touched" class="form-control" formControlName="lastName" id="pilotLastName" name="piloLastName">
+  <p>{{lastName.errors |json }}</p>
   <div *ngIf = "lastName.invalid && lastName.touched">
     <small *ngIf="lastName.errors?.required" class="text-danger">Nazwisko jest wymagane</small>
     </div>
@@ -21,6 +23,7 @@
   <div class="form-group">
   <label for="pilotBirthDate">Data urodzenia: </label>
   <input type="date"  class="form-control" max="3000-01-01" min="1900-01-01" formControlName="birthDate" value = "birthDate.value" id="pilotBirthDate" name="pilotBirthDate">
+  <p>{{birthDate.errors |json }}</p>
   <div *ngIf = "birthDate.invalid && birthDate.touched">
     <small *ngIf="birthDate.errors?.required" class="text-danger">Data urodzenia jest wymagana</small>
     </div>
@@ -28,6 +31,7 @@
 <div class="form-group">
   <label for="username">Nazwa użytkownika:  </label>
   <input type="text" [class.is-invalid] = "username.errors && username.touched" class="form-control" formControlName="username" id="username" name="username">
+  <p>{{username.errors |json }}</p>
   <div *ngIf = "username.invalid && username.touched">
     <small *ngIf="username.errors?.required" class="text-danger">Nazwa użytkownika jest wymagana</small>
     <small *ngIf="username.errors?.minlength" class="text-danger">Nazwa użytkownika musi mieć przynajmniej {{username.errors?.minlength.requiredLength}} znaki</small>
@@ -39,6 +43,7 @@
 <div class="form-group">
   <label for="password">Hasło:  </label>
   <input type="password" [class.is-invalid] = "password.errors && password.touched" class="form-control" formControlName="password" id="password" name="password">
+  <p>{{password.errors |json }}</p>
   <div *ngIf = "password.invalid && password.touched">
     <small *ngIf="password.errors?.required" class="text-danger">Hasło jest wymagane</small>
     <small *ngIf="password.errors?.minlength" class="text-danger">Hasło musi mieć przynajmniej {{password.errors?.minlength.requiredLength}} znaki</small>
@@ -47,6 +52,7 @@
 <div class="form-group">
   <label for="confirmPassword">Powtórz hasło:  </label>
   <input type="password" [class.is-invalid] = "confirmPassword.errors && confirmPassword.touched" class="form-control" formControlName="confirmPassword" id="confirmPassword" name="confirmPassword">
+  <p>{{confirmPassword.errors |json }}</p>
   <div *ngIf = "confirmPassword.invalid && confirmPassword.touched">
     <small *ngIf="confirmPassword.errors?.required" class="text-danger">Potwierdzenie hasła jest wymagane</small>
     <small *ngIf="confirmPassword.errors?.mustMatch" class="text-danger">Hasła muszą być takie same</small>
@@ -57,6 +63,7 @@
   <label for="pilotEmail">E-mail: </label>
   <input type="text"  [class.is-invalid] = "(Email.invalidEmail || Email.duplicateEmail)
   && Email.touched" class="form-control" formControlName="email">
+  <p>{{Email.errors |json }}</p>
   <div *ngIf = "Email.errors && Email.touched">
     <small *ngIf="Email.errors?.invalidEmail" class="text-danger">Nieprawidłowy email</small>
     <small *ngIf="Email.errors?.duplicateEmail" class="text-danger">Email zajęty</small>
@@ -67,8 +74,8 @@
   <select id="country" class="form-control" formControlName="country">
     <option *ngFor = "let country of countries" value="{{country.countryId}}">
       {{country.countryName}}
-    </option>
-  </select>
+   </option>
+   </select>
 </div>
 <input type="submit" class="btn btn-secondary" value="{{addBtnLabel}}">
 <button routerLink="/pilots" class="btn btn-info btn-back">Wstecz</button>

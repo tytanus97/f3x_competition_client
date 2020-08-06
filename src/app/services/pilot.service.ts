@@ -4,6 +4,7 @@ import { Pilot } from '../models/Pilot';
 import { Observable, BehaviorSubject } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { Plane } from '../models/Plane';
+import { PilotCredentials } from '../models/PilotCredentials';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +18,12 @@ export class PilotService {
 
   }
 
-  addPilot(pilot: Pilot){
+  addPilot(pilot: Pilot): Observable<HttpResponse<Pilot>>{
     return this.http.post(this._url, pilot, {observe: 'response'});
+  }
+
+  addPilotCredentials(pilotId: number, pilotCredentials: PilotCredentials): Observable<HttpResponse<Pilot>> {
+    return this.http.post(this._url + `${pilotId}`, pilotCredentials, {observe: 'response'});
   }
   getAllPilots() {
     return this.http.get<Array<Pilot>>(this._url);

@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="container-fluid">
+    <form [formGroup]="loginForm" (ngSubmit) = "submitLogin()">
+      <div class="form-group">
+        <label>Nazwa użytkownika</label>
+        <input type="text" class="form-control" formControlName="username">
+      <div *ngIf = "username.invalid && username.touched">
+        <small *ngIf="username.errors?.required" class="text-danger">Wymagana nazwa użytkownika</small>
+      </div>
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" class="form-control" formControlName="password">
+        <div *ngIf = "password.invalid && password.touched">
+          <small *ngIf="password.errors?.required" class="text-danger">Wymagane hasło</small>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-secondary" value="Zaloguj">
+    </form>
+  </div>
+</div>

@@ -11,10 +11,18 @@ import { PilotDetailsComponent } from './components/pilot-details/pilot-details.
 import { PilotPlanesComponent } from './components/pilot-planes/pilot-planes.component';
 import { AddLocationComponent } from './components/add-location/add-location.component';
 import { LocationHomeComponent } from './components/location-home/location-home.component';
+import { HomeComponent } from './components/home/home.component';
+import { AutheticationComponent } from './components/authetication/authetication.component';
 
 
 
 const routes: Routes = [
+{
+  path: 'home', component: HomeComponent
+},
+{
+  path: 'login', component: AutheticationComponent
+},
   {
     path: 'pilots', component: PilotComponent,
     children: [
@@ -33,8 +41,7 @@ const routes: Routes = [
       {path: 'locationForm', component: AddLocationComponent}
     ]
   },
-  { path: '', redirectTo: 'pilots', pathMatch: 'full' }
-
+  { path: '', redirectTo: 'home', pathMatch: 'full' }
 
 ];
 
