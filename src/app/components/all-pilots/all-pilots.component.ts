@@ -13,16 +13,15 @@ import { takeUntil } from 'rxjs/operators';
 export class AllPilotsComponent implements OnInit, OnDestroy {
   private readonly onDestroy = new Subject<void>();
   public pilots: Array<Pilot>;
+
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
     this.pilotService.getAllPilots().pipe(takeUntil(this.onDestroy)).subscribe(data => {
       this.pilots = data.sort((a, b) => a.pilotRating - b.pilotRating);
-      console.log('subscripe w on init w all pilots component');
-    });
 
-    console.log('on init w allpilotsComponent!!');
+    });
   }
 
   showPilotDetails(pilotId) {

@@ -17,7 +17,7 @@ export class PilotComponent implements OnInit {
   }
 
   addPilot() {
-    this.pilotService.changeCurrentPilot(new Pilot());
+    this.pilotService.changeCurrentPilot(0);
     this.router.navigate(['pilotForm']);
   }
   navigateChild(target: string) {

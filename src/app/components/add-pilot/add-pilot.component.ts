@@ -61,7 +61,6 @@ export class AddPilotComponent implements OnInit, OnDestroy {
     }
     );
 
-    this.pilotForm.statusChanges.pipe(takeUntil(this.onDestroy)).subscribe(() => cd.markForCheck());
   }
 
 

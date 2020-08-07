@@ -11,20 +11,18 @@ import { takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./pilot-details.component.css']
 })
 export class PilotDetailsComponent implements OnInit, OnDestroy{
-  
+
   private readonly onDestroy = new Subject<void>();
   public currentPilot;
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
 
 
   ngOnInit(): void {
-    let pilotId = this.route.snapshot.paramMap.get('id');
-    this.pilotService.getPilotById(parseInt(pilotId)).pipe(takeUntil(this.onDestroy)).subscribe(response => {
-      this.currentPilot = response.body;
-      this.pilotService.changeCurrentPilot(this.currentPilot);
-      console.log(this.currentPilot);
-    });
-   // this.pilotService.currentPilot.subscribe(pilot => this.currentPilot = pilot);
+    const pilotId = this.route.snapshot.paramMap.get('id');
+    // tslint:disable-next-line: radix
+    this.pilotService.changeCurrentPilot(parseInt(pilotId));
+    this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => this.currentPilot = pilot);
+
   }
 
 
@@ -47,7 +45,7 @@ export class PilotDetailsComponent implements OnInit, OnDestroy{
 
   navigateToPilotPlanes(target: string) {
 
-    this.router.navigate(['../' + target, {pilotId: this.currentPilot.pilotId}], {relativeTo: this.route});
+    this.router.navigate([`../${target}`, {pilotId: this.currentPilot.pilotId}], {relativeTo: this.route});
 
   }
   updatePilot() {

@@ -16,7 +16,7 @@ export class PilotProfileComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loggedPilot = this.pilotService.getPilotById(this.authService.)
+    this.authService.loggedPilot.subscribe()
   }
 
 }

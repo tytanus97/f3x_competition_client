@@ -20,9 +20,9 @@ export class AuthService {
   isLogged(): boolean {
     return !!(localStorage.getItem('token') !== null && localStorage.getItem('token') !== '');
   }
-  
+
   authenticate(credentials: PilotCredentials) {
-      // tslint:disable-next-line: max-line-length
+
       console.log(credentials);
       this.httpClient.post(this._url + 'authenticate', credentials).subscribe(res => this.setToken(res), err => {});
 
