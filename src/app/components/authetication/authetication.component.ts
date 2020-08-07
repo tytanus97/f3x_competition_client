@@ -24,7 +24,7 @@ export class AutheticationComponent implements OnInit {
 
   submitLogin() {
     if (this.loginForm.valid && !this.loginForm.pending) {
-        const credentials: PilotCredentials = new PilotCredentials(this.username.value,this.password.value);
+        const credentials: PilotCredentials = new PilotCredentials(this.username.value, this.password.value);
         this.authService.authenticate(credentials);
     }
   }

@@ -1,8 +1,11 @@
+import { BehaviorSubject } from 'rxjs';
+import { PilotService } from './pilot.service';
 import { PilotCredentials } from 'src/app/models/PilotCredentials';
 
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { Pilot } from '../models/Pilot';
 
 
 @Injectable({
@@ -10,14 +13,14 @@ import { Router } from '@angular/router';
 })
 export class AuthService {
 
-
   private _url = 'http://localhost:8080/api/auth/';
-  constructor(private httpClient: HttpClient,private router: Router) { }
+  public loggedPilot = new BehaviorSubject<Pilot>(null);
+  constructor(private httpClient: HttpClient, private router: Router, private pilotService: PilotService) { }
 
   isLogged(): boolean {
     return !!(localStorage.getItem('token') !== null && localStorage.getItem('token') !== '');
   }
-
+  
   authenticate(credentials: PilotCredentials) {
       // tslint:disable-next-line: max-line-length
       console.log(credentials);
@@ -30,14 +33,21 @@ export class AuthService {
   }
 
   setToken(response) {
-    console.log(response.jwt);
-    const token = response.jwt;
 
-    console.log(token)
+    const token = response.jwt;
+    const loggedPilotId = response.pilotId;
     localStorage.setItem('token', token);
+    localStorage.setItem('loggedPilotId', loggedPilotId);
+
+    this.pilotService.getPilotById(loggedPilotId).subscribe(response => this.loggedPilot.next(response.body));
+
+    this.router.navigate(['/home']);
   }
 
   logOut() {
     localStorage.removeItem('token');
+    localStorage.removeItem('loggedPilotId');
+    this.loggedPilot.next(null);
+    this.router.navigate(['/home']);
   }
 }

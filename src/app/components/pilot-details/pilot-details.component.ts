@@ -11,6 +11,7 @@ import { takeUntil, tap } from 'rxjs/operators';
   styleUrls: ['./pilot-details.component.css']
 })
 export class PilotDetailsComponent implements OnInit, OnDestroy{
+  
   private readonly onDestroy = new Subject<void>();
   public currentPilot;
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
