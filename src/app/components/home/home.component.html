@@ -6,6 +6,6 @@
 <div class="content">
   <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "navigate('login')">Zaloguj</button>
   <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "navigate('register')">Zarejestruj</button>
-  <button *ngIf="isLogged()" class="btn btn-primary">Profil</button>
+  <button *ngIf="isLogged()" class="btn btn-primary" (click) = "showPilotProfile()">Profil</button>
 </div>
 </div>

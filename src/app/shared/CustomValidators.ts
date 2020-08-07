@@ -1,7 +1,7 @@
 import { AbstractControl, FormGroup, FormControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { PilotService } from '../services/pilot.service';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map,debounceTime } from 'rxjs/operators';
 import { Pilot } from '../models/Pilot';
 
 export function ImageMaxValidator(control: AbstractControl) {
@@ -36,7 +36,7 @@ export function invalidEmail(control: AbstractControl) {
 
 export function emailTakenValidator(ps: PilotService, pId: number): AsyncValidatorFn {
   return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-    return ps.getByEmail(c.value).pipe(map((pilot) => {
+    return ps.getByEmail(c.value).pipe(debounceTime(500),map((pilot) => {
       return (pilot && (pilot as Pilot).pilotId !== pId)
        ? { duplicateEmail: c.value } : null;
     })
@@ -46,7 +46,7 @@ export function emailTakenValidator(ps: PilotService, pId: number): AsyncValidat
 
 export function usernameTaken(ps: PilotService, pId: number): AsyncValidatorFn {
   return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      return ps.getByUsername(c.value).pipe(map((pilot) => {
+      return ps.getByUsername(c.value).pipe(debounceTime(500),map((pilot) => {
         return (pilot && (pilot as Pilot).pilotId !== pId) ?
         {usernameTaken: c.value} : null;
       }));

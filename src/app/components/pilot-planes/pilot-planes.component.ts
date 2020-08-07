@@ -22,11 +22,10 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
   ngOnInit(): void {
-    const pilotId = this.route.snapshot.paramMap.get('pilotId');
-    this.pilotService.getPilotById(parseInt(pilotId)).pipe(takeUntil(this.onDestroy))
-    .subscribe(pilot => this.currentPilot = pilot.body);
-
-    this.pilotService.getPilotPlanes(parseInt(pilotId)).pipe(takeUntil(this.onDestroy))
+    this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy), switchMap(pilot => {
+      this.currentPilot = pilot;
+      return this.pilotService.getPilotPlanes(pilot.pilotId);
+    }))
     .subscribe(planes => this.pilotPlaneList = planes);
   }
 

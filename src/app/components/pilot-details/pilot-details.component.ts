@@ -18,9 +18,7 @@ export class PilotDetailsComponent implements OnInit, OnDestroy{
 
 
   ngOnInit(): void {
-    const pilotId = this.route.snapshot.paramMap.get('id');
-    // tslint:disable-next-line: radix
-    this.pilotService.changeCurrentPilot(parseInt(pilotId));
+
     this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => this.currentPilot = pilot);
 
   }
@@ -45,11 +43,10 @@ export class PilotDetailsComponent implements OnInit, OnDestroy{
 
   navigateToPilotPlanes(target: string) {
 
-    this.router.navigate([`../${target}`, {pilotId: this.currentPilot.pilotId}], {relativeTo: this.route});
+    this.router.navigate([`../${target}`], {relativeTo: this.route});
 
   }
   updatePilot() {
-    this.pilotService.changeCurrentPilot(this.currentPilot);
     this.router.navigate(['../pilotForm']);
   }
 

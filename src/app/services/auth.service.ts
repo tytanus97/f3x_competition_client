@@ -40,7 +40,7 @@ export class AuthService {
     localStorage.setItem('loggedPilotId', loggedPilotId);
 
     this.pilotService.getPilotById(loggedPilotId).subscribe(response => this.loggedPilot.next(response.body));
-
+    
     this.router.navigate(['/home']);
   }
 

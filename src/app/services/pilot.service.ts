@@ -37,6 +37,7 @@ export class PilotService implements OnDestroy {
   }
 
   getPilotById(pilotId: number) {
+    console.log(typeof pilotId);
     return this.http.get<Pilot>(this._url + `${pilotId}`, { observe: 'response' });
   }
 
