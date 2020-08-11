@@ -1,8 +1,8 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Injectable, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Pilot } from '../models/Pilot';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Plane } from '../models/Plane';
 import { PilotCredentials } from '../models/PilotCredentials';
@@ -10,12 +10,13 @@ import { PilotCredentials } from '../models/PilotCredentials';
 @Injectable({
   providedIn: 'root'
 })
-export class PilotService implements OnDestroy {
+export class PilotService implements OnDestroy{
   private ngDestroy = new Subject<void>();
   private _url = 'http://localhost:8080/api/pilots/';
   public currentPilot = new BehaviorSubject<Pilot>(new Pilot());
 
-  constructor(private http: HttpClient,private router: Router, private route: ActivatedRoute) {
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) {
+
   }
 
 
@@ -42,7 +43,10 @@ export class PilotService implements OnDestroy {
   }
 
   getPilotPlanes(pilotId: number) {
-    return this.http.get<Array<Plane>>(this._url + `${pilotId}/planes`);
+    if (pilotId !== undefined) {
+      return this.http.get<Array<Plane>>(this._url + `${pilotId}/planes`);
+    }
+    return of(Array.of<Plane>());
   }
 
   getByUsername(usrnm: string): Observable<Pilot> {
