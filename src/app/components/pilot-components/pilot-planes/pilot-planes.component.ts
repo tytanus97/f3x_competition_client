@@ -1,5 +1,5 @@
 import { AuthService } from './../../../services/auth.service';
-import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Pilot } from 'src/app/models/Pilot';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Plane } from 'src/app/models/Plane';
@@ -20,23 +20,19 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
   public showPlaneForm = false;
   public viewByProfile: boolean;
 
-  @ViewChild('planeAddBtn') planeAddBtn;
-
 
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
-              private location: Location, private authService: AuthService) { }
+    private location: Location, private authService: AuthService) { }
 
 
   ngOnInit(): void {
+
     this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy), switchMap(pilot => {
       this.currentPilot = pilot;
       return this.pilotService.getPilotPlanes(pilot.pilotId);
     }))
-    .subscribe(planes => this.pilotPlaneList = planes);
-  }
+      .subscribe(planes => this.pilotPlaneList = planes);
 
-  ngAfterViewInit(): void {
-    this.planeAddBtn.nativeElement.innerText = 'Dodaj samolot';
     const currentPilotId = localStorage.getItem('currentPilot');
     if (currentPilotId !== null) {
       // tslint:disable-next-line: radix
@@ -46,28 +42,29 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
+  ngAfterViewInit(): void {
+
+  }
+
 
   navigate(target: string) {
   }
   navigateBack() {
     this.location.back();
   }
-  setShowForm() {
-    this.showPlaneForm = !this.showPlaneForm;
-    this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Dodaj samolot';
-    this.planeAddBtn.nativeElement.className = this.showPlaneForm ? 'btn btn-warning' : 'btn btn-success';
+  setShowForm(setForm: boolean) {
+    this.showPlaneForm = setForm;
+
   }
 
   addPlaneToLocalList(plane: Plane) {
     this.pilotPlaneList.push(plane);
     this.showPlaneForm = false;
-    this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Dodaj samolot';
-    this.planeAddBtn.nativeElement.className = this.showPlaneForm ? 'btn btn-warning' : 'btn btn-success';
   }
 
   deletePlane(plane: Plane) {
     this.pilotService.deletePlane(plane.planeId).pipe(takeUntil(this.onDestroy)).subscribe(response => {
-      if(response.status === 200) {
+      if (response.status === 200) {
         this.pilotPlaneList.splice(this.pilotPlaneList.indexOf(plane), 1);
       }
     });

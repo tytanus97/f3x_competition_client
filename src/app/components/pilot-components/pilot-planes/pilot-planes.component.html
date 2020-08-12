@@ -29,7 +29,8 @@
     </div>
 
   </div>
-  <button #planeAddBtn *ngIf = "viewByProfile" class="btn btn-success" (click)='setShowForm()'></button>
+  <button *ngIf = "!showPlaneForm && viewByProfile" class="btn btn-success" (click)='setShowForm(true)'>Dodaj samolot</button>
+  <button *ngIf = "showPlaneForm" class="btn btn-warning" (click)='setShowForm(false)'>Anuluj dodawanie</button>
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
   <div class="plane-form">
     <app-add-plane *ngIf="showPlaneForm" (planeAdded)="addPlaneToLocalList($event)"></app-add-plane>
