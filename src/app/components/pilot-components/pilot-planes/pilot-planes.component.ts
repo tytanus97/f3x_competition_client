@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth.service';
 import { Component, OnInit, OnDestroy, Input, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { Pilot } from 'src/app/models/Pilot';
 import { PilotService } from 'src/app/services/pilot.service';
@@ -5,6 +6,7 @@ import { Plane } from 'src/app/models/Plane';
 import { switchMap, flatMap, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-pilot-planes',
@@ -16,11 +18,15 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
   public currentPilot: Pilot;
   public pilotPlaneList: Array<Plane>;
   public showPlaneForm = false;
+  public viewByProfile: boolean;
 
   @ViewChild('planeAddBtn') planeAddBtn;
 
 
-  constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute) { }
+  constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
+              private location: Location, private authService: AuthService) { }
+
+
   ngOnInit(): void {
     this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy), switchMap(pilot => {
       this.currentPilot = pilot;
@@ -31,12 +37,21 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.planeAddBtn.nativeElement.innerText = 'Dodaj samolot';
+    const currentPilotId = localStorage.getItem('currentPilot');
+    if (currentPilotId !== null) {
+      // tslint:disable-next-line: radix
+      this.pilotService.changeCurrentPilot(parseInt(currentPilotId));
+      const loggedPilotId = localStorage.getItem('loggedPilotId');
+      this.viewByProfile = (loggedPilotId !== null && currentPilotId === loggedPilotId) ? true : false;
+    }
   }
 
 
   navigate(target: string) {
   }
-
+  navigateBack() {
+    this.location.back();
+  }
   setShowForm() {
     this.showPlaneForm = !this.showPlaneForm;
     this.planeAddBtn.nativeElement.innerText = this.showPlaneForm ? 'Anuluj dodawanie' : 'Dodaj samolot';

@@ -25,8 +25,7 @@ export class AllPilotsComponent implements OnInit, OnDestroy {
   }
 
   showPilotDetails(pilotId) {
-    this.pilotService.changeCurrentPilot(pilotId);
-    this.router.navigate(['../pilotDetails'], { relativeTo: this.route});
+    this.pilotService.showPilotDetails(pilotId);
   }
 
   ngOnDestroy(): void {

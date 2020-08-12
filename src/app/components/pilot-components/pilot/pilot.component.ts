@@ -16,11 +16,7 @@ export class PilotComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  addPilot() {
-    this.pilotService.changeCurrentPilot(0);
-    this.router.navigate(['pilotForm']);
-  }
   navigateChild(target: string) {
-    this.router.navigate([target], { relativeTo: this.route});
+    this.router.navigate([target]);
   }
 }

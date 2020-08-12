@@ -20,18 +20,30 @@ export class HomeComponent implements OnInit {
     return this.authService.isLogged();
   }
 
-
-  navigate(target: string) {
-      this.router.navigate([`${target}`]);
+  searchEvent() {
+    this.router.navigate(['/events/searchEvents']);
+  }
+  searchPilots() {
+    this.router.navigate(['/pilots/searchPilots']);
+  }
+  searchLocations() {
+    this.router.navigate(['/locations/searchLocations']);
   }
 
   showPilotProfile() {
-    if (localStorage.getItem('token') && localStorage.getItem('loggedPilotId')) {
-      // tslint:disable-next-line: radix
-      this.pilotService.changeCurrentPilot(parseInt(localStorage.getItem('loggedPilotId')));
-      this.router.navigate(['/pilots/pilotDetails']);
-    }
+    this.pilotService.showPilotProfile();
+  }
 
+  logout() {
+    this.authService.logOut();
+  }
+
+  register() {
+    this.pilotService.showPilotRegister();
+  }
+
+  login() {
+    this.pilotService.showPilotLogin();
   }
 
 }

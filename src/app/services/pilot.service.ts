@@ -3,14 +3,14 @@ import { Injectable, OnDestroy, OnInit, AfterViewInit } from '@angular/core';
 import { HttpClient, HttpResponse, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Pilot } from '../models/Pilot';
 import { Observable, BehaviorSubject, Subject, of } from 'rxjs';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { switchMap, takeUntil, debounceTime, map, first, catchError } from 'rxjs/operators';
 import { Plane } from '../models/Plane';
 import { PilotCredentials } from '../models/PilotCredentials';
 
 @Injectable({
   providedIn: 'root'
 })
-export class PilotService implements OnDestroy{
+export class PilotService implements OnDestroy {
   private ngDestroy = new Subject<void>();
   private _url = 'http://localhost:8080/api/pilots/';
   public currentPilot = new BehaviorSubject<Pilot>(new Pilot());
@@ -56,12 +56,24 @@ export class PilotService implements OnDestroy{
     return this.http.get<Pilot>(this._url + 'username', { params: param });
   }
 
+  usernameExist(usrnm: string, pId: number) {
+    return this.getByUsername(usrnm).pipe(debounceTime(1000), map(pilot => {
+      return (pilot && (pilot as Pilot).pilotId !== pId) ? of(true) : of(false);
+    }), catchError(_ => of(false)), first());
+  }
+
+  emailExist(email: string, pId: number) {
+    return this.getByEmail(email).pipe(debounceTime(1000), map((pilot) => {
+      return (pilot && (pilot as Pilot).pilotId !== pId) ? of(true) : of(false);
+    }), catchError(_ => of(false)), first());
+  }
+
   changeCurrentPilot(pilotId: number) {
-    if(pilotId === 0) {
+    if (pilotId === 0) {
       this.currentPilot.next(new Pilot());
-     } else {
-    this.getPilotById(pilotId).pipe(takeUntil(this.ngDestroy)).subscribe(response => this.currentPilot.next(response.body));
-    localStorage.setItem('currentPilot', pilotId.toString());
+    } else {
+      this.getPilotById(pilotId).pipe(takeUntil(this.ngDestroy)).subscribe(response => this.currentPilot.next(response.body));
+      localStorage.setItem('currentPilot', pilotId.toString());
     }
   }
 
@@ -90,9 +102,13 @@ export class PilotService implements OnDestroy{
     if (localStorage.getItem('token') && localStorage.getItem('loggedPilotId')) {
       // tslint:disable-next-line: radix
       this.changeCurrentPilot(parseInt(localStorage.getItem('loggedPilotId')));
-      this.router.navigate(['/pilots/pilotDetails']);
+      this.router.navigate(['/pilots/pilotProfile']);
     }
+  }
 
+  showPilotDetails(pilotId: number) {
+    this.changeCurrentPilot(pilotId);
+    this.router.navigate(['/pilots/pilotDetails']);
   }
 
   showPilotRegister() {
@@ -101,7 +117,7 @@ export class PilotService implements OnDestroy{
   }
 
   showPilotLogin() {
-      this.router.navigate(['/login']);
+    this.router.navigate(['/login']);
   }
 
   ngOnDestroy(): void {

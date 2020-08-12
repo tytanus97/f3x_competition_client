@@ -1,0 +1,30 @@
+.container {
+  width:90%;
+  margin-top:10px;
+}
+.header {
+  background-color: lavender;
+}
+
+.action {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.input {
+  padding:0px;
+
+}
+.table-input {
+  background-color: white;
+  border:none;
+  height:48px;
+  width:100%;
+  margin:0 0 0 10px;
+}
+
+#showPlanes {
+  width:100%;
+  margin-top:10px;
+}

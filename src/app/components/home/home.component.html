@@ -1,11 +1,14 @@
 <div class="container">
-<header>F3X Competition</header>
-<div class="action">
-
-</div>
-<div class="content">
-  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "navigate('login')">Zaloguj</button>
-  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "navigate('register')">Zarejestruj</button>
-  <button *ngIf="isLogged()" class="btn btn-primary" (click) = "showPilotProfile()">Profil</button>
-</div>
+  <h1>Szybkie linki</h1>
+  <div class="action">
+    <ul>
+      <li><button class="btn btn-info" (click) = "searchEvent()">Szukaj zawodów</button></li>
+      <li><button class="btn btn-warning" (click) = "searchPilots()">Szukaj pilotów</button></li>
+      <li><button class="btn btn-danger" (click) = "searchLocations()">Szukaj lokacji</button></li>
+      <li><button class="btn btn-primary" *ngIf = "isLogged()" (click) = "showPilotProfile()">Wyświetl mój profil</button></li>
+      <li><button class="btn btn-secondary" *ngIf = "isLogged()" (click) = "logout()">Wyloguj</button></li>
+      <li><button class="btn btn-primary" *ngIf = "!isLogged()" (click) = "login()">Zaloguj</button></li>
+      <li><button class="btn btn-secondary" *ngIf = "!isLogged()" (click) = "register()">Zarejestruj</button></li>
+    </ul>
+  </div>
 </div>

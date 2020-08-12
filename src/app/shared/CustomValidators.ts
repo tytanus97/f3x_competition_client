@@ -1,7 +1,7 @@
 import { AbstractControl, FormGroup, FormControl, AsyncValidatorFn, ValidationErrors } from '@angular/forms';
 import { PilotService } from '../services/pilot.service';
-import { Observable } from 'rxjs';
-import { map,debounceTime } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map,debounceTime, first, take, switchMap, catchError } from 'rxjs/operators';
 import { Pilot } from '../models/Pilot';
 
 export function ImageMaxValidator(control: AbstractControl) {
@@ -36,20 +36,15 @@ export function invalidEmail(control: AbstractControl) {
 
 export function emailTakenValidator(ps: PilotService, pId: number): AsyncValidatorFn {
   return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-    return ps.getByEmail(c.value).pipe(debounceTime(500),map((pilot) => {
-      return (pilot && (pilot as Pilot).pilotId !== pId)
-       ? { duplicateEmail: c.value } : null;
-    })
-    );
-  };
+    return ps.emailExist(c.value, pId).pipe(map((result) => {
+      return (result ? { duplicateEmail: c.value } : null);
+    })); };
 }
 
 export function usernameTaken(ps: PilotService, pId: number): AsyncValidatorFn {
   return (c: AbstractControl): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> => {
-      return ps.getByUsername(c.value).pipe(debounceTime(500),map((pilot) => {
-        return (pilot && (pilot as Pilot).pilotId !== pId) ?
-        {usernameTaken: c.value} : null;
-      }));
-  };
+      return ps.usernameExist(c.value, pId).pipe(map((result) => {
+        return (result ? {usernameTaken: c.value} : null);
+      })); };
 }
 

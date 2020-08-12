@@ -36,9 +36,9 @@ export class AddPlaneComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
-    this.pilotId = this.route.snapshot.paramMap.get('pilotId');
-
+    this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => {
+      this.pilotId = pilot.pilotId;
+    });
   }
 
   planeFormSubmit() {

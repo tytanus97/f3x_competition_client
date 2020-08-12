@@ -13,7 +13,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { passwordMatch, emailTakenValidator, invalidEmail, usernameTaken } from 'src/app/shared/CustomValidators';
 import { PilotCredentials } from 'src/app/models/PilotCredentials';
-
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-add-pilot',
   templateUrl: './add-pilot.component.html',
@@ -30,7 +30,7 @@ export class AddPilotComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder, private countryService: CountryService,
               private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
-              private cd: ChangeDetectorRef) {
+              private location: Location) {
 
     this.pilotService.currentPilot.pipe(takeUntil(this.onDestroy)).subscribe(pilot => {
       this.pilot = pilot;
@@ -41,7 +41,7 @@ export class AddPilotComponent implements OnInit, OnDestroy {
         lastName: [this.pilot.pilotLastName, Validators.required],
         username: ['', {
           validators: [Validators.required, Validators.minLength(3), Validators.maxLength(20)],
-          asyncValidators: [usernameTaken(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)]
+          asyncValidators: [usernameTaken(pilotService, this.pilot.pilotId === 'undefined' ? 0 : this.pilot.pilotId)], updateOn: 'blur'
         }],
         password: ['', {validators: [Validators.required, Validators.minLength(8)]}],
         confirmPassword: ['', {validators: [Validators.required]}],
@@ -74,6 +74,7 @@ export class AddPilotComponent implements OnInit, OnDestroy {
   }
 
   pilotFormSubmit() {
+    console.log(this.pilotForm.pending);
     if (this.pilotForm.valid && !this.pilotForm.pending) {
 
       const country = this.countries.find(c => c.countryId === parseInt(this.pilotForm.get('country').value));
@@ -107,6 +108,11 @@ export class AddPilotComponent implements OnInit, OnDestroy {
     } else {
       alert('Wypełnij formularz prawidłowo!');
     }
+  }
+
+
+  navigateBack() {
+      this.location.back();
   }
 
   get firstName() {

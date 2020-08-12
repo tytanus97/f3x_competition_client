@@ -16,14 +16,14 @@
   <label for="pilotLastName">Nazwisko:  </label>
   <input type="text" [class.is-invalid] = "lastName.errors && lastName.touched" class="form-control" formControlName="lastName" id="pilotLastName" name="piloLastName">
   <p>{{lastName.errors |json }}</p>
-  <div *ngIf = "lastName.invalid && lastName.touched">
+   <div *ngIf = "lastName.invalid && lastName.touched">
     <small *ngIf="lastName.errors?.required" class="text-danger">Nazwisko jest wymagane</small>
     </div>
 </div>
   <div class="form-group">
   <label for="pilotBirthDate">Data urodzenia: </label>
   <input type="date"  class="form-control" max="3000-01-01" min="1900-01-01" formControlName="birthDate" value = "birthDate.value" id="pilotBirthDate" name="pilotBirthDate">
-  <p>{{birthDate.errors |json }}</p>
+   <p>{{birthDate.errors |json }}</p>
   <div *ngIf = "birthDate.invalid && birthDate.touched">
     <small *ngIf="birthDate.errors?.required" class="text-danger">Data urodzenia jest wymagana</small>
     </div>
@@ -31,8 +31,8 @@
 <div class="form-group">
   <label for="username">Nazwa użytkownika:  </label>
   <input type="text" [class.is-invalid] = "username.errors && username.touched" class="form-control" formControlName="username" id="username" name="username">
-  <p>{{username.errors |json }}</p>
-  <div *ngIf = "username.invalid && username.touched">
+   <p>{{username.errors |json }}</p>
+   <div *ngIf = "username.invalid && username.touched">
     <small *ngIf="username.errors?.required" class="text-danger">Nazwa użytkownika jest wymagana</small>
     <small *ngIf="username.errors?.minlength" class="text-danger">Nazwa użytkownika musi mieć przynajmniej {{username.errors?.minlength.requiredLength}} znaki</small>
     <small *ngIf="username.errors?.maxlength" class="text-danger">Nazwa użytkownika musi mieć conajwyżej {{username.errors?.maxlength.requiredLength}} znaki</small>
@@ -43,8 +43,8 @@
 <div class="form-group">
   <label for="password">Hasło:  </label>
   <input type="password" [class.is-invalid] = "password.errors && password.touched" class="form-control" formControlName="password" id="password" name="password">
-  <p>{{password.errors |json }}</p>
-  <div *ngIf = "password.invalid && password.touched">
+   <p>{{password.errors |json }}</p>
+   <div *ngIf = "password.invalid && password.touched">
     <small *ngIf="password.errors?.required" class="text-danger">Hasło jest wymagane</small>
     <small *ngIf="password.errors?.minlength" class="text-danger">Hasło musi mieć przynajmniej {{password.errors?.minlength.requiredLength}} znaki</small>
     </div>
@@ -63,7 +63,7 @@
   <label for="pilotEmail">E-mail: </label>
   <input type="text"  [class.is-invalid] = "(Email.invalidEmail || Email.duplicateEmail)
   && Email.touched" class="form-control" formControlName="email">
-  <p>{{Email.errors |json }}</p>
+   <p>{{Email.errors |json }}</p>
   <div *ngIf = "Email.errors && Email.touched">
     <small *ngIf="Email.errors?.invalidEmail" class="text-danger">Nieprawidłowy email</small>
     <small *ngIf="Email.errors?.duplicateEmail" class="text-danger">Email zajęty</small>
@@ -78,8 +78,13 @@
    </select>
 </div>
 <input type="submit" class="btn btn-secondary" value="{{addBtnLabel}}">
-<button routerLink="/pilots" class="btn btn-info btn-back">Wstecz</button>
+<p>invalid?:{{pilotForm.invalid}}</p>
+<p>pending?:{{pilotForm.pending}}</p>
+
 </form>
+<div class="form-footer">
+  <button (click) = "navigateBack()" class="btn btn-info btn-back">Wstecz</button>
+</div>
 </div>
 </div>
 

@@ -14,8 +14,13 @@
         <div *ngIf = "password.invalid && password.touched">
           <small *ngIf="password.errors?.required" class="text-danger">Wymagane hasło</small>
         </div>
+        <small *ngIf="badCredentials" class="text-danger">Niepoprawne dane logowania</small>
       </div>
       <input type="submit" class="btn btn-secondary" value="Zaloguj">
     </form>
+    <div class="form-footer">
+      <button (click) = "navigateBack()" class="btn btn-info btn-back">Wstecz</button>
+    </div>
+
   </div>
 </div>

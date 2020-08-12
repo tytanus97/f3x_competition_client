@@ -1,0 +1,6 @@
+<div class="content">
+  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "login()">Zaloguj</button>
+  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "register()">Zarejestruj</button>
+  <button *ngIf="isLogged()" class="btn btn-primary" (click) = "showPilotProfile()">Profil</button>
+  <button *ngIf="isLogged()" class="btn btn-secondary"  (click) = "logout()">Wyloguj</button>
+</div>
