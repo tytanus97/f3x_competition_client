@@ -29,7 +29,6 @@ export class AutheticationComponent implements OnInit, OnDestroy {
   submitLogin() {
     if (this.loginForm.valid && !this.loginForm.pending) {
         const credentials: PilotCredentials = new PilotCredentials(this.username.value, this.password.value);
-
         // tslint:disable-next-line: max-line-length
         this.authService.authenticate(credentials).pipe(takeUntil(this.onDestroy))
         .subscribe(res => {
@@ -41,6 +40,8 @@ export class AutheticationComponent implements OnInit, OnDestroy {
         });
 
 
+    } else {
+      this.loginForm.setErrors({'emptyForm': 'Wypelnij pola'});
     }
   }
 

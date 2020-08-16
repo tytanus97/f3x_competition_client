@@ -2,3 +2,7 @@
   width:100%;
   text-align:right;
 }
+
+input.login {
+  margin-top:10px
+}
