@@ -6,3 +6,8 @@
   background-color:honeydew;
   cursor: pointer;
 }
+
+.country-input {
+  width:30%;
+  margin-bottom: 20px;
+}

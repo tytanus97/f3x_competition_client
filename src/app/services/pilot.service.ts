@@ -11,6 +11,7 @@ import { PilotCredentials } from '../models/PilotCredentials';
   providedIn: 'root'
 })
 export class PilotService implements OnDestroy {
+  [x: string]: any;
   private ngDestroy = new Subject<void>();
   private _url = 'http://localhost:8080/api/pilots/';
   public currentPilot = new BehaviorSubject<Pilot>(new Pilot());
@@ -29,6 +30,13 @@ export class PilotService implements OnDestroy {
   }
   getAllPilots() {
     return this.http.get<Array<Pilot>>(this._url);
+  }
+
+  findAllPilotsByCountryName(countryName: string) {
+
+    let params = new HttpParams();
+    params = params.append('countryName',countryName);
+    return this.http.get<Array<Pilot>>(this._url + 'country',{params:params});
   }
 
   getByEmail(email: string): Observable<Pilot> {

@@ -13,6 +13,7 @@ import { LocationHomeComponent } from './components/location-home/location-home.
 import { HomeComponent } from './components/home/home.component';
 import { AutheticationComponent } from './components/authetication/authetication.component';
 import { PilotProfileComponent } from './components/pilot-components/pilot-profile/pilot-profile.component';
+import { PilotHomeComponent } from './components/pilot-components/pilot-home/pilot-home.component';
 
 
 
@@ -26,6 +27,7 @@ const routes: Routes = [
   {
     path: 'pilots', component: PilotComponent,
     children: [
+      { path: 'home', component: PilotHomeComponent },
       { path: 'allPilots', component: AllPilotsComponent },
       { path: 'pilotProfile', component: PilotProfileComponent },
       { path: 'pilotDetails', component: PilotDetailsComponent },

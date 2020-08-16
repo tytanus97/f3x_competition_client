@@ -27,6 +27,7 @@ import { AutheticationComponent } from './components/authetication/authetication
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PilotProfileComponent } from './components/pilot-components/pilot-profile/pilot-profile.component';
 import { UserActionComponent } from './components/user/user-action/user-action.component';
+import { PilotHomeComponent } from './components/pilot-components/pilot-home/pilot-home.component';
 
 
 
@@ -50,7 +51,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     HomeComponent,
     AutheticationComponent,
     PilotProfileComponent,
-    UserActionComponent
+    UserActionComponent,
+    PilotHomeComponent
 
   ],
   imports: [
