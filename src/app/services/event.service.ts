@@ -10,7 +10,7 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-
+  
   public addEvent(event: Event) {
     return this.http.post(this._url, event, {observe: 'response'});
   }

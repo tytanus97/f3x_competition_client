@@ -10,7 +10,6 @@ import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common
 import { AddPilotComponent } from './components/pilot-components/add-pilot/add-pilot.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { PilotComponent } from './components/pilot-components/pilot/pilot.component';
-import { EventComponent } from './components/event-components/event/event.component';
 import { PlaneComponent } from './components/pilot-components/plane/plane.component';
 import { LocationComponent } from './components/location/location.component';
 import { AllPilotsComponent } from './components/pilot-components/all-pilots/all-pilots.component';
@@ -28,6 +27,9 @@ import { AuthInterceptorService } from './services/auth-interceptor.service';
 import { PilotProfileComponent } from './components/pilot-components/pilot-profile/pilot-profile.component';
 import { UserActionComponent } from './components/user/user-action/user-action.component';
 import { PilotHomeComponent } from './components/pilot-components/pilot-home/pilot-home.component';
+import { EventHomeComponent } from './components/event-components/event-home/event-home.component';
+import { EventsComponent } from './components/event-components/events/events.component';
+import { AddEventComponent } from './components/event-components/add-event/add-event.component';
 
 
 
@@ -36,7 +38,6 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
 @NgModule({
   declarations: [
     AppComponent,
-    EventComponent,
     PlaneComponent,
     LocationComponent,
     AddPilotComponent,
@@ -52,7 +53,10 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     AutheticationComponent,
     PilotProfileComponent,
     UserActionComponent,
-    PilotHomeComponent
+    PilotHomeComponent,
+    EventHomeComponent,
+    EventsComponent,
+    AddEventComponent
 
   ],
   imports: [
