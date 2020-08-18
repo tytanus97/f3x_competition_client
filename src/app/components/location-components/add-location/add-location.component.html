@@ -1,0 +1,36 @@
+<div class="container">
+<div class="container-fluid">
+<form  [formGroup] = "locationForm" (ngSubmit) = "addLocation()">
+  <div class="form-group">
+    <label for="locationName">Nazwa</label>
+    <input type="text" [class.is-invalid] = "locationName.errors && locationName.touched"  class="form-control"
+    id="locationName" formControlName ="locationName" placeholder="Nazwa lokalizacji">
+    <div *ngIf="locationName.invalid && locationName.touched">
+      <small *ngIf="locationName.errors?.required" class="text-danger">To pole jest wymagane</small>
+      <small *ngIf="locationName.errors?.minlength" class="text-danger">Nazwa lokalizacji jest za krótka</small>
+      <small *ngIf="locationName.errors?.maxlength" class="text-danger">Nazwa lokalizacji jest za długa</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="country">Kraj</label>
+    <select class="form-control" formControlName = "locationCountry"
+     [class.is-invalid] = "locationCountry.errors && locationCountry.touched">
+      <option value="" selected disabled hidden>Wybierz kraj</option>
+      <option *ngFor ="let country of countryList" value="{{country.countryId}}"
+      class="form-control">{{country.countryName}}</option>
+    </select>
+  </div>
+  <div class="form-group">
+    <label for="coordinates">Współrzędne geograficzne</label>
+    <a href="https://epsg.io/map#srs=4326&x=66.298826&y=57.326521&z=4&layer=streets"
+    target="_blank" class="btn btn-secondary">Wybierz współrzędne</a>
+    <input type="text" [class.is-invalid] = "locationCountry.errors && locationCountry.touched"
+    formControlName="locationCoordinates" class="form-control" id="coordinates" placeholder="XX.XXXXXXX YY.YYYYYYY">
+    <div *ngIf="locationCoordinates.invalid && locationCoordinates.touched">
+      <small *ngIf="locationCoordinates.errors?.pattern" class="text-danger">Niewłaściwy format</small>
+    </div>
+  </div>
+  <button type="submit" class="btn btn-primary">Dodaj</button>
+</form>
+</div>
+</div>

@@ -1,0 +1,7 @@
+.wrapper {
+    margin:10px;
+}
+table>tbody>tr:hover {
+    background-color:honeydew;
+    cursor: pointer;
+}
