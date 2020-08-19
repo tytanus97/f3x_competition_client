@@ -1,1 +1,26 @@
-<p>location-details works!</p>
+<div class="container">
+
+  <table class="table table-striped">
+    <tr scope="col">
+      <td class="header"><b>Nazwa lokacji</b></td>
+      <td>{{currentLocation?.locationName}}</td>
+    </tr>
+    <tr scope="col">
+      <td class="header"><b>Kraj</b></td>
+      <td>{{currentLocation?.country.countryName}}</td>
+    </tr>
+  </table>
+
+  <div class="images" *ngIf="currentLocation?.imageList?.length; else imagesEmpty">
+    <img *ngFor="let image of currentLocation?.imageList" src="{{image.imageURI}}">
+  </div>
+
+  <div class="action">
+    <button type='button' (click) = "navigateBack()" class="btn btn-dark">Wstecz</button>
+  </div>
+
+  <ng-template #imagesEmpty>
+    <div class="alert alert-warning" role="alert">
+      Brak zdjęć do wyświetlenia
+    </div>
+  </ng-template>

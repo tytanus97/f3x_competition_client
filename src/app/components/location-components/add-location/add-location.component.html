@@ -30,7 +30,19 @@
       <small *ngIf="locationCoordinates.errors?.pattern" class="text-danger">Niewłaściwy format</small>
     </div>
   </div>
+  <div class="form-group">
+    <label>Zdjęcia: </label>
+    <input type="file" class="file-input" name="images" (change)="onFileChanged($event)"
+    accept="image/x-png,image/jpeg" formControllName = "planeImages" multiple>
+   <!--  <div *ngIf="planeImages.invalid">
+      <small *ngIf="planeImages.errors?.filesCount" class="text-danger">{{planeImages.errors.filesCount}}</small>
+    </div> -->
+  </div>
+
   <button type="submit" class="btn btn-primary">Dodaj</button>
 </form>
+<div class="form-footer">
+  <button (click) = "navigateBack()" class="btn btn-info btn-back">Wstecz</button>
+</div>
 </div>
 </div>

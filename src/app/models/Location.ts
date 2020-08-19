@@ -1,6 +1,6 @@
 import { Country } from './Country';
-
+import { Image } from './Image';
 export class Location {
   constructor(public locationId, public locationName: string,
-              public lattitude: string, public longitude: string, public country: Country) {}
+              public latitude: string, public longitude: string, public country: Country, public imageList?: Array<Image>) {}
 }

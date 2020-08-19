@@ -22,7 +22,7 @@ export class PilotPlanesComponent implements OnInit, OnDestroy, AfterViewInit {
 
 
   constructor(private pilotService: PilotService, private router: Router, private route: ActivatedRoute,
-    private location: Location, private authService: AuthService) { }
+              private location: Location, private authService: AuthService) { }
 
 
   ngOnInit(): void {

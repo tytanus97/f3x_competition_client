@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Location as LocationRoute } from '@angular/common';
+import { Component, OnInit, AfterViewInit, AfterViewChecked } from '@angular/core';
 import { Location } from 'src/app/models/Location';
 import { LocationService } from 'src/app/services/location.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { switchMap, catchError, last } from 'rxjs/operators';
-import { throwError } from 'rxjs';
-import { ThrowStmt } from '@angular/compiler';
-import { createInject } from '@angular/compiler/src/core';
+
 
 @Component({
   selector: 'app-location-details',
@@ -17,21 +15,29 @@ export class LocationDetailsComponent implements OnInit {
 
   public currentLocation: Location;
 
-  constructor(private locationService: LocationService,private router: Router, private route: ActivatedRoute) {
-   }
+  constructor(private locationService: LocationService, private router: Router, private route: ActivatedRoute,
+              private location: LocationRoute) {
+  }
 
   ngOnInit(): void {
-
-    let locationId = this.route.snapshot.queryParamMap.get('locationId');
+    const locationId = this.route.snapshot.queryParamMap.get('locationId');
     console.log(locationId);
-    try{
-    if(Number(locationId)) {
-        this.locationService.getById(Number(locationId)).subscribe(location => this.currentLocation = location);
-    } else throw Error('Invalid locationId parameter');
-    } catch(err) {
-      this.router.navigate(['home'],{relativeTo:this.route.parent});
+    try {
+      if (Number(locationId)) {
+        this.locationService.getById(Number(locationId)).subscribe(location => {
+          this.currentLocation = location;
+          console.log('lokacja');
+          console.log(location);
+        });
+      } else {
+        throw Error('Invalid locationId parameter');
+      }
+    } catch (err) {
+      this.router.navigate(['home'], { relativeTo: this.route.parent });
     }
-    
-    }
+  }
 
+  navigateBack() {
+    this.location.back();
+  }
 }
