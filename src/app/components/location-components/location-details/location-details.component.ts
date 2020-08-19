@@ -32,20 +32,6 @@ export class LocationDetailsComponent implements OnInit {
       this.router.navigate(['home'],{relativeTo:this.route.parent});
     }
     
-
-
-    /* 
-    this.route.paramMap.pipe(last(),switchMap(params => {
-      console.log(params.get('locationId'));
-      if(params.get('locationId')) {
-        return this.locationService.getById(Number(params.get('locationId')));
-      } else {
-        throw Error('Undefinded locationId parameter');
-      }
-    }),catchError((error) => { 
-      console.log(error);
-      return this.router.navigate(['home'],{relativeTo:this.route.parent});
-    })).subscribe(location => this.currentLocation = location as Location);
-   */}
+    }
 
 }

@@ -1,6 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule, routingComponents} from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PilotService } from './services/pilot.service';
@@ -11,7 +9,6 @@ import { AddPilotComponent } from './components/pilot-components/add-pilot/add-p
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { PilotComponent } from './components/pilot-components/pilot/pilot.component';
 import { PlaneComponent } from './components/pilot-components/plane/plane.component';
-import { LocationComponent } from './components/location/location.component';
 import { AllPilotsComponent } from './components/pilot-components/all-pilots/all-pilots.component';
 import { PilotDetailsComponent } from './components/pilot-components/pilot-details/pilot-details.component';
 import { FormsModule } from '@angular/forms';
@@ -19,8 +16,6 @@ import { PilotPlanesComponent } from './components/pilot-components/pilot-planes
 import { AddPlaneComponent } from './components/pilot-components/add-plane/add-plane.component';
 import { EventService } from './services/event.service';
 import { LocationService } from './services/location.service';
-import { AddLocationComponent } from './components/add-location/add-location.component';
-import { LocationHomeComponent } from './components/location-home/location-home.component';
 import { HomeComponent } from './components/home/home.component';
 import { AutheticationComponent } from './components/authetication/authetication.component';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
@@ -30,6 +25,12 @@ import { PilotHomeComponent } from './components/pilot-components/pilot-home/pil
 import { EventHomeComponent } from './components/event-components/event-home/event-home.component';
 import { EventsComponent } from './components/event-components/events/events.component';
 import { AddEventComponent } from './components/event-components/add-event/add-event.component';
+import { LocationComponent } from './components/location-components/location/location.component';
+import { AddLocationComponent } from './components/location-components/add-location/add-location.component';
+import { CommonModule } from '@angular/common';
+import { BrowserModule } from '@angular/platform-browser';
+import { LocationHomeComponent } from './components/location-components/location-home/location-home.component';
+import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
 
 
 
@@ -48,7 +49,6 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     PilotPlanesComponent,
     AddPlaneComponent,
     AddLocationComponent,
-    LocationHomeComponent,
     HomeComponent,
     AutheticationComponent,
     PilotProfileComponent,
@@ -56,11 +56,14 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     PilotHomeComponent,
     EventHomeComponent,
     EventsComponent,
-    AddEventComponent
+    LocationHomeComponent,
+    AddEventComponent,
+    LocationDetailsComponent
 
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
