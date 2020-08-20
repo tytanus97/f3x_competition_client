@@ -6,7 +6,6 @@
         <tr>
           <th scope="col">Nazwa lokalizacji</th>
           <th scope="col">Kraj</th>
-          <th scope="col">Zdjecia</th>
           <th scope="col">Mapa</th>
         </tr>
       </thead>
@@ -14,9 +13,9 @@
         <tr *ngFor="let location of locations" (click) = "showLocationDetails(location.locationId)">
           <td scope="row">{{location.locationName}}</td>
           <td scope="row">{{location.country?.countryName}}</td>
-          <td scope="row"><a>Galeria</a></td>
-          <td><a href="https://www.google.pl/maps/@{{location.longitude}},{{location.latitude}},13.00z" target = "_blank">Pokaż</a></td>
           
+          <td><a href="https://www.google.pl/maps/@{{location.longitude}},{{location.latitude}},13.00z" target = "_blank">Pokaż</a></td>
+
         </tr>
       </tbody>
     </table>

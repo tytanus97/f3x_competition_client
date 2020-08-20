@@ -31,6 +31,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserModule } from '@angular/platform-browser';
 import { LocationHomeComponent } from './components/location-components/location-home/location-home.component';
 import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
+import { ClickedOutsideDirective } from './shared/clicked-outside.directive';
+import { FilterLocationsPipe } from './shared/filter-locations.pipe';
 
 
 
@@ -58,7 +60,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     EventsComponent,
     LocationHomeComponent,
     AddEventComponent,
-    LocationDetailsComponent
+    LocationDetailsComponent,
+    ClickedOutsideDirective,
+    FilterLocationsPipe
 
   ],
   imports: [

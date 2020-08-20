@@ -63,14 +63,17 @@ export class AddLocationComponent implements OnInit, OnDestroy {
       const country = this.countryList.find(c => c.countryId === Number(this.locationCountry.value));
       const location = new Locat(0, this.locationName.value, coordinates[0], coordinates[1], country);
       console.log(location);
-      const images: Array<File> = Array.from(this.locationForm.get('locationImages').value);
 
-      formData.append('location', JSON.stringify(location));
+      if (this.locationForm.get('locationImages').value !== null) {
 
-      for (let image of images) {
-        formData.append('locationImages', image);
+        const images: Array<File> = Array.from(this.locationForm.get('locationImages').value);
+
+        for (const image of images) {
+          formData.append('locationImages', image);
+        }
       }
 
+      formData.append('location', JSON.stringify(location));
       this.locationService.addLocation(formData).pipe(finalize(() => {
         this.router.navigate(['home'], { relativeTo: this.route.parent }); })).subscribe((error) => {console.log(error); });
     } else {

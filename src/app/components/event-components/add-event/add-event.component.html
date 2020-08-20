@@ -1,3 +1,19 @@
-<div class="wapper">
+<div class="container">
+  <form [formGroup] = "eventForm">
+    <div class="form-group">
+      <label>Nazwa zawodów:</label>
+      <input class="form-control" type="text" formControlName = "eventName">
+    </div>
+    <div appClickedOutside (clickOutside)="closeDropDown()" class="form-group">
+      <label>Lokalizacja:</label>
+      <input (click)="openDropDown()" type="text" class="form-control search-bar" formControlName = "eventLocationName">
+      <div *ngIf="showDropDown" class="state-container-dropdown">
+        <div>
+          <div class="locations" *ngFor="let location of locationList | filterLocations: getSearchLocationName()">
+            {{location.locationName}}</div>
+        </div>
 
+      </div>
+    </div>
+  </form>
 </div>
