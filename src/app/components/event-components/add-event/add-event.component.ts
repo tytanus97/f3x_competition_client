@@ -15,9 +15,13 @@ import {Location as Locat} from 'src/app/models/Location';
 export class AddEventComponent implements OnInit, OnDestroy {
 
   private onDestroy = new Subject<void>();
+
   public locationList: Array<Locat>;
   public showDropDown = false;
   public eventForm;
+
+  public selectedLocation: Locat;
+
   constructor(private router: Router, private route: ActivatedRoute,
               private locationService: LocationService, private location: Location,
               private fb: FormBuilder) { }
@@ -39,6 +43,15 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   closeDropDown() {
     this.showDropDown = false;
+  }
+
+  selectLocation(location: Locat) {
+    this.selectedLocation = location;
+    console.log(location);
+    this.eventForm.patchValue({
+      eventLocationName: location.locationName
+    });
+    this.closeDropDown();
   }
 
   getSearchLocationName() {
