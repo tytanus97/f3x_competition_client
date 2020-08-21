@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Event } from 'src/app/models/Event';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class EventService {
 
   constructor(private http: HttpClient) { }
 
-  
+
   public addEvent(event: Event) {
     return this.http.post(this._url, event, {observe: 'response'});
   }
