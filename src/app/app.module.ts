@@ -33,6 +33,8 @@ import { LocationHomeComponent } from './components/location-components/location
 import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
 import { ClickedOutsideDirective } from './shared/clicked-outside.directive';
 import { FilterLocationsPipe } from './shared/filter-locations.pipe';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -71,7 +73,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [services, HttpClient,
   {provide: HTTP_INTERCEPTORS,
