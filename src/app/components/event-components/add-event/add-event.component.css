@@ -1,6 +1,6 @@
 
 .container {
-  width:70%;
+  width:50%;
   height:auto;
 
 }
@@ -27,4 +27,9 @@
 }
 .locations:hover {
   background-color:#C2C2C2;
+}
+
+.datePicker {
+  display:flex;
+  flex-direction: row;
 }

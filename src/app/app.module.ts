@@ -35,6 +35,12 @@ import { ClickedOutsideDirective } from './shared/clicked-outside.directive';
 import { FilterLocationsPipe } from './shared/filter-locations.pipe';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+
+
 
 
 
@@ -74,8 +80,12 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgbModule.forRoot(),
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    NgbModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatInputModule
   ],
   providers: [services, HttpClient,
   {provide: HTTP_INTERCEPTORS,

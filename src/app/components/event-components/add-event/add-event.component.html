@@ -1,23 +1,60 @@
 <div class="container">
-  <form [formGroup] = "eventForm">
+  <form [formGroup]="eventForm" (ngSubmit) = "addEvent()">
     <div class="form-group">
       <label>Nazwa zawodów:</label>
-      <input class="form-control" type="text" formControlName = "eventName">
+      <input class="form-control" type="text" formControlName="eventName">
+      <div *ngIf = "eventForm.controls.eventName.invalid && eventForm.controls.eventName.touched">
+        <small *ngIf="eventForm.controls.eventLocationName.errors.required" class="text-danger">To pole jest wymagane</small>
+      </div>
     </div>
     <div appClickedOutside (clickOutside)="closeDropDown()" class="form-group">
       <label>Lokalizacja:</label>
-      <input (click)="openDropDown()" type="text" class="form-control search-bar" formControlName = "eventLocationName">
+      <input (click)="openDropDown()" type="text" class="form-control search-bar" formControlName="eventLocationName">
       <div *ngIf="showDropDown" class="state-container-dropdown">
         <div>
-          <div class="locations" (click) = "selectLocation(location)" *ngFor="let location of locationList | filterLocations: getSearchLocationName()">
+          <div class="locations" (click)="selectLocation(location)"
+            *ngFor="let location of locationList | filterLocations: getSearchLocationName()">
             {{location.locationName}}</div>
         </div>
 
       </div>
+      <div *ngIf="eventForm.controls.eventLocationName.invalid && eventForm.controls.eventLocationName.touched">
+        <small *ngIf="eventForm.controls.eventLocationName.errors.required" class="text-danger">To pole jest wymagane</small>
+      </div>
     </div>
     <div class="form-group">
-       <label></label>
-      <input >
+        <mat-label>Początek zawodów:</mat-label>
+        <div class="datePicker">
+        <input (click) = "showDatepicker(startDatePicker)" matInput [matDatepicker] = "startDatePicker" class="form-control" formControlName="startDate">
+        <mat-datepicker #startDatePicker></mat-datepicker>
+      </div>
+      <div *ngIf="eventForm.controls.startDate.invalid && eventForm.controls.startDate.touched">
+        <small *ngIf="eventForm.controls.startDate.errors.matDatepickerParse" class="text-danger">Błędny format daty</small>
+        <small *ngIf="eventForm.controls.startDate.errors.required" class="text-danger">To pole jest wymagane</small>
+      </div>
     </div>
+    <div class="form-group">
+      <mat-label>Koniec zawodów:</mat-label>
+      <div class="datePicker">
+      <input (click) = "showDatepicker(endDatePicker)" matInput [matDatepicker] = "endDatePicker" class="form-control" formControlName="endDate">
+      <mat-datepicker #endDatePicker></mat-datepicker>
+    </div>
+    <div *ngIf="eventForm.controls.endDate.invalid && eventForm.controls.endDate.touched">
+      <small *ngIf="eventForm.controls.endDate.errors.matDatepickerParse" class="text-danger">Błędny format daty</small>
+      <small *ngIf="eventForm.controls.endDate.errors.invalidDates" class="text-danger">Nieprawidłowe daty</small>
+      <small *ngIf="eventForm.controls.endDate.errors.required" class="text-danger">To pole jest wymagane</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <mat-label>Ilość rund:</mat-label>
+    <input type="number" class="form-control" formControlName="roundCount">
+    <div *ngIf="eventForm.controls.roundCount.errors">
+      <small *ngIf="eventForm.controls.roundCount.errors.max" class="text-danger">Maksymalna wartość to 20</small>
+      <small *ngIf="eventForm.controls.roundCount.errors.min" class="text-danger">Minimalna wartość to 1</small>
+    </div>
+  </div>
+  <input type="submit" class="btn btn-primary" value="Dodaj">
   </form>
+
+
 </div>

@@ -48,3 +48,19 @@ export function usernameTaken(ps: PilotService, pId: number): AsyncValidatorFn {
       })); };
 }
 
+export function validateDates(startDateName: string, endDateName: string) {
+  return (formGroup: FormGroup) => {
+      const startDateControl = formGroup.controls[startDateName];
+      const endDateControl = formGroup.controls[endDateName];
+
+      if (!startDateControl || !endDateControl ||
+          startDateControl.errors || endDateControl.errors) {
+        return;
+      }
+      const startDate: Date = new Date(startDateControl.value);
+      const endDate: Date = new Date(endDateControl.value);
+
+      endDateControl.setErrors(startDate > endDate ? {invalidDates: 'nieprawidlowe daty'} : null);
+  };
+}
+
