@@ -18,7 +18,7 @@ import { LocationComponent } from './components/location-components/location/loc
 import { LocationHomeComponent } from './components/location-components/location-home/location-home.component';
 import { AddLocationComponent } from './components/location-components/add-location/add-location.component';
 import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
-import { AuthService } from './services/auth.service';
+import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 
 
 
@@ -46,7 +46,8 @@ const routes: Routes = [
     path: 'events', component: EventsComponent,
     children: [
       { path: 'home', component: EventHomeComponent },
-      { path: 'addEvent', component: AddEventComponent, canActivate: [AuthGuard] }
+      { path: 'addEvent', component: AddEventComponent, canActivate: [AuthGuard] },
+      { path: 'searchEvent', component: SearchEventComponent }
     ]
   },
   {

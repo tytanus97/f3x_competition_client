@@ -39,6 +39,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 
 
 
@@ -70,7 +71,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     AddEventComponent,
     LocationDetailsComponent,
     ClickedOutsideDirective,
-    FilterLocationsPipe
+    FilterLocationsPipe,
+    SearchEventComponent
 
   ],
   imports: [

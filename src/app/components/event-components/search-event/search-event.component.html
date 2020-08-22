@@ -1,0 +1,29 @@
+<div class="wrapper">
+  <h1>Szukaj zawodów</h1>
+ <div class="content">
+   <table class="table table-striped">
+       <thead>
+         <tr>
+       <td scope="col">Data</td>
+       <td scope="col">Nazwa zawodów</td>
+       <td scope="col">Lokacja</td>
+       <td scope="col">Mapa</td>
+       <td scope="col">Status</td>
+       <td></td>
+          </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let event of eventList">
+          <td>{{event.startDate}}</td>
+          <td>{{event.eventName}}</td>
+          <td>{{event.location?.locationName}}</td>
+          <td><a href="https://www.google.pl/maps/@{{event.location?.longitude}},{{event.location?.latitude}},13.00z" target = "_blank">Pokaż</a></td>
+
+        </tr>
+      </tbody>
+   </table>
+ </div>
+  <div class="action">
+    <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
+  </div>
+</div>

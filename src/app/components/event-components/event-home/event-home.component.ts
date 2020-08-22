@@ -11,10 +11,15 @@ import { Location } from '@angular/common';
 })
 export class EventHomeComponent implements OnInit {
 
-  constructor(private eventService: EventService,private authService: AuthService,private router: Router,private route: ActivatedRoute,private location : Location) { }
+  constructor(private eventService: EventService,private authService: AuthService,
+              private router: Router, private route: ActivatedRoute, private location: Location) { }
 
   ngOnInit(): void {
 
+  }
+
+  searchEvent() {
+    this.router.navigate(['searchEvent'],{relativeTo:this.route.parent});
   }
 
   navigateBack() {

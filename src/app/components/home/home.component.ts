@@ -21,13 +21,13 @@ export class HomeComponent implements OnInit {
   }
 
   searchEvent() {
-    this.router.navigate(['/events/searchEvents']);
+    this.router.navigate(['/events/searchEvent']);
   }
   searchPilots() {
-    this.router.navigate(['/pilots/searchPilots']);
+    this.router.navigate(['/pilots/allPilots']);
   }
   searchLocations() {
-    this.router.navigate(['/locations/searchLocations']);
+    this.router.navigate(['/locations/home']);
   }
 
   showPilotProfile() {
