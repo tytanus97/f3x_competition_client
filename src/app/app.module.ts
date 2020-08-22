@@ -40,6 +40,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
+import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
 
 
 
@@ -72,7 +73,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     LocationDetailsComponent,
     ClickedOutsideDirective,
     FilterLocationsPipe,
-    SearchEventComponent
+    SearchEventComponent,
+    EventDetailsComponent
 
   ],
   imports: [

@@ -1,3 +1,4 @@
+import { EventType } from './../../../shared/Utils';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy, ChangeDetectorRef, OnChanges, SimpleChanges, ElementRef } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -12,6 +13,7 @@ import { EventService } from 'src/app/services/event.service';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Event } from 'src/app/models/Event';
 
+
 @Component({
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
@@ -24,7 +26,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public locationList: Array<Locat>;
   public showDropDown = false;
   public eventForm;
-
+  public EventType = EventType;
   public selectedLocation: Locat;
 
   constructor(private router: Router, private route: ActivatedRoute,
@@ -41,7 +43,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
       eventLocationName: [null, { validators: [Validators.required] }],
       startDate: [null, { validators: [Validators.required] }],
       endDate: [null, { validators: [Validators.required] }],
-      roundCount: [null, { validators: [Validators.max(20), Validators.min(1), Validators.required] }]
+      eventType: [null, {validators: [Validators.required ]}]
     }, { validators: [validateDates('startDate', 'endDate')] });
   }
 
@@ -53,11 +55,14 @@ export class AddEventComponent implements OnInit, OnDestroy {
         if (response.status !== 200) {
            throw Error('Something went wrong');
         }
-        event = new Event(0, this.eventForm.get('roundCount').value, this.eventForm.get('eventName').value,
-        this.selectedLocation, this.eventForm.get('startDate').value, this.eventForm.get('endDate').value, response.body);
+        event = new Event(0, true, this.eventForm.get('eventType').value,
+        this.eventForm.get('eventName').value,
+        this.selectedLocation, this.eventForm.get('startDate').value,
+        this.eventForm.get('endDate').value, response.body);
+
         console.log(event);
 
-        
+
         return this.eventService.addEvent(event);
       })).subscribe(response => {
         console.log(response);

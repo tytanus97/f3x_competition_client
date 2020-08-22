@@ -1,0 +1,37 @@
+
+.wrapper {
+  margin:10px;
+}
+
+.tdesc {
+  background-color:lightgray;
+}
+
+tr {
+  height:2.5rem;
+}
+td {
+  padding:5px;
+  border-bottom:1px solid wheat;
+  text-align:left;
+}
+.tdata {
+  background-color:white;
+}
+
+.eventInfoTable {
+  width:100%;
+
+  border:1px solid wheat;
+  border-radius:10px;
+}
+.registrationStatusColumn {
+  width:100%;
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+span {
+  margin:auto;
+}

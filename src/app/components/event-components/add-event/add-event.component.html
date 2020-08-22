@@ -46,15 +46,17 @@
     </div>
   </div>
   <div class="form-group">
-    <mat-label>Ilość rund:</mat-label>
-    <input type="number" class="form-control" formControlName="roundCount">
-    <div *ngIf="eventForm.controls.roundCount.errors">
-      <small *ngIf="eventForm.controls.roundCount.errors.max" class="text-danger">Maksymalna wartość to 20</small>
-      <small *ngIf="eventForm.controls.roundCount.errors.min" class="text-danger">Minimalna wartość to 1</small>
+    <mat-label>Typ zawodów:</mat-label>
+    <select class="form-control" formControlName = "eventType">
+      <option disabled selected value="null">Typ zawodów:</option>
+      <option *ngFor="let eventType of EventType" value="{{eventType}}">{{eventType}}</option>
+    </select>
+    <div *ngIf="eventForm.controls.eventType.invalid && eventForm.controls.eventType.touched">
+      <small class="text-danger" *ngIf="eventForm.controls.eventType.errors?.required">To pole jest wymagane</small>
     </div>
-  </div>
+      </div>
+
   <input type="submit" class="btn btn-primary" value="Dodaj">
   </form>
-
 
 </div>

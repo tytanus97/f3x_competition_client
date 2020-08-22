@@ -13,12 +13,18 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let event of eventList">
+        <tr *ngFor="let event of eventList" (click) = "showEventDetails(event.eventId)">
           <td>{{event.startDate}}</td>
           <td>{{event.eventName}}</td>
           <td>{{event.location?.locationName}}</td>
           <td><a href="https://www.google.pl/maps/@{{event.location?.longitude}},{{event.location?.latitude}},13.00z" target = "_blank">Pokaż</a></td>
-
+          <td>
+            <div *ngIf="event.registrationStatus" class = "registrationStatusColumn">
+              <span style="color:green"><b>Rejestracja otwarta</b></span>
+              <button class="btn btn-success">Zarejestruj mnie</button>
+            </div>
+            <span *ngIf="!event.registrationStatus" style="color:red"><b>Rejestracja zamknięta</b></span>
+          </td>
         </tr>
       </tbody>
    </table>

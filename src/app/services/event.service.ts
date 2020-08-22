@@ -16,7 +16,7 @@ export class EventService {
     return this.http.post(this._url, event, {observe: 'response'});
   }
 
-  public getEvent(eventId: number) {
+  public findById(eventId: number) {
     return this.http.get<Event>(this._url + `${eventId}`, {observe: 'response'});
   }
 

@@ -15,7 +15,7 @@ export class LocationHomeComponent implements OnInit {
   public locations: Array<Location>;
 
   constructor(private router: Router, private route: ActivatedRoute, private locationService: LocationService) { }
-  
+
   ngOnInit(): void {
       this.locationService.findAllLocations().subscribe(data => {
         console.log(data);
@@ -24,7 +24,7 @@ export class LocationHomeComponent implements OnInit {
   }
 
   showLocationDetails(locationId: number) {
-    this.router.navigate(['locationDetails'],{queryParams: {locationId: `${locationId}`}, relativeTo:this.route.parent});
+    this.router.navigate(['locationDetails'], {queryParams: {locationId: `${locationId}`}, relativeTo: this.route.parent});
   }
   goToAddLocation() {
     this.router.navigate(['../locationForm'], {relativeTo: this.route});

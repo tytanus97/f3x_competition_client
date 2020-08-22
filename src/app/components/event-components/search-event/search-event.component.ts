@@ -24,6 +24,10 @@ export class SearchEventComponent implements OnInit {
     error => console.log(error));
   }
 
+  showEventDetails(eventId: number) {
+    this.router.navigate(['eventDetails'], {queryParams: { eventId: eventId }, relativeTo: this.route.parent});
+  }
+
   navigateBack() {
     this.location.back();
   }

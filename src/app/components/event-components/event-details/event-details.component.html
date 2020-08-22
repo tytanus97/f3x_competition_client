@@ -1,0 +1,42 @@
+<div class="wrapper">
+  <div class="eventInfo">
+    <table class="eventInfoTable">
+      <tr>
+        <td class="tdesc">Data rozpoczęcia</td>
+        <td class="tdata">{{currentEvent?.startDate}}</td>
+        <td class="tdesc">Nazwa zawodów</td>
+        <td class="tdata">{{currentEvent?.eventName}}</td>
+
+      </tr>
+      <tr>
+        <td class="tdesc">Data zakończenia</td>
+        <td class="tdata">{{currentEvent?.endDate}}</td>
+        <td class="tdesc">Kierownik zawodów</td>
+        <td class="tdata">{{currentEvent?.pilotDirector.pilotFirstName}} {{currentEvent?.pilotDirector.pilotLastName}}</td>
+      </tr>
+      <tr>
+        <td class="tdesc">Lokalizacja</td>
+        <td class="tdata">{{currentEvent?.location.locationName}}</td>
+        <td class="tdesc">Typ zawodów:</td>
+        <td class="tdata">{{currentEvent?.eventType}}</td>
+      </tr>
+      <tr>
+        <td class="tdesc">Status</td>
+        <td class="tdata" colspan="3">
+          <div *ngIf="currentEvent?.registrationStatus" class = "registrationStatusColumn">
+            <span style="color:green"><b>Rejestracja otwarta</b></span>
+            <button class="btn btn-success">Zarejestruj mnie</button>
+          </div>
+          <span *ngIf="!currentEvent?.registrationStatus" style="color:red"><b>Rejestracja zamknięta</b></span>
+        </td>
+      </tr>
+    </table>
+  </div>
+<div class="eventPilotsInfo">
+
+</div>
+
+<div class="action">
+  <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
+</div>
+</div>
