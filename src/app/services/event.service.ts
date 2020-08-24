@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Event } from 'src/app/models/Event';
+import { Pilot } from '../models/Pilot';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,6 +22,14 @@ export class EventService {
     return this.http.get<Event>(this._url + `${eventId}`, {observe: 'response'});
   }
 
+  public findEventPilots(eventId: number) {
+    return this.http.get<Array<Pilot>>(this._url + `${eventId}/pilots`, {observe: 'response'});
+  }
+
+  public addPilotToEvent(eventId: number, pilotId: number): Observable<HttpResponse<Event>> {
+
+    return this.http.post<HttpResponse<Event>>(this._url + `${eventId}/pilots/${pilotId}`, {observe: 'response'});
+  }
   public getAllEvents() {
     return this.http.get<Array<Event>>(this._url, {observe: 'response'});
    }

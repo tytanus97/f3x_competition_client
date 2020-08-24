@@ -25,7 +25,7 @@
         <td class="tdata" colspan="3">
           <div *ngIf="currentEvent?.registrationStatus" class = "registrationStatusColumn">
             <span style="color:green"><b>Rejestracja otwarta</b></span>
-            <button class="btn btn-success">Zarejestruj mnie</button>
+            <button class="btn btn-success" (click) = "registerMe()">Zarejestruj mnie</button>
           </div>
           <span *ngIf="!currentEvent?.registrationStatus" style="color:red"><b>Rejestracja zamknięta</b></span>
         </td>
@@ -33,6 +33,24 @@
     </table>
   </div>
 <div class="eventPilotsInfo">
+  <div *ngIf="currentEventPilotList?.length > 0; else pilotsNotFound;">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <td scope="col">#</td>
+          <td scope="col">Nazwa pilota</td>
+          <td scope="col">Kraj</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pilot of currentEventPilotList;let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{pilot?.pilotFirstName}} {{pilot?.pilotLastName}}</td>
+          <td>{{pilot?.country?.countryName}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
 </div>
 
@@ -40,3 +58,9 @@
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 </div>
+
+<ng-template #pilotsNotFound>
+  <div class="alert alert-warning" role="alert">
+    Brak zarejestrowanych pilotów
+  </div>
+</ng-template>

@@ -31,6 +31,14 @@ export class AuthService {
     return `Bearer ${localStorage.getItem('token')}`;
   }
 
+  getLoggedPilotId(): number {
+    const loggedPilotId = localStorage.getItem('loggedPilotId');
+    if (!Number(loggedPilotId)) {
+      throw Error('Pilot is not logged');
+    }
+    return Number(loggedPilotId);
+  }
+
   setToken(response) {
     const token = response.jwt;
     const loggedPilotId = response.pilotId;
