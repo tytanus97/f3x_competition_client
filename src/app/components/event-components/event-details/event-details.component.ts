@@ -20,13 +20,10 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   public currentEventPilotList: Array<Pilot>;
 
   constructor(private router: Router, private route: ActivatedRoute, private eventService: EventService,
-    private location: Location, private authService: AuthService) { }
+              private location: Location, private authService: AuthService) { }
 
   ngOnInit(): void {
 
-    this.router.routeReuseStrategy.shouldReuseRoute = () => {
-      return false;
-    };
     const eventId = this.route.snapshot.queryParamMap.get('eventId');
     console.log(eventId);
     try {
@@ -62,12 +59,17 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
           console.error('Pilot juz zarejestrowany');
         } break;
         case 200: {
-          this.router.navigate([this.route.url]);
+          this.router.navigate([this.location.path()]);
         }
       }
     });
   }
 
+  isLoggedPilotInList(): boolean {
+    const loggedPilotId = this.authService.getLoggedPilotId();
+    return this.currentEventPilotList && this.currentEventPilotList
+          .filter(pilot => pilot.pilotId === loggedPilotId).length > 0 ? true : false;
+  }
 
   navigateBack() {
     this.location.back();

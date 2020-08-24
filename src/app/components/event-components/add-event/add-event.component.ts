@@ -67,6 +67,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
       })).subscribe(response => {
         console.log(response);
         console.log(response.body);
+        this.router.navigate(['searchEvent'], {relativeTo: this.route.parent});
       }, error => console.log(error));
     }
   }
