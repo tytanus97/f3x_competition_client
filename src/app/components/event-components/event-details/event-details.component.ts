@@ -18,6 +18,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
 
   public currentEvent: Event;
   public currentEventPilotList: Array<Pilot>;
+  public isLoggedUserInEventPilotsList: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private eventService: EventService,
               private location: Location, private authService: AuthService) { }
@@ -43,6 +44,9 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
       this.router.navigate(['searchEvent'], { relativeTo: this.route.parent });
       return;
     }
+
+    this.isLoggedUserInEventPilotsList = this.isLoggedPilotInList();
+
   }
 
   registerMe() {

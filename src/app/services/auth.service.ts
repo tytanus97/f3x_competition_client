@@ -1,12 +1,12 @@
-import { BehaviorSubject, Observable } from 'rxjs';
+
 import { PilotService } from './pilot.service';
 import { PilotCredentials } from 'src/app/models/PilotCredentials';
-
-import { HttpClient, HttpResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Pilot } from '../models/Pilot';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject } from 'rxjs';
+
 
 
 @Injectable({
@@ -33,10 +33,9 @@ export class AuthService {
 
   getLoggedPilotId(): number {
     const loggedPilotId = localStorage.getItem('loggedPilotId');
-    if (!Number(loggedPilotId)) {
-      throw Error('Pilot is not logged');
-    }
-    return Number(loggedPilotId);
+    if (Number(loggedPilotId)) {
+      return Number(loggedPilotId);
+        }
   }
 
   setToken(response) {
