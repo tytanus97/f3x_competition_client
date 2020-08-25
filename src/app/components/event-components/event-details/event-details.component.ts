@@ -24,26 +24,18 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
               private location: Location, private authService: AuthService) { }
 
   ngOnInit(): void {
-
-    const eventId = this.route.snapshot.queryParamMap.get('eventId');
-    console.log(eventId);
-    try {
-      if (Number(eventId)) {
-        this.eventService.findById(Number(eventId)).pipe(takeUntil(this.onDestroy), switchMap((response) => {
-          this.currentEvent = response.body;
-          return this.eventService.findEventPilots(this.currentEvent.eventId);
-        })).subscribe(response => {
-          console.log(response.body);
-          this.currentEventPilotList = response.body;
-        });
+    
+    this.route.data.pipe(switchMap(data => {
+      this.currentEvent = data.currentEvent.body;
+      console.log(data.currentEvent.body);
+      return this.eventService.findEventPilots(this.currentEvent.eventId);
+    })).subscribe(response => {
+      if (response.status === 200) {
+        this.currentEventPilotList = response.body;
       } else {
-        throw Error('invalid parameter');
+        this.router.navigate(['searchEvent'], { relativeTo: this.route.parent });
       }
-    } catch (error) {
-      console.log(error);
-      this.router.navigate(['searchEvent'], { relativeTo: this.route.parent });
-      return;
-    }
+    });
 
     this.isLoggedUserInEventPilotsList = this.isLoggedPilotInList();
 
@@ -72,7 +64,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   isLoggedPilotInList(): boolean {
     const loggedPilotId = this.authService.getLoggedPilotId();
     return this.currentEventPilotList && this.currentEventPilotList
-          .filter(pilot => pilot.pilotId === loggedPilotId).length > 0 ? true : false;
+      .filter(pilot => pilot.pilotId === loggedPilotId).length > 0 ? true : false;
   }
 
   navigateBack() {

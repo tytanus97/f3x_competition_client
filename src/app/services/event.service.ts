@@ -18,7 +18,7 @@ export class EventService {
     return this.http.post(this._url, event, {observe: 'response'});
   }
 
-  public findById(eventId: number) {
+  public findById(eventId: number): Observable<HttpResponse<Event>> {
     return this.http.get<Event>(this._url + `${eventId}`, {observe: 'response'});
   }
 

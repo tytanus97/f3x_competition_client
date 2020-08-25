@@ -1,3 +1,4 @@
+import { EventResolverService } from './resolvers/event/event-resolver.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AddPilotComponent } from './components/pilot-components/add-pilot/add-pilot.component';
@@ -49,7 +50,7 @@ const routes: Routes = [
       { path: 'home', component: EventHomeComponent },
       { path: 'addEvent', component: AddEventComponent, canActivate: [AuthGuard] },
       { path: 'searchEvent', component: SearchEventComponent },
-      { path: 'eventDetails', component: EventDetailsComponent }
+      { path: 'eventDetails', component: EventDetailsComponent, resolve: {currentEvent : EventResolverService}}
     ]
   },
   {
