@@ -19,25 +19,32 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   public currentEvent: Event;
   public currentEventPilotList: Array<Pilot>;
   public isLoggedUserInEventPilotsList: boolean;
+  public showManageBtn: boolean;
 
   constructor(private router: Router, private route: ActivatedRoute, private eventService: EventService,
               private location: Location, private authService: AuthService) { }
 
   ngOnInit(): void {
-    
+
     this.route.data.pipe(switchMap(data => {
       this.currentEvent = data.currentEvent.body;
       console.log(data.currentEvent.body);
+
+      this.showManageBtn = this.authService.getLoggedPilotId() &&
+      (this.authService.getLoggedPilotId() === this.currentEvent.pilotDirector.pilotId) &&
+      this.currentEvent.eventStatus;
+
       return this.eventService.findEventPilots(this.currentEvent.eventId);
     })).subscribe(response => {
       if (response.status === 200) {
         this.currentEventPilotList = response.body;
+        this.isLoggedUserInEventPilotsList = this.isLoggedPilotInList();
       } else {
         this.router.navigate(['searchEvent'], { relativeTo: this.route.parent });
       }
     });
 
-    this.isLoggedUserInEventPilotsList = this.isLoggedPilotInList();
+
 
   }
 
@@ -65,6 +72,11 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     const loggedPilotId = this.authService.getLoggedPilotId();
     return this.currentEventPilotList && this.currentEventPilotList
       .filter(pilot => pilot.pilotId === loggedPilotId).length > 0 ? true : false;
+  }
+
+  navigateEventManage() {
+    this.router.navigate(['manageEvent'], {queryParams: {eventId: this.currentEvent.eventId},
+                                          relativeTo: this.route.parent});
   }
 
   navigateBack() {

@@ -1,3 +1,5 @@
+import { AuthService } from 'src/app/services/auth.service';
+import { ManageEventComponent } from './components/event-components/manage-event/manage-event.component';
 import { EventResolverService } from './resolvers/event/event-resolver.service';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
@@ -50,7 +52,8 @@ const routes: Routes = [
       { path: 'home', component: EventHomeComponent },
       { path: 'addEvent', component: AddEventComponent, canActivate: [AuthGuard] },
       { path: 'searchEvent', component: SearchEventComponent },
-      { path: 'eventDetails', component: EventDetailsComponent, resolve: {currentEvent : EventResolverService}}
+      { path: 'eventDetails', component: EventDetailsComponent, resolve: {currentEvent : EventResolverService}},
+      { path: 'manageEvent', component: ManageEventComponent, resolve: {currentEvent: EventResolverService}, canActivate: [AuthGuard]}
     ]
   },
   {
@@ -61,7 +64,8 @@ const routes: Routes = [
       { path: 'locationDetails', component: LocationDetailsComponent }
     ]
   },
-  { path: '', redirectTo: 'home', pathMatch: 'full' }
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+  { path: '**', redirectTo: 'home' }
 
 ];
 

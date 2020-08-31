@@ -32,6 +32,9 @@
       </tr>
     </table>
   </div>
+<div class="event-manage" *ngIf="showManageBtn">
+<button class="btn btn-primary" (click) = "navigateEventManage()">Zarządzaj zawodami</button>
+</div>
 <div class="eventPilotsInfo">
   <div *ngIf="currentEventPilotList?.length > 0; else pilotsNotFound;">
     <table class="table table-striped">
