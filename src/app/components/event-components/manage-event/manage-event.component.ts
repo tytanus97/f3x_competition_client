@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/Event';
 import {Location} from '@angular/common';
+import { take } from 'rxjs/internal/operators/take';
 @Component({
   selector: 'app-manage-event',
   templateUrl: './manage-event.component.html',
@@ -22,7 +23,12 @@ export class ManageEventComponent implements OnInit {
 
 
   endRegistrationPhase() {
-
+      this.eventService.changeRegistrationStatus(this.currentEvent.eventId, false).pipe(take(1)).subscribe(response => {
+          if (response.status === 200) {
+            this.currentEvent = response.body;
+            window.location.reload();
+          }
+      });
   }
 
   navigateBack() {

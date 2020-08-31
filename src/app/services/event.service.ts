@@ -34,8 +34,13 @@ export class EventService {
     return this.http.get<Array<Event>>(this._url, {observe: 'response'});
    }
 
-   public updateEvent(event: Event) {
-     return this.http.put(this._url + `/`, event, {observe: 'response'});
-   }
+  public updateEvent(event: Event) {
+    return this.http.put(this._url + `/`, event, {observe: 'response'});
+  }
+
+  public changeRegistrationStatus(eventId: number, registrationStatus: boolean): Observable<HttpResponse<Event>> {
+    return this.http.patch<HttpResponse<Event>>(this._url + `${eventId}/registrationStatus`,
+     {body: registrationStatus, observe: 'response'});
+  }
 
 }
