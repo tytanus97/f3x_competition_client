@@ -56,14 +56,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
            throw Error('Something went wrong');
         }
 
-        const isEventActive = this.eventForm.get('endDate').value >= new Date();
-        console.log(this.eventForm.get('endDate').value);
-        console.log(new Date());
-
         event = new Event(0, true, this.eventForm.get('eventType').value,
         this.eventForm.get('eventName').value,
         this.selectedLocation, this.eventForm.get('startDate').value,
-        this.eventForm.get('endDate').value, response.body, isEventActive);
+        this.eventForm.get('endDate').value, response.body, this.eventForm.get('endDate').value >= new Date());
 
         console.log(event);
 

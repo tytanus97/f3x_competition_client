@@ -61,8 +61,9 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
         case 208: {
           console.error('Pilot juz zarejestrowany');
         } break;
-        case 200: {
-          this.router.navigate([this.location.path()]);
+        default: {
+         console.log('reload');
+         window.location.reload();
         }
       }
     });
