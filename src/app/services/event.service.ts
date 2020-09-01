@@ -3,6 +3,7 @@ import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Event } from 'src/app/models/Event';
 import { Pilot } from '../models/Pilot';
 import { Observable } from 'rxjs';
+import { Round } from '../models/Round';
 
 @Injectable({
   providedIn: 'root'
@@ -39,8 +40,12 @@ export class EventService {
   }
 
   public changeRegistrationStatus(eventId: number, registrationStatus: boolean): Observable<HttpResponse<Event>> {
-    return this.http.patch<HttpResponse<Event>>(this._url + `${eventId}/registrationStatus`,
-     {body: registrationStatus, observe: 'response'});
+    return this.http.patch<Event>(this._url + `${eventId}/registrationStatus`,
+     registrationStatus, {observe: 'response'});
+  }
+
+  public findEventRounds(eventId: number ): Observable<HttpResponse<Array<Round>>> {
+    return this.http.get<Array<Round>>(this._url + `${eventId}/rounds`, {observe: 'response'});
   }
 
 }

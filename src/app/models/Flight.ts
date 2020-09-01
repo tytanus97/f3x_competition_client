@@ -1,8 +1,8 @@
 import { Pilot } from './Pilot';
 import { Round } from './Round';
-import { Stats } from './Stats';
 
 export class Flight {
 
-  constructor(flightId: number, pilot?: Pilot, event?: Event, round?: Round, stats: Stats,task: Task) {}
+  constructor(public flightId?: number, public pilot?: Pilot,
+              public flightDuration?: number, public flightLanding?: number, public flightPenalty?: number) {}
 }

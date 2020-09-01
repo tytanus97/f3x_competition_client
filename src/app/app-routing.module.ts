@@ -23,6 +23,7 @@ import { AddLocationComponent } from './components/location-components/add-locat
 import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
+import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table/event-table.component';
 
 
 

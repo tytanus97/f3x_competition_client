@@ -1,3 +1,7 @@
+import { Flight } from './Flight';
+
 export class Round {
-  constructor(roundId: number, event?: Event, roundNumber: number, roundStatus: number, roundStartDate: Date) {}
+  constructor(public roundId: number, public  event?: Event,
+              public  roundNumber?: number, public roundStatus?: number,
+               public flightList?: Array<Flight> ) {}
 }

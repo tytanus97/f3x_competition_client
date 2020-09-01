@@ -42,6 +42,7 @@ import { MatInputModule } from '@angular/material/input';
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
 import { ManageEventComponent } from './components/event-components/manage-event/manage-event.component';
+import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table/event-table.component';
 
 
 
@@ -76,7 +77,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     FilterLocationsPipe,
     SearchEventComponent,
     EventDetailsComponent,
-    ManageEventComponent
+    ManageEventComponent,
+    EventTableComponent
 
   ],
   imports: [

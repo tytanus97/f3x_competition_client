@@ -1,0 +1,6 @@
+<div class="table-div">
+  <div class="alert alert-warning" role="alert" *ngIf="!roundList?.length; else eventRounds">
+    Brak rund do wyświetlenia
+  </div>
+  <ng-template #eventRounds></ng-template>
+</div>

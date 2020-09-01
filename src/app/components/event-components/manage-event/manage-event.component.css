@@ -1,0 +1,23 @@
+header {
+  text-align:center;
+}
+
+.wrapper {
+  margin:10px;
+  height:100%;
+}
+
+.action {
+  display:flex;
+  flex-direction: column;
+}
+.action button {
+  margin:5px;
+}
+.child-component {
+  flex-grow:1;
+}
+.content {
+  display:flex;
+  flex-direction: row;
+}

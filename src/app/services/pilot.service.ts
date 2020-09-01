@@ -35,7 +35,7 @@ export class PilotService implements OnDestroy {
   findAllPilotsByCountryName(countryName: string) {
 
     let params = new HttpParams();
-    params = params.append('countryName',countryName);
+    params = params.append('countryName' ,countryName);
     return this.http.get<Array<Pilot>>(this._url + 'country',{params: params});
   }
 
