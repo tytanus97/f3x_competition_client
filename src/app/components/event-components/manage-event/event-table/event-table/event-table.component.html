@@ -8,8 +8,11 @@
       <thead>
         <tr class="table-header">
           <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
-          <mat-icon class="create-icon" (click) = "manageRound(round)" #tooltip = "matTooltip" matTooltip="Zarządaj rundą"
-          matTooltipClass="example-tooltip-red"  >create</mat-icon>
+          <mat-icon (mouseenter) = "enter($event)" (mouseleave)="leave($event)" *ngIf="round.roundStatus; else roundEnd" class="icon" (click) = "manageRound(round)" #tooltip = "matTooltip" matTooltip="Zarządaj rundą"
+          matTooltipClass="example-tooltip-red">create</mat-icon>
+          <ng-template #roundEnd><mat-icon class="icon">done</mat-icon></ng-template>
+
+
         </tr>
         <tr class="table-cols">
           <th>#</th>
@@ -20,7 +23,8 @@
           <th>Landing</th>
           <th>Penalty</th>
         </tr>
-        <tr *ngFor="let flight of round.flightList | sortTotal">
+        <tr *ngFor="let flight of ((round.flightList | combinePilots:pilotList) | sortTotal); let i = index">
+            <td>{{i}}</td>
             <td>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</td>
             <td>{{flight.total}}</td>
             <td>0</td>

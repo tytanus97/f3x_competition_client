@@ -47,6 +47,7 @@ import { AddRoundComponent } from './components/round-components/add-round/add-r
 import { SortTotalPipe } from './shared/sort-total.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { CombinePilotsPipe } from './shared/combine-pilots.pipe';
 
 
 
@@ -84,7 +85,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     ManageEventComponent,
     EventTableComponent,
     AddRoundComponent,
-    SortTotalPipe
+    SortTotalPipe,
+    CombinePilotsPipe
 
   ],
   imports: [

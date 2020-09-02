@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { Round } from 'src/app/models/Round';
 import { Pilot } from 'src/app/models/Pilot';
 
@@ -7,7 +7,7 @@ import { Pilot } from 'src/app/models/Pilot';
   templateUrl: './event-table.component.html',
   styleUrls: ['./event-table.component.css']
 })
-export class EventTableComponent implements OnInit {
+export class EventTableComponent implements OnInit{
 
   @Input()
   public roundList: Array<Round>;
@@ -18,12 +18,21 @@ export class EventTableComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.roundList);
   }
 
 
+
   manageRound(round: Round) {
-    
+
+  }
+
+  enter(event) {
+    event.target.style.color = 'white';
+    event.target.style.cursor = 'pointer';
+  }
+
+  leave(event) {
+    event.target.style.color = 'black';
   }
 
 }

@@ -9,8 +9,7 @@
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 <div class="child-component"  [ngSwitch]="currentComponent">
-<app-event-table *ngSwitchCase="'event-table'" [roundList] = "eventRounds"></app-event-table>
-
+<app-event-table *ngSwitchCase="'event-table'" [roundList] = "eventRounds" [pilotList] = "eventPilots"></app-event-table>
 </div>
 </div>
 

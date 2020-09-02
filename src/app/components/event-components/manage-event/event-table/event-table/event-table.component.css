@@ -11,13 +11,9 @@ tr.table-header {
   font-size:1.5rem;
 }
 
-.create-icon {
+.icon {
   transition:color 0.5s;
-  
+
   font-size:1.5rem;
   margin-top:10px;
-}
-.create-icon:hover {
-  color:white;
-  cursor: pointer;
 }
