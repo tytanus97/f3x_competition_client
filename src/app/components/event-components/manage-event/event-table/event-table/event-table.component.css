@@ -1,6 +1,9 @@
 table {
   border:none;
 }
+td,tr{
+  text-align: center;
+}
 
 tr.table-header {
   background-color:lightsteelblue;
@@ -13,7 +16,6 @@ tr.table-header {
 
 .icon {
   transition:color 0.5s;
-
   font-size:1.5rem;
   margin-top:10px;
 }

@@ -48,6 +48,7 @@ import { SortTotalPipe } from './shared/sort-total.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CombinePilotsPipe } from './shared/combine-pilots.pipe';
+import { ShowTableDirective } from './shared/show-table.directive';
 
 
 
@@ -86,7 +87,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     EventTableComponent,
     AddRoundComponent,
     SortTotalPipe,
-    CombinePilotsPipe
+    CombinePilotsPipe,
+    ShowTableDirective
 
   ],
   imports: [
