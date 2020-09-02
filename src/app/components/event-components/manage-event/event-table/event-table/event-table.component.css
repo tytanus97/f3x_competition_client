@@ -1,0 +1,23 @@
+table {
+  border:none;
+}
+
+tr.table-header {
+  background-color:lightsteelblue;
+  height:100%;
+  text-align:center;
+}
+.table-header th {
+  font-size:1.5rem;
+}
+
+.create-icon {
+  transition:color 0.5s;
+  
+  font-size:1.5rem;
+  margin-top:10px;
+}
+.create-icon:hover {
+  color:white;
+  cursor: pointer;
+}

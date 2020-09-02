@@ -6,7 +6,8 @@ import { Event } from 'src/app/models/Event';
 import { Location } from '@angular/common';
 import { take } from 'rxjs/internal/operators/take';
 import { switchMap } from 'rxjs/operators';
-import { HIGH_CONTRAST_MODE_ACTIVE_CSS_CLASS } from '@angular/cdk/a11y/high-contrast-mode/high-contrast-mode-detector';
+import { Pilot } from 'src/app/models/Pilot';
+
 @Component({
   selector: 'app-manage-event',
   templateUrl: './manage-event.component.html',
@@ -17,6 +18,7 @@ export class ManageEventComponent implements OnInit {
   public currentEvent: Event;
   public currentComponent = 'event-table';
   public eventRounds: Array<Round>;
+  public eventPilots: Array<Pilot>;
 
   constructor(private eventService: EventService, private router: Router, private route: ActivatedRoute,
               private location: Location) { }
@@ -28,6 +30,7 @@ export class ManageEventComponent implements OnInit {
     })).subscribe(response => {
         if (response.status === 200) {
           this.eventRounds = response.body;
+          console.log(this.eventRounds);
         } else {
           console.error('Error getting event rounds');
         }
@@ -54,6 +57,26 @@ export class ManageEventComponent implements OnInit {
       }
     });
   }
+
+  addRound() {
+    if (confirm('Czy napewno chcesz dodać runde?')){
+    const roundNum = typeof(this.eventRounds) === 'undefined' ? 1 : this.eventRounds.length + 1;
+    const round: Round = new Round(0, roundNum, true, null);
+    this.eventService.addRound(round, this.currentEvent.eventId).pipe(take(1)).subscribe(response => {
+      console.log(response);
+      if (response.status === 200) {
+          window.location.reload();
+      } else {
+        console.error('something went wrong adding round to event');
+      }
+    });
+  }
+  }
+
+  showTable() {
+    this.currentComponent = 'event-table';
+  }
+
 
   navigateBack() {
     this.location.back();

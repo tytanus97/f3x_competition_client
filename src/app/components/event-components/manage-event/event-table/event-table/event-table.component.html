@@ -2,5 +2,37 @@
   <div class="alert alert-warning" role="alert" *ngIf="!roundList?.length; else eventRounds">
     Brak rund do wyświetlenia
   </div>
-  <ng-template #eventRounds></ng-template>
+  <ng-template #eventRounds>
+    <div class="round-container" *ngFor="let round of roundList">
+    <table class="table table-stripped">
+      <thead>
+        <tr class="table-header">
+          <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
+          <mat-icon class="create-icon" (click) = "manageRound(round)" #tooltip = "matTooltip" matTooltip="Zarządaj rundą"
+          matTooltipClass="example-tooltip-red"  >create</mat-icon>
+        </tr>
+        <tr class="table-cols">
+          <th>#</th>
+          <th>Pilot</th>
+          <th>Total</th>
+          <th>Diff</th>
+          <th>Duration</th>
+          <th>Landing</th>
+          <th>Penalty</th>
+        </tr>
+        <tr *ngFor="let flight of round.flightList | sortTotal">
+            <td>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</td>
+            <td>{{flight.total}}</td>
+            <td>0</td>
+            <td>{{flight.flightDuration}}</td>
+            <td>{{flight.flightLanding}}</td>
+            <td>{{flight.flightPenalty}}</td>
+
+
+        </tr>
+      </thead>
+
+    </table>
+  </div>
+  </ng-template>
 </div>

@@ -1,0 +1,13 @@
+import { Pipe, PipeTransform } from '@angular/core';
+import { Flight } from '../models/Flight';
+
+@Pipe({
+  name: 'sortTotal'
+})
+export class SortTotalPipe implements PipeTransform {
+
+  transform(flights: Array<Flight>, ...args: unknown[]): Array<Flight> {
+    return flights.sort((a: Flight, b: Flight) => a.total - b.total);
+  }
+
+}

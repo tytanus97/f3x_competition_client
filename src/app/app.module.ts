@@ -43,6 +43,10 @@ import { SearchEventComponent } from './components/event-components/search-event
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
 import { ManageEventComponent } from './components/event-components/manage-event/manage-event.component';
 import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table/event-table.component';
+import { AddRoundComponent } from './components/round-components/add-round/add-round/add-round.component';
+import { SortTotalPipe } from './shared/sort-total.pipe';
+import { MatIconModule } from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 
@@ -78,7 +82,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     SearchEventComponent,
     EventDetailsComponent,
     ManageEventComponent,
-    EventTableComponent
+    EventTableComponent,
+    AddRoundComponent,
+    SortTotalPipe
 
   ],
   imports: [
@@ -93,7 +99,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     MatDatepickerModule,
     MatNativeDateModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatIconModule,
+    MatTooltipModule
   ],
   providers: [services, HttpClient,
   {provide: HTTP_INTERCEPTORS,

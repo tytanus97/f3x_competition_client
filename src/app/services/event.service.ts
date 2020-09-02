@@ -48,4 +48,8 @@ export class EventService {
     return this.http.get<Array<Round>>(this._url + `${eventId}/rounds`, {observe: 'response'});
   }
 
+  public addRound(round: Round, eventId: number): Observable<HttpResponse<Round>> {
+    return this.http.post<Round>(this._url + `${eventId}/rounds`, round, {observe: 'response'});
+  }
+
 }

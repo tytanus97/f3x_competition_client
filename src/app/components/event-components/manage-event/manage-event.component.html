@@ -4,7 +4,8 @@
   <div class="action">
   <button *ngIf="currentEvent?.registrationStatus" class="btn btn-danger" (click) = "endRegistrationPhase()">Zakończ rejestracje</button>
   <button *ngIf="!currentEvent?.registrationStatus" class="btn btn-success" (click) = "openRegistrationPhase()">Wznów rejestracje</button>
-  <button class="btn btn-warning">Dodaj runde</button>
+  <button class="btn btn-primary" (click) = "addRound()">Dodaj runde</button>
+  <button class="btn btn-primary" (click) = "showTable()">Wyniki</button>
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 <div class="child-component"  [ngSwitch]="currentComponent">
