@@ -3,22 +3,22 @@
     Brak rund do wyświetlenia
   </div>
   <ng-template #eventRounds>
-    <div class="round-container" *ngFor="let round of roundList; let show = true">
-      <table class="table table-stripped">
-        <thead>
-          <tr id = "{{round.roundNumber}}" appShowTable class="table-header">
-              <mat-icon id="show"(mouseenter)="enter($event)" display="none" (mouseleave)="leave($event)"
-                style="font-size:2rem" class="icon">keyboard_arrow_right</mat-icon>
-              <mat-icon id="hide" (mouseenter)="enter($event)" (mouseleave)="leave($event)"
-               style="font-size:2rem" class="icon">keyboard_arrow_down</mat-icon>
-            <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
-            <mat-icon (mouseenter)="enter($event)" (mouseleave)="leave($event)" *ngIf="round.roundStatus; else roundEnd"
-              class="icon" (click)="manageRound(round)" #tooltip="matTooltip" matTooltip="Zarządaj rundą"
-              matTooltipClass="example-tooltip-red">create</mat-icon>
-            <ng-template #roundEnd>
-              <mat-icon class="icon">done</mat-icon>
-            </ng-template>
-          </tr>
+    <div class="round-container" *ngFor="let round of roundList">
+      <div class="table-header">
+        <mat-icon id="s{{round.roundNumber}}" (click)="toggleTable($event)" (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+        style="font-size:2rem;display:none" class="icon">keyboard_arrow_right</mat-icon>
+      <mat-icon id="h{{round.roundNumber}}" (click)="toggleTable($event)" (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+        style="font-size:2rem" class="icon">keyboard_arrow_down</mat-icon>
+      <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
+      <mat-icon (mouseenter)="enter($event)" (mouseleave)="leave($event)" *ngIf="round.roundStatus; else roundEnd"
+        class="icon" (click)="manageRound(round)" #tooltip="matTooltip" matTooltip="Zarządaj rundą"
+        matTooltipClass="example-tooltip-red" style="margin-right:10px;">create</mat-icon>
+      <ng-template #roundEnd>
+        <mat-icon class="icon" style="margin-right:10px;" >done</mat-icon>
+      </ng-template>
+      </div>
+      <table id="t{{round.roundNumber}}" class="table table-stripped">
+        <thead >
           <tr class="table-cols">
             <th>#</th>
             <th>Pilot</th>
@@ -29,7 +29,7 @@
             <th>Penalty</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="tbody">
           <tr *ngFor="let flight of ((round.flightList | combinePilots:pilotList) | sortTotal); let i = index">
             <td>{{i+1}}</td>
             <td>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</td>
@@ -38,8 +38,6 @@
             <td>{{flight.flightDuration}}</td>
             <td>{{flight.flightLanding}}</td>
             <td>{{flight.flightPenalty}}</td>
-
-
           </tr>
         </tbody>
 

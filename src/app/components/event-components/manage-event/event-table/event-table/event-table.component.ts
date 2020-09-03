@@ -35,4 +35,14 @@ export class EventTableComponent implements OnInit{
     event.target.style.color = 'black';
   }
 
+  toggleTable(event) {
+    const id: string = event.target.id;
+    const num = id.substring(1);
+    event.target.style.display = 'none';
+    const clickedEl = id.substring(0, 1);
+
+    document.getElementById(`${clickedEl === 's' ? 'h' : 's'}${num}`).style.display = 'initial';
+    document.getElementById(`t${num}`).style.display = (clickedEl === 's' ? 'table' : 'none');
+  }
+
 }
