@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Event } from 'src/app/models/Event';
 import { Pilot } from '../models/Pilot';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Round } from '../models/Round';
+import { Flight } from '../models/Flight';
 
 @Injectable({
   providedIn: 'root'
@@ -50,6 +51,15 @@ export class EventService {
 
   public addRound(round: Round, eventId: number): Observable<HttpResponse<Round>> {
     return this.http.post<Round>(this._url + `${eventId}/rounds`, round, {observe: 'response'});
+  }
+
+  public finalizeRound(round: Round) {
+     return this.http.put(this._url + `rounds/${round.roundId}/finalizeRound`, round, {observe: 'response'});
+  }
+
+  public addFlight(flight: Flight, roundId: number) {
+      console.log('dupa');
+      return this.http.post(this._url + `rounds/${roundId}/flights`, flight, {observe: 'response'});
   }
 
 }

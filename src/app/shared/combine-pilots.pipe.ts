@@ -7,17 +7,20 @@ import { Pilot } from '../models/Pilot';
 })
 export class CombinePilotsPipe implements PipeTransform {
 
-  transform(flights: Array<Flight>, pilots: Array<Pilot>): Array<Flight> {
+  transform(pilots: Array<Pilot>, flights: Array<Flight>): Array<Pilot> {
     if (!pilots) {
       return;
     }
-    const result = pilots.map(pilot => {
-    const flight =  flights.find(f => f.pilot.pilotId === pilot.pilotId);
-
-    return flight ? new Flight(flight.flightId, pilot, flight.flightDuration,
-            flight.flightLanding, flight.flightPenalty) : new Flight(0, pilot, 0, 0, 0, 0);
-   });
-
+    if (!flights) {
+      return pilots;
+    }
+    const alreadyFlew = flights.map(flight => flight.pilot.pilotId);
+    const result = pilots.filter(pilot => {
+      if (!alreadyFlew.find(id => id === pilot.pilotId)) {
+        return pilot;
+      }
+      return;
+    });
     return result;
   }
 

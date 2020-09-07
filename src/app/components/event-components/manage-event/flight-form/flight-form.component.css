@@ -1,0 +1,23 @@
+.flight-form {
+  align-items: center;
+  margin-top:10px;
+ display:flex;
+ flex-direction: row;
+ justify-content:flex-start;
+}
+
+mat-form-field {
+  margin-right:5px;
+}
+
+.submit-flight {
+  margin: 10px;
+  margin-top:0px;
+  width:50%;
+  margin-bottom:20px;
+}
+
+form {
+  margin-bottom:10px;
+}
+

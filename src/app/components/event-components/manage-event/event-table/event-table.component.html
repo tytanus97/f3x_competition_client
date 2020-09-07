@@ -5,19 +5,23 @@
   <ng-template #eventRounds>
     <div class="round-container" *ngFor="let round of roundList">
       <div class="table-header">
-        <mat-icon id="s{{round.roundNumber}}" (click)="toggleTable($event)" (mouseenter)="enter($event)" (mouseleave)="leave($event)"
-        style="font-size:2rem;display:none" class="icon">keyboard_arrow_right</mat-icon>
-      <mat-icon id="h{{round.roundNumber}}" (click)="toggleTable($event)" (mouseenter)="enter($event)" (mouseleave)="leave($event)"
-        style="font-size:2rem" class="icon">keyboard_arrow_down</mat-icon>
+        <mat-icon id="s{{round.roundNumber}}" (click)="toggleTable($event)"
+         (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+          style="font-size:2rem" class="icon">keyboard_arrow_right</mat-icon>
+
+        <mat-icon id="h{{round.roundNumber}}" (click)="toggleTable($event)"
+          (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+           style="font-size:2rem;display:none" class="icon">keyboard_arrow_down</mat-icon>
+
       <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
       <mat-icon (mouseenter)="enter($event)" (mouseleave)="leave($event)" *ngIf="round.roundStatus; else roundEnd"
-        class="icon" (click)="manageRound(round)" #tooltip="matTooltip" matTooltip="Zarządaj rundą"
+        class="icon" #tooltip="matTooltip" matTooltip="Zarządaj rundą"
         matTooltipClass="example-tooltip-red" style="margin-right:10px;">create</mat-icon>
       <ng-template #roundEnd>
-        <mat-icon class="icon" style="margin-right:10px;" >done</mat-icon>
+        <mat-icon class="icon" style="margin-right:10px;">done</mat-icon>
       </ng-template>
       </div>
-      <table id="t{{round.roundNumber}}" class="table table-stripped">
+      <table id="t{{round.roundNumber}}" style="display:none" class="table table-stripped">
         <thead >
           <tr class="table-cols">
             <th>#</th>
@@ -30,7 +34,7 @@
           </tr>
         </thead>
         <tbody class="tbody">
-          <tr *ngFor="let flight of ((round.flightList | combinePilots:pilotList) | sortTotal); let i = index">
+          <tr *ngFor="let flight of ((round.flightList) | sortTotal); let i = index">
             <td>{{i+1}}</td>
             <td>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</td>
             <td>{{flight.total}}</td>
@@ -40,8 +44,13 @@
             <td>{{flight.flightPenalty}}</td>
           </tr>
         </tbody>
-
       </table>
+      <div *ngIf="round.roundStatus" class="round-action">
+       <app-flight-form *ngIf="showFlightForm"[pilots] = "pilotList" [round] = "round" (emitFlight) = "flightSubmited($event)" ></app-flight-form>
+        <button class="btn btn-success" *ngIf="!showFlightForm" (click) = "showForm(round.roundId)">Dodaj lot</button>
+        <button class="btn btn-warning" *ngIf="showFlightForm" (click) = "cancelForm()">Anuluj</button>
+      </div>
     </div>
   </ng-template>
 </div>
+

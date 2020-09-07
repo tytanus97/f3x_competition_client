@@ -37,18 +37,20 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
 import { ManageEventComponent } from './components/event-components/manage-event/manage-event.component';
-import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table/event-table.component';
+import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table.component';
 import { AddRoundComponent } from './components/round-components/add-round/add-round/add-round.component';
 import { SortTotalPipe } from './shared/sort-total.pipe';
 import { MatIconModule } from '@angular/material/icon';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { CombinePilotsPipe } from './shared/combine-pilots.pipe';
 import { ShowTableDirective } from './shared/show-table.directive';
+import { MatSelectModule } from '@angular/material/select';
+import { FlightFormComponent } from './components/event-components/manage-event/flight-form/flight-form.component';
 
 
 
@@ -88,8 +90,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     AddRoundComponent,
     SortTotalPipe,
     CombinePilotsPipe,
-    ShowTableDirective
-
+    ShowTableDirective,
+    FlightFormComponent
   ],
   imports: [
     BrowserModule,
@@ -105,7 +107,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSelectModule
   ],
   providers: [services, HttpClient,
   {provide: HTTP_INTERCEPTORS,

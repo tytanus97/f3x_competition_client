@@ -1,6 +1,10 @@
 import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
 import { Round } from 'src/app/models/Round';
 import { Pilot } from 'src/app/models/Pilot';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import { EventService } from 'src/app/services/event.service';
+import { take } from 'rxjs/operators';
+
 
 @Component({
   selector: 'app-event-table',
@@ -15,16 +19,18 @@ export class EventTableComponent implements OnInit{
   @Input()
   public pilotList: Array<Pilot>;
 
-  constructor() { }
+  public showFlightForm = false;
+
+  private currentRoundId;
+
+
+  constructor(private eventService: EventService) { }
 
   ngOnInit(): void {
-  }
-
-
-
-  manageRound(round: Round) {
 
   }
+
+
 
   enter(event) {
     event.target.style.color = 'white';
@@ -34,6 +40,32 @@ export class EventTableComponent implements OnInit{
   leave(event) {
     event.target.style.color = 'black';
   }
+
+  showForm(roundId: number) {
+    this.showFlightForm = true;
+    this.currentRoundId = roundId;
+  }
+
+  cancelForm() {
+    this.showFlightForm = false;
+    this.currentRoundId = null;
+  }
+
+  flightSubmited(value) {
+
+       if (this.currentRoundId) {
+         console.log('dupa3');
+         this.eventService.addFlight(value, this.currentRoundId).pipe(take(1)).subscribe(response => {
+          if (response.status === 201) {
+            window.location.reload();
+          } else {
+            throw Error('Error adding new flight');
+          }
+        },
+        err => console.log(err));
+      
+  }
+}
 
   toggleTable(event) {
     const id: string = event.target.id;

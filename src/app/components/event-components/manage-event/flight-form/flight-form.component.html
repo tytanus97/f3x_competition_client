@@ -1,0 +1,42 @@
+<form class="flight-form" [formGroup] = "flightForm" (ngSubmit) = "submitFlight()">
+  <mat-form-field appearance="fill">
+    <mat-label>Pilot</mat-label>
+    <mat-select formControlName="pilot">
+      <mat-option  *ngFor="let pilot of (pilots | combinePilots:round.flightList)" value="{{pilot.pilotId}}">{{pilot.pilotFirstName}} {{pilot.pilotLastName}}</mat-option>
+    </mat-select>
+    <mat-error *ngIf="flightForm.controls.pilot?.invalid && flightForm.controls.pilot.touched">
+      <span *ngIf="flightForm.controls.pilot?.errors?.required">To pole jest wymagane</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Czas lotu</mat-label>
+    <input matInput type="number" placeholder="0-300" formControlName="duration">
+    <mat-error  *ngIf="flightForm.controls.duration?.invalid && flightForm.controls.duration.touched">
+      <span *ngIf="flightForm.controls.duration?.errors?.required">To pole jest wymage</span>
+      <span *ngIf="flightForm.controls.duration?.errors?.min ||
+      flightForm.controls.duration?.errors?.max">Nieprawidłowa wartość</span>
+    </mat-error>
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Lądowanie</mat-label>
+    <mat-select formControlName="landing">
+      <mat-option  *ngFor="let point of landingPoints" value="{{point}}">{{point}}</mat-option>
+    </mat-select>
+    <mat-error  *ngIf="flightForm.controls.landing?.invalid && flightForm.controls.landing.touched">
+      <span *ngIf="flightForm.controls.landing?.errors?.required">To pole jest wymage</span>
+      <span *ngIf="flightForm.controls.landing?.errors?.min ||
+       flightForm.controls.landing?.errors?.max">Nieprawidłowa wartość</span>
+    </mat-error>
+
+  </mat-form-field>
+  <mat-form-field appearance="fill">
+    <mat-label>Karne pkt.</mat-label>
+    <input matInput type="number" placeholder="0-100" formControlName="penalty">
+    <mat-error  *ngIf="flightForm.controls.penalty?.invalid && flightForm.controls.penalty.touched">
+      <span *ngIf="flightForm.controls.penalty?.errors?.required">To pole jest wymage</span>
+      <span *ngIf="flightForm.controls.penalty?.errors?.min ||
+       flightForm.controls.penalty?.errors?.max">Nieprawidłowa wartość</span>
+    </mat-error>
+  </mat-form-field>
+  <input type="submit" value="Dodaj" class="btn btn-secondary submit-flight">
+</form>

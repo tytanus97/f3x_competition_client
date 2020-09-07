@@ -5,7 +5,7 @@ import { EventService } from 'src/app/services/event.service';
 import { Event } from 'src/app/models/Event';
 import { Location } from '@angular/common';
 import { take } from 'rxjs/internal/operators/take';
-import { switchMap, concat, concatMap } from 'rxjs/operators';
+import { switchMap, concat, concatMap, catchError } from 'rxjs/operators';
 import { Pilot } from 'src/app/models/Pilot';
 
 @Component({
@@ -19,6 +19,7 @@ export class ManageEventComponent implements OnInit {
   public currentComponent = 'event-table';
   public eventRounds: Array<Round>;
   public eventPilots: Array<Pilot>;
+
 
   constructor(private eventService: EventService, private router: Router, private route: ActivatedRoute,
               private location: Location) { }
@@ -34,15 +35,15 @@ export class ManageEventComponent implements OnInit {
         throw Error('Error');
       }
       return this.eventService.findEventPilots(this.currentEvent.eventId);
-    } )).subscribe(response => {
-        if (response.status === 200) {
-          this.eventPilots = response.body;
-        } else {
-          throw Error('Error');
-        }
+    })).subscribe(response => {
+      if (response.status === 200) {
+        this.eventPilots = response.body;
+      } else {
+        throw Error('Error');
+      }
 
-        console.log(this.eventRounds);
-        console.log(this.eventPilots);
+      console.log(this.eventRounds);
+      console.log(this.eventPilots);
     });
   }
 
@@ -66,17 +67,36 @@ export class ManageEventComponent implements OnInit {
   }
 
   addRound() {
-    if (confirm('Czy napewno chcesz dodać runde?')){
-    const roundNum = typeof(this.eventRounds) === 'undefined' ? 1 : this.eventRounds.length + 1;
-    const round: Round = new Round(0, roundNum, true, null);
-    this.eventService.addRound(round, this.currentEvent.eventId).pipe(take(1)).subscribe(response => {
-      if (response.status === 200) {
-          window.location.reload();
+    if (confirm('Czy napewno chcesz dodać runde?')) {
+      const roundNum = typeof (this.eventRounds) === 'undefined' ? 1 : this.eventRounds.length + 1;
+      const round: Round = new Round(0, roundNum, true, null);
+
+      if (roundNum >= 2) {
+        this.eventService.finalizeRound(this.eventRounds[Number(roundNum) - 2]).pipe(switchMap((response) => {
+          if (response.status !== 200) {
+            throw Error('Something went wrong when finalize round');
+          }
+          return this.eventService.addRound(round, this.currentEvent.eventId);
+        }), take(1),
+          catchError((err) => { throw Error(err); })
+        ).subscribe(response => {
+          if (response.status === 200) {
+            window.location.reload();
+          } else {
+            throw Error('something went wrong adding round to event');
+          }
+        }, err => console.log(err));
       } else {
-        console.error('something went wrong adding round to event');
+        this.eventService.addRound(round, this.currentEvent.eventId).pipe(take(1)).subscribe(response => {
+          if (response.status === 200) {
+            window.location.reload();
+          } else {
+            console.error('something went wrong adding round to event');
+          }
+        });
       }
-    });
-  }
+
+    }
   }
 
   showTable() {
