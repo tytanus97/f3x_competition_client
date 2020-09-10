@@ -9,8 +9,11 @@
          <th scope="col">Wynik</th>
      </tr>
      <tbody>
-         <tr *ngFor="let result of resultList;let i = index">
-             <td>{{i+1}}</td>
+         <tr *ngFor="let result of resultList;let i = index" >
+             <td>{{i+1}} <span appMarkPosition [index] = "i" class="material-icons">
+                emoji_events
+                </span></td>
+             
              <td>{{result.pilot.pilotFirstName}} {{result.pilot.pilotLastName}}</td>
              <td>{{result.total}}</td>
          </tr>

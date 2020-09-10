@@ -12,6 +12,7 @@ import { Flight } from '../models/Flight';
 export class EventService {
 
   private _url = 'http://localhost:8080/api/events/';
+  private _url_flights = 'http://localhost:8080/api/flights/'
 
   constructor(private http: HttpClient) { }
 
@@ -58,8 +59,11 @@ export class EventService {
   }
 
   public addFlight(flight: Flight, roundId: number) {
-      console.log('dupa');
       return this.http.post(this._url + `rounds/${roundId}/flights`, flight, {observe: 'response'});
+  }
+
+  public deleteFlight(flightId: number) {
+    return this.http.delete(this._url_flights + `${flightId}/delete`,{observe:'response'});
   }
 
 }

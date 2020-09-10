@@ -5,9 +5,11 @@ h1 {
     text-align:center;
     padding:10px;
     height:100%;
-    
 }
 .header {
     height:60px;
     background-color: lightsteelblue;
+}
+td {
+    vertical-align: middle;
 }

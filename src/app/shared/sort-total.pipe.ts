@@ -10,7 +10,7 @@ export class SortTotalPipe implements PipeTransform {
     if (!flights) {
       return;
     }
-    return flights.sort((a: Flight, b: Flight) => a.total - b.total);
+    return flights.sort((a: Flight, b: Flight) => b.total - a.total);
   }
 
 }

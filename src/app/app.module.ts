@@ -51,7 +51,9 @@ import { CombinePilotsPipe } from './shared/combine-pilots.pipe';
 import { ShowTableDirective } from './shared/show-table.directive';
 import { MatSelectModule } from '@angular/material/select';
 import { FlightFormComponent } from './components/event-components/manage-event/flight-form/flight-form.component';
-
+import {MatButtonModule} from '@angular/material/button';
+import { ResultsComponent } from './components/event-components/manage-event/results/results.component';
+import { MarkPositionDirective } from './shared/mark-position.directive';
 
 
 
@@ -91,7 +93,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     SortTotalPipe,
     CombinePilotsPipe,
     ShowTableDirective,
-    FlightFormComponent
+    FlightFormComponent,
+    ResultsComponent,
+    MarkPositionDirective
   ],
   imports: [
     BrowserModule,
@@ -108,7 +112,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    MatSelectModule
+    MatSelectModule,
+    MatButtonModule
   ],
   providers: [services, HttpClient,
   {provide: HTTP_INTERCEPTORS,
