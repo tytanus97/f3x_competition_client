@@ -3,7 +3,7 @@
     Brak rund do wyświetlenia
   </div>
   <ng-template #eventRounds>
-    <div class="round-container" *ngFor="let round of roundList">
+    <div class="round-container" *ngFor="let round of roundList; last as isLast">
       <div class="table-header">
         <mat-icon id="s{{round.roundNumber}}" (click)="toggleTable($event)"
          (mouseenter)="enter($event)" (mouseleave)="leave($event)"
@@ -14,11 +14,11 @@
            style="font-size:2rem;display:none" class="icon">keyboard_arrow_down</mat-icon>
 
       <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
-      <mat-icon (mouseenter)="enter($event)" (mouseleave)="leave($event)" *ngIf="round.roundStatus; else roundEnd"
-        class="icon" #tooltip="matTooltip" matTooltip="Zarządaj rundą"
-        matTooltipClass="example-tooltip-red" style="margin-right:10px;">create</mat-icon>
+      <div *ngIf="round.roundStatus; else roundEnd"
+        class="icon"
+       style="margin-right:10px;"><span style="color:green">w trakcie</span></div>
       <ng-template #roundEnd>
-        <mat-icon class="icon" style="margin-right:10px;">done</mat-icon>
+        <div class="icon" style="margin-right:10px;"><span style="color:crimson">zakończona</span></div>
       </ng-template>
       </div>
       <table id="t{{round.roundNumber}}" style="display:none" class="table table-stripped">
@@ -34,14 +34,16 @@
           </tr>
         </thead>
         <tbody class="tbody">
-          <tr *ngFor="let flight of ((round.flightList) | sortTotal); let i = index">
-            <td>{{i+1}}</td>
-            <td>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</td>
-            <td>{{flight.total}}</td>
-            <td>0</td>
-            <td>{{flight.flightDuration}}</td>
-            <td>{{flight.flightLanding}}</td>
-            <td>{{flight.flightPenalty}}</td>
+          <tr *ngFor="let flight of ((round.flightList) | sortTotal) as sortedList; let i = index">
+            <td><span>{{i+1}}</span></td>
+            <td><span>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</span></td>
+            <td><span>{{flight.total}}</span></td>
+            <td *ngIf="i == 0" > </td>
+            <td *ngIf=" i !== 0" style="color:red"><span>{{flight.total - sortedList[i-1].total}}</span></td>
+            <td><span>{{flight.flightDuration}}</span></td>
+            <td><span>{{flight.flightLanding}}</span></td>
+            <td><span>{{flight.flightPenalty}}</span></td>
+            <td *ngIf="round.roundStatus"><button mat-mini-fab color="warn" (click) = "deleteFlight(flight.flightId,round)">x</button></td>
           </tr>
         </tbody>
       </table>
@@ -49,8 +51,8 @@
        <app-flight-form *ngIf="showFlightForm"[pilots] = "pilotList" [round] = "round" (emitFlight) = "flightSubmited($event)" ></app-flight-form>
         <button class="btn btn-success" *ngIf="!showFlightForm" (click) = "showForm(round.roundId)">Dodaj lot</button>
         <button class="btn btn-warning" *ngIf="showFlightForm" (click) = "cancelForm()">Anuluj</button>
+        <button mat-raised-button (click) = "finalizeRound(round)">Zakończ rundę</button>
       </div>
     </div>
   </ng-template>
 </div>
-

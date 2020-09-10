@@ -103,6 +103,7 @@ export class ManageEventComponent implements OnInit {
     this.currentComponent = 'event-table';
   }
 
+  
 
   navigateBack() {
     this.location.back();

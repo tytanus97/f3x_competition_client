@@ -2,10 +2,10 @@
 <header><h1>{{currentEvent.eventName}}</h1></header>
 <div class="content">
   <div class="action">
-  <button *ngIf="currentEvent?.registrationStatus" class="btn btn-danger" (click) = "endRegistrationPhase()">Zakończ rejestracje</button>
-  <button *ngIf="!currentEvent?.registrationStatus" class="btn btn-success" (click) = "openRegistrationPhase()">Wznów rejestracje</button>
-  <button class="btn btn-primary" (click) = "addRound()">Dodaj runde</button>
-  <button class="btn btn-primary" (click) = "showTable()">Wyniki</button>
+  <button mat-raised-button *ngIf="currentEvent?.registrationStatus && currentEvent?.eventStatus"  (click) = "endRegistrationPhase()">Zakończ rejestracje</button>
+  <button mat-raised-button *ngIf="!currentEvent?.registrationStatus && currentEvent?.eventStatus"  (click) = "openRegistrationPhase()">Wznów rejestracje</button>
+  <button mat-raised-button (click) = "addRound()" *ngIf = "currentEvent?.eventStatus">Dodaj runde</button>
+  <button mat-raised-button (click) = "showResults()">Wyniki</button>
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 <div class="child-component"  [ngSwitch]="currentComponent">

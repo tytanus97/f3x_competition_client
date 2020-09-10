@@ -5,8 +5,14 @@ table {
 }
 td,tr{
   text-align: center;
+  height:100%;
+  vertical-align: middle;
 }
-
+td>span {
+  margin:auto;
+  display:block;
+  width:100%;
+}
 .table-header {
   background-color:lightsteelblue;
   height:100%;
@@ -32,6 +38,11 @@ td,tr{
 .round-container {
   margin-top:5px;
   margin-bottom:5px;
+}
+
+.round-action>button {
+margin-right:10px;
+
 }
 
 

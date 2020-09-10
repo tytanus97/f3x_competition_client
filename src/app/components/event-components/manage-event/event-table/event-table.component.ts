@@ -4,6 +4,8 @@ import { Pilot } from 'src/app/models/Pilot';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import { EventService } from 'src/app/services/event.service';
 import { take } from 'rxjs/operators';
+import { PilotHomeComponent } from 'src/app/components/pilot-components/pilot-home/pilot-home.component';
+import { ConfigurableFocusTrapConfig } from '@angular/cdk/a11y/focus-trap/configurable-focus-trap-config';
 
 
 @Component({
@@ -15,13 +17,13 @@ export class EventTableComponent implements OnInit{
 
   @Input()
   public roundList: Array<Round>;
-
   @Input()
   public pilotList: Array<Pilot>;
-
   public showFlightForm = false;
-
   private currentRoundId;
+
+  public styleShow = '{font-size:2rem;display:initial}';
+  public styleHide = '{font-size:2rem;display:none}';
 
 
   constructor(private eventService: EventService) { }
@@ -76,5 +78,27 @@ export class EventTableComponent implements OnInit{
     document.getElementById(`${clickedEl === 's' ? 'h' : 's'}${num}`).style.display = 'initial';
     document.getElementById(`t${num}`).style.display = (clickedEl === 's' ? 'table' : 'none');
   }
+
+  deleteFlight(flightId: number,round: Round) {
+    this.eventService.deleteFlight(flightId).pipe(take(1)).subscribe(response => {
+      if(response.status === 200) {
+          round.flightList = round.flightList.filter(f => f.flightId !== flightId);
+      } else {
+        throw Error('Something went wrong deleting flight');
+      }
+    },err => console.log(err));
+  }
+
+  finalizeRound(round: Round) {
+    if(confirm('Do you want to finalize this round?')) {
+    this.eventService.finalizeRound(round).pipe(take(1)).subscribe(response => {
+      if(response.status === 200) {
+        window.location.reload();
+      } else {
+        throw Error('Something went wrong when finalize round');
+      }
+    },err => console.log(err));
+  }
+}
 
 }
