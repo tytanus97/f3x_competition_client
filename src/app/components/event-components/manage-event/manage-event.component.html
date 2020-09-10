@@ -6,10 +6,12 @@
   <button mat-raised-button *ngIf="!currentEvent?.registrationStatus && currentEvent?.eventStatus"  (click) = "openRegistrationPhase()">Wznów rejestracje</button>
   <button mat-raised-button (click) = "addRound()" *ngIf = "currentEvent?.eventStatus">Dodaj runde</button>
   <button mat-raised-button (click) = "showResults()">Wyniki</button>
+  <button mat-raised-button (click) = "showRounds()">Rundy</button>
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 <div class="child-component"  [ngSwitch]="currentComponent">
 <app-event-table *ngSwitchCase="'event-table'" [roundList] = "eventRounds" [pilotList] = "eventPilots"></app-event-table>
+<app-results *ngSwitchCase="'app-results'" [roundList] = "eventRounds" [pilotList] = "eventPilots"></app-results>
 </div>
 </div>
 

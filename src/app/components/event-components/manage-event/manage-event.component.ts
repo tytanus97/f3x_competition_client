@@ -41,7 +41,6 @@ export class ManageEventComponent implements OnInit {
       } else {
         throw Error('Error');
       }
-
       console.log(this.eventRounds);
       console.log(this.eventPilots);
     });
@@ -99,11 +98,15 @@ export class ManageEventComponent implements OnInit {
     }
   }
 
-  showTable() {
+  showResults() {
+    this.currentComponent = 'app-results';
+  }
+
+  showRounds() {
     this.currentComponent = 'event-table';
   }
 
-  
+
 
   navigateBack() {
     this.location.back();

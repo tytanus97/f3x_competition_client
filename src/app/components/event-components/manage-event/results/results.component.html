@@ -1,1 +1,19 @@
-<p>results works!</p>
+<div class="wrapper">
+<div class="header">
+    <h1>Wyniki</h1>
+</div>
+<table class="table table-stripped">
+     <tr>
+         <th scope="col">#</th>
+         <th scope="col">Pilot</th>
+         <th scope="col">Wynik</th>
+     </tr>
+     <tbody>
+         <tr *ngFor="let result of resultList;let i = index">
+             <td>{{i+1}}</td>
+             <td>{{result.pilot.pilotFirstName}} {{result.pilot.pilotLastName}}</td>
+             <td>{{result.total}}</td>
+         </tr>
+     </tbody>
+</table>
+</div>
