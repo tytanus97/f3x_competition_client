@@ -31,8 +31,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
       console.log(data.currentEvent.body);
 
       this.showManageBtn = this.authService.getLoggedPilotId() &&
-      (this.authService.getLoggedPilotId() === this.currentEvent.pilotDirector.pilotId) &&
-      this.currentEvent.eventStatus;
+      (this.authService.getLoggedPilotId() === this.currentEvent.pilotDirector.pilotId);
 
       return this.eventService.findEventPilots(this.currentEvent.eventId);
     })).subscribe(response => {

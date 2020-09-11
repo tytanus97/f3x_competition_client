@@ -9,7 +9,8 @@
          <th scope="col">Wynik</th>
      </tr>
      <tbody>
-         <tr *ngFor="let result of resultList;let i = index" >
+         <tr *ngFor="let result of resultList | sort:'total';let i = index" >
+            
              <td>{{i+1}} <span appMarkPosition [index] = "i" class="material-icons">
                 emoji_events
                 </span></td>

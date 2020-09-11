@@ -12,4 +12,10 @@ h1 {
 }
 td {
     vertical-align: middle;
+    position:relative;
+}
+
+.material-icons {
+    position:relative;
+    top:5px;
 }
