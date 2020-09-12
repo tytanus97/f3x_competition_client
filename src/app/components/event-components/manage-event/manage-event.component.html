@@ -7,7 +7,7 @@
 
   <button mat-raised-button (click) = "showResults()">Wyniki</button>
   <button mat-raised-button (click) = "showRounds()">Rundy</button>
-  <button mat-raised-button (click) = "finishEvent()">Zakończ zawody</button>
+  <button mat-raised-button *ngIf="currentEvent.eventStatus" (click) = "finishEvent()">Zakończ zawody</button>
   <button class="btn btn-secondary" (click) = "navigateBack()">Wstecz</button>
 </div>
 <div class="child-component"  [ngSwitch]="currentComponent">

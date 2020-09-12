@@ -1,11 +1,8 @@
-import { Component, OnInit, Input, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { Round } from 'src/app/models/Round';
 import { Pilot } from 'src/app/models/Pilot';
-import {MatFormFieldModule} from '@angular/material/form-field';
 import { EventService } from 'src/app/services/event.service';
-import { take } from 'rxjs/operators';
-import { PilotHomeComponent } from 'src/app/components/pilot-components/pilot-home/pilot-home.component';
-import { ConfigurableFocusTrapConfig } from '@angular/cdk/a11y/focus-trap/configurable-focus-trap-config';
+import { catchError, switchMap, take } from 'rxjs/operators';
 import { Event } from 'src/app/models/Event';
 
 @Component({
@@ -102,6 +99,39 @@ export class EventTableComponent implements OnInit{
         throw Error('Something went wrong when finalize round');
       }
     },err => console.log(err));
+  }
+}
+
+addRound() {
+  if (confirm('Czy napewno chcesz dodać runde?')) {
+    const roundNum = typeof (this.eventRounds) === 'undefined' ? 1 : this.eventRounds.length + 1;
+    const round: Round = new Round(0, roundNum, true, null);
+
+    if (roundNum >= 2) {
+      this.eventService.finalizeRound(this.eventRounds[Number(roundNum) - 2]).pipe(switchMap((response) => {
+        if (response.status !== 200) {
+          throw Error('Something went wrong when finalize round');
+        }
+        return this.eventService.addRound(round, this.currentEvent.eventId);
+      }), take(1),
+        catchError((err) => { throw Error(err); })
+      ).subscribe(response => {
+        if (response.status === 200) {
+          window.location.reload();
+        } else {
+          throw Error('something went wrong adding round to event');
+        }
+      }, err => console.log(err));
+    } else {
+      this.eventService.addRound(round, this.currentEvent.eventId).pipe(take(1)).subscribe(response => {
+        if (response.status === 200) {
+          window.location.reload();
+        } else {
+          console.error('something went wrong adding round to event');
+        }
+      });
+    }
+
   }
 }
 

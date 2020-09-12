@@ -7,6 +7,7 @@ import { Location } from '@angular/common';
 import { take } from 'rxjs/internal/operators/take';
 import { switchMap, concat, concatMap, catchError } from 'rxjs/operators';
 import { Pilot } from 'src/app/models/Pilot';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-manage-event',
@@ -76,7 +77,15 @@ export class ManageEventComponent implements OnInit {
   
 
   finishEvent() {
-
+      if(confirm('Do you want to finish this event?')) {
+        if(this.eventRounds && this.eventRounds.length > 0) {
+          this.eventService.finishEvent(this.currentEvent.eventId).pipe(take(1)).subscribe((response: HttpResponse<any>) => {
+            if(response.status === 200) {
+              window.location.reload();
+            } else throw Error('Something went wrong when finish event');
+          }, err => console.log(err));
+        }
+      }
   }
 
 

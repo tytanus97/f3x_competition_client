@@ -1,3 +1,4 @@
+<button mat-raised-button (click) = "addRound()" color="primary" *ngIf = "currentEvent?.eventStatus">Dodaj runde</button>
 <div class="table-div">
   <div class="alert alert-warning" role="alert" *ngIf="!eventRounds?.length; else eventRoundsView">
     Brak rund do wyświetlenia

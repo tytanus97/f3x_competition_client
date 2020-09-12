@@ -66,4 +66,7 @@ export class EventService {
     return this.http.delete(this._url_flights + `${flightId}/delete`,{observe:'response'});
   }
 
+  public finishEvent(eventId: number) {
+    return this.http.put(this._url + `${eventId}/finishEvent`,{observe:'response'});
+  }
 }

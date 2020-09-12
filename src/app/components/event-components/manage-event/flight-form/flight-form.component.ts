@@ -1,4 +1,3 @@
-import { BehaviorSubject } from 'rxjs';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { Round } from 'src/app/models/Round';
