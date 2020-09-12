@@ -18,16 +18,16 @@ export class ResultsComponent implements OnInit, OnChanges {
 
   public resultList: Array<Result>;
 
-  constructor() { 
+  constructor() {
   }
 
   ngOnInit(): void {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-  
-    if(changes.pilotList.firstChange && changes.roundList.firstChange) {
-    this.initResultList();
+
+    if (changes.pilotList.firstChange && changes.roundList.firstChange) {
+      this.initResultList();
     }
     else {
       this.resultList.length = 0;
@@ -36,22 +36,33 @@ export class ResultsComponent implements OnInit, OnChanges {
   }
 
   private initResultList(): void {
-    const flightList = this.roundList.flatMap(r => r.flightList);
-    this.resultList = this.pilotList.map(p => {
-      const pFlights = flightList.filter( pf =>  pf.pilot.pilotId === p.pilotId);
-      let ftotal = 0;
-      for(let f of pFlights) {
-        ftotal += f.total;
-      }
-      return {
-        pilot:p,
-        total:ftotal
-      }
-    });
+    if (this.roundList && this.roundList.length > 0) {
+      this.resultList = new Array<Result>();
+      const flightList = this.roundList.flatMap(r => r.flightList);
+
+      if (!flightList || flightList.length <= 0) return;
+
+      this.pilotList.forEach(p => {
+        const pFlights = flightList.filter(pf => pf.pilot.pilotId === p.pilotId);
+        if(pFlights && pFlights.length > 0) {
+
+          let ftotal = 0;
+          for (let f of pFlights) {
+            ftotal += f.total;
+          }
+          this.resultList.push({
+            pilot: p,
+            total: ftotal,
+            place: 0
+          });
+        }
+      });
+    }
   }
 }
 
 interface Result {
   pilot: Pilot;
   total: number;
+  place: number;
 }

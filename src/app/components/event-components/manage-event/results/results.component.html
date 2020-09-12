@@ -10,9 +10,9 @@
          <th scope="col">Diff</th>
      </tr>
      <tbody>
-         <tr *ngFor="let result of (resultList | sort:'total') as sorted;let i = index" >
+         <tr *ngFor="let result of (resultList | sort:'total' | setPlace) as sorted;let i = index" >
             
-             <td>{{i+1}} <span *ngIf = "i < 3"appMarkPosition [index] = "i" class="material-icons">
+             <td>{{i+1}} <span *ngIf = "i < 3" appMarkPosition [place] = "result.place" class="material-icons">
                 emoji_events
                 </span></td>
              <td>{{result.pilot.pilotFirstName}} {{result.pilot.pilotLastName}}</td>
