@@ -65,38 +65,6 @@ export class ManageEventComponent implements OnInit {
     });
   }
 
-  addRound() {
-    if (confirm('Czy napewno chcesz dodać runde?')) {
-      const roundNum = typeof (this.eventRounds) === 'undefined' ? 1 : this.eventRounds.length + 1;
-      const round: Round = new Round(0, roundNum, true, null);
-
-      if (roundNum >= 2) {
-        this.eventService.finalizeRound(this.eventRounds[Number(roundNum) - 2]).pipe(switchMap((response) => {
-          if (response.status !== 200) {
-            throw Error('Something went wrong when finalize round');
-          }
-          return this.eventService.addRound(round, this.currentEvent.eventId);
-        }), take(1),
-          catchError((err) => { throw Error(err); })
-        ).subscribe(response => {
-          if (response.status === 200) {
-            window.location.reload();
-          } else {
-            throw Error('something went wrong adding round to event');
-          }
-        }, err => console.log(err));
-      } else {
-        this.eventService.addRound(round, this.currentEvent.eventId).pipe(take(1)).subscribe(response => {
-          if (response.status === 200) {
-            window.location.reload();
-          } else {
-            console.error('something went wrong adding round to event');
-          }
-        });
-      }
-
-    }
-  }
 
   showResults() {
     this.currentComponent = 'app-results';
@@ -104,6 +72,11 @@ export class ManageEventComponent implements OnInit {
 
   showRounds() {
     this.currentComponent = 'event-table';
+  }
+  
+
+  finishEvent() {
+
   }
 
 

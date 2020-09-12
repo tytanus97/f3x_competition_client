@@ -6,7 +6,7 @@ import { EventService } from 'src/app/services/event.service';
 import { take } from 'rxjs/operators';
 import { PilotHomeComponent } from 'src/app/components/pilot-components/pilot-home/pilot-home.component';
 import { ConfigurableFocusTrapConfig } from '@angular/cdk/a11y/focus-trap/configurable-focus-trap-config';
-
+import { Event } from 'src/app/models/Event';
 
 @Component({
   selector: 'app-event-table',
@@ -16,9 +16,13 @@ import { ConfigurableFocusTrapConfig } from '@angular/cdk/a11y/focus-trap/config
 export class EventTableComponent implements OnInit{
 
   @Input()
-  public roundList: Array<Round>;
+  public eventRounds: Array<Round>;
   @Input()
-  public pilotList: Array<Pilot>;
+  public eventPilots: Array<Pilot>;
+
+  @Input()
+  public currentEvent: Event;
+
   public showFlightForm = false;
   private currentRoundId;
 
