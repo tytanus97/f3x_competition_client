@@ -7,6 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, switchMap } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Pilot } from 'src/app/models/Pilot';
+import { Round } from 'src/app/models/Round';
 
 @Component({
   selector: 'app-event-details',
@@ -17,6 +18,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   private onDestroy = new Subject<void>();
 
   public currentEvent: Event;
+  public eventRounds: Array<Round>;
   public currentEventPilotList: Array<Pilot>;
   public isLoggedUserInEventPilotsList: boolean;
   public showManageBtn: boolean;
@@ -28,23 +30,27 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
 
     this.route.data.pipe(switchMap(data => {
       this.currentEvent = data.currentEvent.body;
-      console.log(data.currentEvent.body);
-
       this.showManageBtn = this.authService.getLoggedPilotId() &&
       (this.authService.getLoggedPilotId() === this.currentEvent.pilotDirector.pilotId);
-
       return this.eventService.findEventPilots(this.currentEvent.eventId);
-    })).subscribe(response => {
+    }),
+    switchMap(response => {
       if (response.status === 200) {
         this.currentEventPilotList = response.body;
         this.isLoggedUserInEventPilotsList = this.isLoggedPilotInList();
       } else {
         this.router.navigate(['searchEvent'], { relativeTo: this.route.parent });
+        throw Error('Something went wrong getting event pilots');
       }
-    });
-
-
-
+      return this.eventService.findEventRounds(this.currentEvent.eventId);
+    })).subscribe(response => {
+      if (response.status === 200) {
+        this.eventRounds = response.body;
+      } else {
+        throw Error('Something went wrong getting event rounds');
+      }
+    },
+    err => console.log(err));
   }
 
   registerMe() {

@@ -37,7 +37,14 @@
 </div>
 <div class="eventPilotsInfo">
   <div *ngIf="currentEventPilotList?.length > 0; else pilotsNotFound;">
-    <table class="table table-striped">
+    <app-results [currentEvent] = "currentEvent" [eventRounds] = "eventRounds" [eventPilots] = "currentEventPilotList"></app-results>
+    
+    
+    
+    
+    
+    
+    <!-- <table class="table table-striped">
       <thead>
         <tr>
           <td scope="col">#</td>
@@ -52,7 +59,7 @@
           <td>{{pilot?.country?.countryName}}</td>
         </tr>
       </tbody>
-    </table>
+    </table> -->
   </div>
 
 </div>

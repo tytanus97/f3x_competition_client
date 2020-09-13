@@ -1,13 +1,15 @@
-h1 {
+h2 {
     font-family:sans-serif;
     font-weight: bold;
-    font-size: 2.2rem;
+    font-size: 2rem;
     text-align:center;
-    padding:10px;
-    height:100%;
+    display:inline-block;
+    width:100%;
+    vertical-align: middle;
+    margin-bottom:auto;
 }
 .header {
-    height:60px;
+    padding:5px;
     background-color: lightsteelblue;
 }
 td {

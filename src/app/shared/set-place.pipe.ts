@@ -10,7 +10,6 @@ export class SetPlacePipe implements PipeTransform {
 
     if(!items || items.length === 0) return;
     
-
     let p = 1;
     items[0].place = p;
 
