@@ -11,7 +11,6 @@ export class MarkPositionDirective implements OnInit {
   constructor(private elRef:ElementRef) { }
 
    ngOnInit() {
-    console.log(this.place);
     switch(this.place) {
       case 1: this.elRef.nativeElement.style.color ='#FFD700'; break;
       case 2: this.elRef.nativeElement.style.color ='#C0C0C0'; break;

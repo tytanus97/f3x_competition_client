@@ -2,6 +2,7 @@ import { Component, OnInit, Input, OnChanges, SimpleChanges } from '@angular/cor
 import { Pilot } from 'src/app/models/Pilot';
 import { Round } from 'src/app/models/Round';
 import { Event } from 'src/app/models/Event';
+import { Flight } from 'src/app/models/Flight';
 
 @Component({
   selector: 'app-results',
@@ -25,43 +26,42 @@ export class ResultsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(): void {
+
   }
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    if (changes.eventPilots.firstChange && changes.eventRounds.firstChange) {
-      this.initResultList();
-    }
-    else {
-      this.resultList.length = 0;
-      this.initResultList();
-    }
+    this.initResultList();
+  
   }
 
   private initResultList(): void {
     if (this.eventRounds && this.eventRounds.length > 0) {
-      this.resultList = new Array<Result>();
-      const flightList = this.eventRounds.flatMap(r => r.flightList);
-
+      const flightList: Array<Flight> = this.eventRounds.flatMap(r => r.flightList);
       if (!flightList || flightList.length <= 0) return;
-
-      this.eventPilots.forEach(p => {
+      this.resultList = this.eventPilots.map(p => {
         const pFlights = flightList.filter(pf => pf.pilot.pilotId === p.pilotId);
         if(pFlights && pFlights.length > 0) {
-
+          
           let ftotal = 0;
           for (let f of pFlights) {
             ftotal += f.total;
           }
-          this.resultList.push({
+          console.log({
             pilot: p,
             total: ftotal,
             place: 0
           });
+         return {
+            pilot: p,
+            total: ftotal,
+            place: 0
+          } 
         }
       });
+      console.log(this.resultList);
+    
     }
-    console.log(this.resultList);
   }
 
 }

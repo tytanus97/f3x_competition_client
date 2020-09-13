@@ -7,7 +7,6 @@ import { Flight } from '../models/Flight';
 export class SortPipe implements PipeTransform {
 
   transform(items: Array<any>, property:string): Array<Flight> {
-    console.log(items);
     if (!items || items.length <= 1) {
       return items;
     }
