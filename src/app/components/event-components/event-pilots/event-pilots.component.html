@@ -1,1 +1,16 @@
-<p>event-pilots works!</p>
+ <table class="table table-striped">
+      <thead>
+        <tr>
+          <td scope="col">#</td>
+          <td scope="col">Nazwa pilota</td>
+          <td scope="col">Kraj</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let pilot of eventPilots;let i = index;">
+          <td>{{i+1}}</td>
+          <td>{{pilot?.pilotFirstName}} {{pilot?.pilotLastName}}</td>
+          <td>{{pilot?.country?.countryName}}</td>
+        </tr>
+      </tbody>
+    </table>

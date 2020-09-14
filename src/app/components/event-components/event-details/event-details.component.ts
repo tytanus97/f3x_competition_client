@@ -27,7 +27,6 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
               private location: Location, private authService: AuthService) { }
 
   ngOnInit(): void {
-
     this.route.data.pipe(switchMap(data => {
       this.currentEvent = data.currentEvent.body;
       this.showManageBtn = this.authService.getLoggedPilotId() &&
@@ -46,6 +45,10 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
     })).subscribe(response => {
       if (response.status === 200) {
         this.eventRounds = response.body;
+
+        this.eventService.setCurrentEvent(this.currentEvent);
+        this.eventService.setCurrentEventPilots(this.currentEventPilotList);
+        this.eventService.setCurrentEventRounds(this.eventRounds);
       } else {
         throw Error('Something went wrong getting event rounds');
       }

@@ -3,6 +3,7 @@ import { Pilot } from 'src/app/models/Pilot';
 import { Round } from 'src/app/models/Round';
 import { Event } from 'src/app/models/Event';
 import { Flight } from 'src/app/models/Flight';
+import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-results',
@@ -22,7 +23,7 @@ export class ResultsComponent implements OnInit, OnChanges {
 
   public resultList: Array<Result>;
 
-  constructor() {
+  constructor(private eventService: EventService) {
   }
 
   ngOnInit(): void {
@@ -31,37 +32,8 @@ export class ResultsComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
 
-    this.initResultList();
+    this.resultList = this.eventService.initResultList(this.eventRounds,this.eventPilots);
   
-  }
-
-  private initResultList(): void {
-    if (this.eventRounds && this.eventRounds.length > 0) {
-      const flightList: Array<Flight> = this.eventRounds.flatMap(r => r.flightList);
-      if (!flightList || flightList.length <= 0) return;
-      this.resultList = this.eventPilots.map(p => {
-        const pFlights = flightList.filter(pf => pf.pilot.pilotId === p.pilotId);
-        if(pFlights && pFlights.length > 0) {
-          
-          let ftotal = 0;
-          for (let f of pFlights) {
-            ftotal += f.total;
-          }
-          console.log({
-            pilot: p,
-            total: ftotal,
-            place: 0
-          });
-         return {
-            pilot: p,
-            total: ftotal,
-            place: 0
-          } 
-        }
-      });
-      console.log(this.resultList);
-    
-    }
   }
 
 }

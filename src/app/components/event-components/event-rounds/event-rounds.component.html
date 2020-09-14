@@ -1,0 +1,52 @@
+
+<div class="table-div">
+  <div class="alert alert-warning" role="alert" *ngIf="!eventRounds?.length; else eventRoundsView">
+    Brak rund do wyświetlenia
+  </div>
+  <ng-template #eventRoundsView>
+    <div class="round-container" *ngFor="let round of eventRounds; last as isLast">
+      <div class="table-header">
+        <mat-icon id="s{{round.roundNumber}}" (click)="toggleTable($event)"
+         (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+          style="font-size:2rem" class="icon">keyboard_arrow_right</mat-icon>
+
+        <mat-icon id="h{{round.roundNumber}}" (click)="toggleTable($event)"
+          (mouseenter)="enter($event)" (mouseleave)="leave($event)"
+           style="font-size:2rem;display:none" class="icon">keyboard_arrow_down</mat-icon>
+
+      <th scope="col" colspan="7">Runda {{round.roundNumber}}</th>
+      <div *ngIf="round.roundStatus; else roundEnd"
+        class="icon"
+       style="margin-right:10px;"><span style="color:green">w trakcie</span></div>
+      <ng-template #roundEnd>
+        <div class="icon" style="margin-right:10px;"><span style="color:crimson">zakończona</span></div>
+      </ng-template>
+      </div>
+      <table id="t{{round.roundNumber}}" style="display:none" class="table table-stripped">
+        <thead >
+          <tr class="table-cols">
+            <th>#</th>
+            <th>Pilot</th>
+            <th>Total</th>
+            <th>Diff</th>
+            <th>Duration</th>
+            <th>Landing</th>
+            <th>Penalty</th>
+          </tr>
+        </thead>
+        <tbody class="tbody">
+          <tr *ngFor="let flight of ((round.flightList) | sort:'total') as sortedList; let i = index">
+            <td><span>{{i+1}}</span></td>
+            <td><span>{{flight.pilot?.pilotFirstName}} {{flight.pilot?.pilotLastName}}</span></td>
+            <td><span>{{flight.total}}</span></td>
+            <td *ngIf="i == 0" > </td>
+            <td *ngIf=" i !== 0" style="color:red"><span>{{flight.total - sortedList[i-1].total}}</span></td>
+            <td><span>{{flight.flightDuration}}</span></td>
+            <td><span>{{flight.flightLanding}}</span></td>
+            <td><span>{{flight.flightPenalty}}</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ng-template>
+</div>

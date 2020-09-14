@@ -56,6 +56,8 @@ import { ResultsComponent } from './components/event-components/manage-event/res
 import { MarkPositionDirective } from './shared/mark-position.directive';
 import { SetPlacePipe } from './shared/set-place.pipe';
 import { EventPilotsComponent } from './components/event-components/event-pilots/event-pilots.component';
+import { EventStatsComponent } from './components/event-components/event-stats/event-stats.component';
+import { EventRoundsComponent } from './components/event-components/event-rounds/event-rounds.component';
 
 
 
@@ -99,7 +101,9 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     ResultsComponent,
     MarkPositionDirective,
     SetPlacePipe,
-    EventPilotsComponent
+    EventPilotsComponent,
+    EventStatsComponent,
+    EventRoundsComponent
   ],
   imports: [
     BrowserModule,

@@ -23,6 +23,8 @@ import { LocationDetailsComponent } from './components/location-components/locat
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
 import { EventPilotsComponent } from './components/event-components/event-pilots/event-pilots.component';
+import { EventStatsComponent } from './components/event-components/event-stats/event-stats.component';
+import { EventRoundsComponent } from './components/event-components/event-rounds/event-rounds.component';
 
 
 
@@ -55,8 +57,10 @@ const routes: Routes = [
       {
         path: 'eventDetails', component: EventDetailsComponent, resolve: { currentEvent: EventResolverService },
         children: [
-          {path: '',pathMatch: 'full',redirectTo: 'eventPilots'},
-          { path: 'eventPilots', component: EventPilotsComponent }
+          { path: '',pathMatch: 'full',redirectTo: 'eventPilots'},
+          { path: 'eventPilots', component: EventPilotsComponent },
+          { path: 'eventStats', component: EventStatsComponent },
+          { path: 'eventRounds', component: EventRoundsComponent }
         ]
       },
       { path: 'manageEvent', component: ManageEventComponent, resolve: { currentEvent: EventResolverService }, canActivate: [AuthGuard] }

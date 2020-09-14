@@ -14,6 +14,10 @@ export class EventService {
   private _url = 'http://localhost:8080/api/events/';
   private _url_flights = 'http://localhost:8080/api/flights/'
 
+  private currentEvent = new BehaviorSubject<Event>(null);
+  private currentEventPilots = new BehaviorSubject<Array<Pilot>>(null);
+  private currentEventRounds = new BehaviorSubject<Array<Round>>(null);
+
   constructor(private http: HttpClient) { }
 
 
@@ -69,4 +73,55 @@ export class EventService {
   public finishEvent(eventId: number) {
     return this.http.put(this._url + `${eventId}/finishEvent`,{observe:'response'});
   }
+
+  public initResultList(eventRounds,eventPilots) {
+    if (eventRounds && eventRounds.length > 0) {
+      const flightList: Array<Flight> = eventRounds.flatMap(r => r.flightList);
+      if (!flightList || flightList.length <= 0) return;
+      return eventPilots.map(p => {
+        const pFlights = flightList.filter(pf => pf.pilot.pilotId === p.pilotId);
+        if(pFlights && pFlights.length > 0) {
+          
+          let ftotal = 0;
+          for (let f of pFlights) {
+            ftotal += f.total;
+          }
+          console.log({
+            pilot: p,
+            total: ftotal,
+            place: 0
+          });
+         return {
+            pilot: p,
+            total: ftotal,
+            place: 0
+          } 
+        }
+      });
+   
+    }
+  }
+
+  public setCurrentEvent(event: Event): void {
+      this.currentEvent.next(event);
+  }
+
+  public setCurrentEventRounds(eventRounds: Array<Round>): void {
+    this.currentEventRounds.next(eventRounds);
+  }
+
+  public setCurrentEventPilots(eventPilots: Array<Pilot>): void {
+    this.currentEventPilots.next(eventPilots);
+  }
+
+  public getCurrentEvent() {
+    return this.currentEvent;
+  }
+  public getCurrentEventRounds() {
+    return this.currentEventRounds;
+  }
+  public getCurrentEventPilots() {
+    return this.currentEventPilots;
+  }
 }
+

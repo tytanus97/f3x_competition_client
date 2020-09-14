@@ -42,23 +42,7 @@
       <li><button class = "btn btn-primary" routerLink="eventStats" [queryParams] = "{eventId: currentEvent?.eventId}" routerLinkActive="active">Wyniki</button></li>
       <li><button class = "btn btn-primary" routerLink="eventRounds" [queryParams] = "{eventId: currentEvent?.eventId}" routerLinkActive="active">Rundy</button></li>
     </ul>
-    <router-outlet></router-outlet>  
-    <!-- <table class="table table-striped">
-      <thead>
-        <tr>
-          <td scope="col">#</td>
-          <td scope="col">Nazwa pilota</td>
-          <td scope="col">Kraj</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let pilot of currentEventPilotList;let i = index;">
-          <td>{{i+1}}</td>
-          <td>{{pilot?.pilotFirstName}} {{pilot?.pilotLastName}}</td>
-          <td>{{pilot?.country?.countryName}}</td>
-        </tr>
-      </tbody>
-    </table> -->
+    <router-outlet></router-outlet> 
   </div>
 
 </div>
