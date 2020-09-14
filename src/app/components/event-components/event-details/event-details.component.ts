@@ -89,7 +89,7 @@ export class EventDetailsComponent implements OnInit, OnDestroy {
   }
 
   navigateBack() {
-    this.location.back();
+    this.router.navigate(['/events/home']);
   }
   ngOnDestroy(): void {
     this.onDestroy.next();

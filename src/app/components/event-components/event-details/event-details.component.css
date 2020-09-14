@@ -45,7 +45,7 @@ span {
 }
 
 .active {
-  background-color: red !important;
+  background-color: rgb(179, 179, 179) !important;
 }
 ul {
   list-style: none;
