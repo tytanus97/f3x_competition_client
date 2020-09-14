@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { concat, merge, mergeMap } from 'rxjs/operators';
+import {  mergeMap } from 'rxjs/operators';
 import { Pilot } from 'src/app/models/Pilot';
 import { Round } from 'src/app/models/Round';
 import { EventService } from 'src/app/services/event.service';

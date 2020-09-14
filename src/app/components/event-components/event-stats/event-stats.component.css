@@ -1,0 +1,23 @@
+h2 {
+    font-family:sans-serif;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align:center;
+    display:inline-block;
+    width:100%;
+    vertical-align: middle;
+    margin-bottom:auto;
+}
+.header {
+    padding:5px;
+    background-color: lightsteelblue;
+}
+td {
+    vertical-align: middle;
+    position:relative;
+}
+
+.material-icons {
+    position:relative;
+    top:5px;
+}

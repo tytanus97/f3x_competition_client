@@ -1,1 +1,25 @@
-<p>event-stats works!</p>
+<div class="wrapper">
+    <div class="header">
+        <h2>Wyniki</h2>
+    </div>
+    <table class="table table-stripped">
+         <tr>
+             <th scope="col">#</th>
+             <th scope="col">Pilot</th>
+             <th scope="col">Wynik</th>
+             <th scope="col">Diff</th>
+         </tr>
+         <tbody>
+             <tr *ngFor="let result of (resultList | sort:'total' | setPlace)  as sorted;let i = index" >
+                
+                 <td>{{i+1}} <span *ngIf = "i < 3" appMarkPosition [place] = "result.place" class="material-icons">
+                    emoji_events
+                    </span></td>
+                 <td>{{result.pilot.pilotFirstName}} {{result.pilot.pilotLastName}}</td>
+                 <td>{{result.total}}</td>
+                 <td *ngIf="i === 0"> </td>
+                 <td *ngIf="i > 0" style="color:red">{{result.total - sorted[i-1].total}}</td>
+             </tr>
+         </tbody>
+    </table>
+    </div>
