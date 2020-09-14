@@ -1,6 +1,27 @@
 <div class="content">
-  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "login()">Zaloguj</button>
-  <button *ngIf="!isLogged()" class="btn btn-primary" (click) = "register()">Zarejestruj</button>
-  <button *ngIf="isLogged()" class="btn btn-primary" (click) = "showPilotProfile()">Profil</button>
-  <button *ngIf="isLogged()" class="btn btn-secondary"  (click) = "logout()">Wyloguj</button>
+<div class="action" *ngIf="!isLogged()" (click)="login()" >
+  <span  class="material-icons">
+    login
+  </span>
+  <span class="desc">Login</span>
+</div>
+<div *ngIf="!isLogged()" (click)="register()">
+  <span  class="material-icons">
+    save_alt
+  </span>
+
+  <span class="desc">Register</span>
+</div>
+<div  *ngIf="isLogged()"(click)="showPilotProfile()">
+  <span class="material-icons">
+    account_box
+  </span>
+  <span class="desc">Profile</span>
+</div>
+<div *ngIf="isLogged()" (click)="logout()" >
+  <span class="material-icons">
+    power_settings_new
+  </span>
+  <span class="desc">Logout</span>
+</div>
 </div>

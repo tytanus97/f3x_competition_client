@@ -60,9 +60,12 @@ nav>ul>li>img {
 
  .active:not(img) {
    font-weight: bold;
-   
     border-bottom:3px solid red;
-   
-   
+ }
+ .wrapper {
+   width:100%;
+   display: flex;
+   background-color: #f8f9fa;
+   justify-content: space-between;
  }
   

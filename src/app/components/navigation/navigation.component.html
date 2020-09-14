@@ -7,14 +7,15 @@
     <li routerLink='locations/home' routerLinkActive="active"><span>Lokacje</span></li>
   </ul>
 </nav> -->
-
+<div class="wrapper">
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="navbar-nav">
       <a class="nav-item nav-link"  routerLink="home"><img class="home" src="assets/images/plane.png"></a>
-      <a class="nav-item nav-link" routerLink='pilots/home' routerLinkActive="active"><span>Piloci</span></a>
-      <a class="nav-item nav-link" routerLink='events/home' routerLinkActive="active"><span>Zawody</span></a>
-      <a class="nav-item nav-link" routerLink='planes' routerLinkActive="active"><span>Samoloty</span></a>
-      <a class="nav-item nav-link" routerLink='locations/home' routerLinkActive="active"><span>Lokacje</span></a>
+      <a class="nav-item nav-link" routerLink='pilots/home' [routerLinkActiveOptions]="{exact: false}" routerLinkActive="active"><span>Piloci</span></a>
+      <a class="nav-item nav-link" routerLink='events/home' [routerLinkActiveOptions]="{exact: false}" routerLinkActive="active"><span>Zawody</span></a>
+      <a class="nav-item nav-link" routerLink='planes' [routerLinkActiveOptions]="{exact: false}" routerLinkActive="active"><span>Samoloty</span></a>
+      <a class="nav-item nav-link" routerLink='locations/home' [routerLinkActiveOptions]="{exact: false}" routerLinkActive="active"><span>Lokacje</span></a>
   </div>
 </nav>
 <app-user-action></app-user-action>
+</div>

@@ -1,18 +1,1 @@
-nav {
-  display:flex;
-  flex-direction: row;
-}
-nav>a {
-  margin:5px;
-  background-color:ghostwhite;
-  border-radius: 5px;
-  width: 100px;
-  text-align: center;
-}
-nav>a.active {
- color:rebeccapurple;
- border:1px solid black;
-}
-nav>a:hover {
-  text-decoration: none;
-}
+
