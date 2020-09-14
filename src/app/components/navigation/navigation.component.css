@@ -1,4 +1,4 @@
-ul {
+/* ul {
   list-style: none;
   display:flex;
   flex-direction: row;
@@ -40,3 +40,29 @@ nav>ul>li:nth-child(1){
 nav>ul>li>img {
   width:50px;
 }
+ */
+ a>img {
+   width:50px;
+ }
+ a>span {
+  width:100%;
+  display:inline-block;
+  margin-top:10px !important;
+  font-size:1.5rem;
+ }
+ a:not(img) {
+   margin-right:10px;
+ }
+ .navbar-nav {
+  padding:0 !important;
+  height:60px;
+ }
+
+ .active:not(img) {
+   font-weight: bold;
+   
+    border-bottom:3px solid red;
+   
+   
+ }
+  

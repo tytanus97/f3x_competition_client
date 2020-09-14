@@ -43,3 +43,17 @@ span {
 .event-manage {
   margin-top:10px;
 }
+
+.active {
+  background-color: red !important;
+}
+ul {
+  list-style: none;
+}
+ul.event-action>li>button {
+  margin-left:10px;
+}
+.event-action {
+  display:flex;
+  flex-direction: row;
+}

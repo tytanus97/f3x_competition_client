@@ -1,10 +1,20 @@
-<nav>
+<!-- <nav>
   <ul>
-    <li routerLink="home"   routerLinkActive="active" ><img class="home" src="assets/images/plane.png"></li>
+    <li routerLink="home"   routerLinkActive="active" ></li>
     <li routerLink='pilots/home' routerLinkActive="active"><span>Piloci</span></li>
     <li routerLink='events/home' routerLinkActive="active"><span>Zawody</span></li>
     <li routerLink='planes' routerLinkActive="active"><span>Samoloty</span></li>
     <li routerLink='locations/home' routerLinkActive="active"><span>Lokacje</span></li>
   </ul>
+</nav> -->
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="navbar-nav">
+      <a class="nav-item nav-link"  routerLink="home"><img class="home" src="assets/images/plane.png"></a>
+      <a class="nav-item nav-link" routerLink='pilots/home' routerLinkActive="active"><span>Piloci</span></a>
+      <a class="nav-item nav-link" routerLink='events/home' routerLinkActive="active"><span>Zawody</span></a>
+      <a class="nav-item nav-link" routerLink='planes' routerLinkActive="active"><span>Samoloty</span></a>
+      <a class="nav-item nav-link" routerLink='locations/home' routerLinkActive="active"><span>Lokacje</span></a>
+  </div>
 </nav>
 <app-user-action></app-user-action>

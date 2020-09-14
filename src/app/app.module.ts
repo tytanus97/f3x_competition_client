@@ -55,6 +55,7 @@ import {MatButtonModule} from '@angular/material/button';
 import { ResultsComponent } from './components/event-components/manage-event/results/results.component';
 import { MarkPositionDirective } from './shared/mark-position.directive';
 import { SetPlacePipe } from './shared/set-place.pipe';
+import { EventPilotsComponent } from './components/event-components/event-pilots/event-pilots.component';
 
 
 
@@ -97,7 +98,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     FlightFormComponent,
     ResultsComponent,
     MarkPositionDirective,
-    SetPlacePipe
+    SetPlacePipe,
+    EventPilotsComponent
   ],
   imports: [
     BrowserModule,

@@ -37,13 +37,12 @@
 </div>
 <div class="eventPilotsInfo">
   <div *ngIf="currentEventPilotList?.length > 0; else pilotsNotFound;">
-    <app-results [currentEvent] = "currentEvent" [eventRounds] = "eventRounds" [eventPilots] = "currentEventPilotList"></app-results>
-    
-    
-    
-    
-    
-    
+    <ul class="event-action">
+      <li><button class = "btn btn-primary" routerLink="eventPilots" [queryParams] = "{eventId: currentEvent?.eventId}" routerLinkActive="active">Piloci</button></li>
+      <li><button class = "btn btn-primary" routerLink="eventStats" [queryParams] = "{eventId: currentEvent?.eventId}" routerLinkActive="active">Wyniki</button></li>
+      <li><button class = "btn btn-primary" routerLink="eventRounds" [queryParams] = "{eventId: currentEvent?.eventId}" routerLinkActive="active">Rundy</button></li>
+    </ul>
+    <router-outlet></router-outlet>  
     <!-- <table class="table table-striped">
       <thead>
         <tr>

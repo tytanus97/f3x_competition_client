@@ -1,4 +1,3 @@
-import { AuthService } from 'src/app/services/auth.service';
 import { ManageEventComponent } from './components/event-components/manage-event/manage-event.component';
 import { EventResolverService } from './resolvers/event/event-resolver.service';
 import { NgModule } from '@angular/core';
@@ -23,7 +22,7 @@ import { AddLocationComponent } from './components/location-components/add-locat
 import { LocationDetailsComponent } from './components/location-components/location-details/location-details.component';
 import { SearchEventComponent } from './components/event-components/search-event/search-event.component';
 import { EventDetailsComponent } from './components/event-components/event-details/event-details.component';
-import { EventTableComponent } from './components/event-components/manage-event/event-table/event-table.component';
+import { EventPilotsComponent } from './components/event-components/event-pilots/event-pilots.component';
 
 
 
@@ -53,15 +52,21 @@ const routes: Routes = [
       { path: 'home', component: EventHomeComponent },
       { path: 'addEvent', component: AddEventComponent, canActivate: [AuthGuard] },
       { path: 'searchEvent', component: SearchEventComponent },
-      { path: 'eventDetails', component: EventDetailsComponent, resolve: {currentEvent : EventResolverService}},
-      { path: 'manageEvent', component: ManageEventComponent, resolve: {currentEvent: EventResolverService}, canActivate: [AuthGuard]}
+      {
+        path: 'eventDetails', component: EventDetailsComponent, resolve: { currentEvent: EventResolverService },
+        children: [
+          {path: '',pathMatch: 'full',redirectTo: 'eventPilots'},
+          { path: 'eventPilots', component: EventPilotsComponent }
+        ]
+      },
+      { path: 'manageEvent', component: ManageEventComponent, resolve: { currentEvent: EventResolverService }, canActivate: [AuthGuard] }
     ]
   },
   {
     path: 'locations', component: LocationComponent,
     children: [
       { path: 'home', component: LocationHomeComponent },
-      { path: 'locationForm', component: AddLocationComponent, canActivate:[AuthGuard] },
+      { path: 'locationForm', component: AddLocationComponent, canActivate: [AuthGuard] },
       { path: 'locationDetails', component: LocationDetailsComponent }
     ]
   },
@@ -71,7 +76,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})],
+  imports: [RouterModule.forRoot(routes, { onSameUrlNavigation: 'reload' })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
