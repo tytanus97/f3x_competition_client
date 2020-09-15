@@ -2,8 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Pilot } from 'src/app/models/Pilot';
 import { PilotService } from 'src/app/services/pilot.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { iif, Subject } from 'rxjs';
+import { take, takeUntil } from 'rxjs/operators';
 import { Country } from 'src/app/models/Country';
 import { CountryService } from 'src/app/services/country.service';
 
@@ -35,9 +35,11 @@ export class AllPilotsComponent implements OnInit, OnDestroy {
   }
 
   onSelectCountryChange(countryName: string) {
-    this.pilotService.findAllPilotsByCountryName(countryName).subscribe(data => {
+    iif(()=> countryName !== 'all',this.pilotService.findAllPilotsByCountryName(countryName),this.pilotService.getAllPilots())
+    .pipe(take(1)).subscribe(data => {
       this.pilots = data;
     });
+  
   }
 
   ngOnDestroy(): void {

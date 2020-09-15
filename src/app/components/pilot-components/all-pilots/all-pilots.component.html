@@ -1,6 +1,7 @@
 <div class='container'>
   <select name="countryInput" class="form-control country-input" (change) = "onSelectCountryChange($event.target.value)">
     <option selected disabled>Wybierz kraj</option>
+    <option value="all">Wszystkie</option>
     <option *ngFor="let country of countries" value={{country.countryName}}>{{country.countryName}}</option>
 
   </select>
