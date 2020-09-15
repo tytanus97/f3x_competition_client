@@ -31,4 +31,6 @@ header>h1 {
 .content {
   display:flex;
   flex-direction: row;
+  flex-wrap:wrap;
+  justify-content: center;
 }

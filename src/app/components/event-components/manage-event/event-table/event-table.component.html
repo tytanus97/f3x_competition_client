@@ -44,7 +44,9 @@
             <td><span>{{flight.flightDuration}}</span></td>
             <td><span>{{flight.flightLanding}}</span></td>
             <td><span>{{flight.flightPenalty}}</span></td>
-            <td *ngIf="round.roundStatus"><button mat-mini-fab color="warn" (click) = "deleteFlight(flight.flightId,round)">x</button></td>
+            <td *ngIf="round.roundStatus">
+              <span class="material-icons" (click) = "deleteFlight(flight.flightId,round)">delete</span>
+            </td>
           </tr>
         </tbody>
       </table>
