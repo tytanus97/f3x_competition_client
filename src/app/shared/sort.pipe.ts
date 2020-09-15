@@ -12,5 +12,5 @@ export class SortPipe implements PipeTransform {
     }
     return items.sort((a: any, b: any) => b[property] - a[property]);
   }
-
+  
 }

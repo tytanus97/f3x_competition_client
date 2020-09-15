@@ -58,6 +58,7 @@ import { SetPlacePipe } from './shared/set-place.pipe';
 import { EventPilotsComponent } from './components/event-components/event-pilots/event-pilots.component';
 import { EventStatsComponent } from './components/event-components/event-stats/event-stats.component';
 import { EventRoundsComponent } from './components/event-components/event-rounds/event-rounds.component';
+import { SortDatePipe } from './shared/sort-date.pipe';
 
 
 
@@ -103,7 +104,8 @@ export const services = [ PilotService, CountryService, EventService, LocationSe
     SetPlacePipe,
     EventPilotsComponent,
     EventStatsComponent,
-    EventRoundsComponent
+    EventRoundsComponent,
+    SortDatePipe
   ],
   imports: [
     BrowserModule,

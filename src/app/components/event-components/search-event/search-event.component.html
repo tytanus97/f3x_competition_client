@@ -13,7 +13,7 @@
           </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let event of eventList" (click) = "showEventDetails(event.eventId)">
+        <tr *ngFor="let event of eventList | sortDate:'startDate'" (click) = "showEventDetails(event.eventId)">
           <td>{{event.startDate}}</td>
           <td>{{event.eventName}}</td>
           <td>{{event.location?.locationName}}</td>
