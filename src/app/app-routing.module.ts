@@ -36,8 +36,8 @@ const routes: Routes = [
     path: 'login', component: AutheticationComponent
   },
   {
-    path: 'pilots', component: PilotComponent,
-    children: [
+    path: 'pilots',component: PilotComponent,
+    children: [ 
       { path: 'home', component: PilotHomeComponent },
       { path: 'allPilots', component: AllPilotsComponent },
       { path: 'pilotProfile', component: PilotProfileComponent },
