@@ -39,7 +39,7 @@ export class LocationHomeComponent implements OnInit {
   }
 
   initMap() {
-    this.map = new L.map('map').setView([52.237, 21.017], 10);
+    this.map = new L.map('map').setView([52.237, 21.017], 5);
 
     const iconSize = 40;
 
@@ -52,36 +52,46 @@ export class LocationHomeComponent implements OnInit {
     const icon = {
       draggable: false,
       icon: L.icon(iconOptions)
+
     }
-     const title = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    const title = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-    
+
     //const markers = new C.MarkerClusterGroup();
 
     this.locations.forEach(l => {
-      const coords = this.transformCoords(l.latitude,l.longitude);
-      const marker = new L.marker([coords.longitude,coords.latitude], icon);
-      const popup = L.popup({offset:[0,-30]}).setContent(`${l.locationName}`);
-      
+      const coords = this.transformCoords(l.latitude, l.longitude);
+      const marker = new L.marker([coords.longitude, coords.latitude], icon);
+
+      let popupContent = `${l.locationName}<br>`;
+      console.log(l.imageList == null);
+      if (l.imageList !== null) {
+        popupContent += "<div class='popupimages'>"
+          popupContent += `<img style="height:100px;border-radius:10px" class="popimg" src='${l.imageList[0].imageURI}'>`
+        popupContent += '</div>';
+      }
+      console.log(popupContent);
+      const popup = L.popup({ offset: [0, -30],minWidth:180}).setContent(popupContent);
+
       marker.on('mouseover', (event) => {
         event.target.openPopup();
       });
       marker.on('mouseout', (event) => {
-        setTimeout(() => event.target.closePopup(),1000);
+      // setTimeout(() => event.target.closePopup(), 1000);
       })
       marker.bindPopup(popup);
       marker.addTo(this.map);
     });
 
     this.map.addLayer(title);
-    
+
   }
 
-  private transformCoords(lat: string, lon: string): { latitude:number,longitude: number} {
-      return {
-        latitude: (Math.round(Number(lat) * 1000)/1000),
-        longitude: (Math.round(Number(lon) * 1000)/1000),
-      }
+  private transformCoords(lat: string, lon: string): { latitude: number, longitude: number } {
+    return {
+      latitude: (Math.round(Number(lat) * 1000) / 1000),
+      longitude: (Math.round(Number(lon) * 1000) / 1000),
+    }
   }
 }
