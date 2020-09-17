@@ -10,7 +10,7 @@
          <th scope="col">Diff</th>
      </tr>
      <tbody>
-         <tr *ngFor="let result of (resultList | sort:'total' | setPlace)  as sorted;let i = index" >
+         <tr *ngFor="let result of (resultList | sort:'total':1 | setPlace)  as sorted;let i = index" >
             
              <td>{{result.place}} <span *ngIf = "i < 3" appMarkPosition [place] = "result.place" class="material-icons">
                 emoji_events

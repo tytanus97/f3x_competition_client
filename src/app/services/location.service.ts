@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Location } from '../models/Location';
 import { Observable } from 'rxjs';
 
@@ -33,5 +33,9 @@ export class LocationService {
 
   findAllLocations(): Observable<Array<Location>> {
     return this.http.get<Array<Location>>(this._url);
+  }
+
+  findAllLocationsByCountryName(countryName: string): Observable<Array<Location>> {
+    return this.http.get<Array<Location>>(this._url+`country/${countryName}`);
   }
 }

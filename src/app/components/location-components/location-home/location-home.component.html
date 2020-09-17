@@ -2,6 +2,12 @@
   <div class="content">
     <div class="location-list">
       <button class="btn btn-success" (click)="goToAddLocation()">+ Dodaj nową lokację</button>
+
+      <select name="countryInput" class="form-control country-input" (change) = "onSelectCountryChange($event.target.value)">
+        <option selected disabled>Wybierz kraj</option>
+        <option value="all">Wszystkie</option>
+        <option *ngFor="let country of countries" value={{country.countryName}}>{{country.countryName}}</option>
+      </select>
       <table class="table table-striped">
         <thead>
           <tr>

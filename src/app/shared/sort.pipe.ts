@@ -6,11 +6,11 @@ import { Flight } from '../models/Flight';
 }) 
 export class SortPipe implements PipeTransform {
 
-  transform(items: Array<any>, property:string): Array<Flight> {
+  transform(items: Array<any>, property:string, dir: number): Array<Flight> {
     if (!items || items.length <= 1) {
       return items;
     }
-    return items.sort((a: any, b: any) => b[property] - a[property]);
+    return items.sort((a: any, b: any) => ((b[property] - a[property]) * dir));
   }
   
 }

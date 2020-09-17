@@ -39,7 +39,6 @@ export class AllPilotsComponent implements OnInit, OnDestroy {
     .pipe(take(1)).subscribe(data => {
       this.pilots = data;
     });
-  
   }
 
   ngOnDestroy(): void {

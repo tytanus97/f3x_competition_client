@@ -4,6 +4,11 @@ import { LocationService } from 'src/app/services/location.service';
 import { Location } from 'src/app/models/Location';
 import * as L from 'leaflet';
 import * as C from 'leaflet.markercluster'
+import { Country } from 'src/app/models/Country';
+import { mergeMap, take } from 'rxjs/operators';
+import { CountryService } from 'src/app/services/country.service';
+import { iif } from 'rxjs';
+import { HttpResponse } from '@angular/common/http';
 
 
 
@@ -15,21 +20,24 @@ import * as C from 'leaflet.markercluster'
 export class LocationHomeComponent implements OnInit {
 
   public locations: Array<Location>;
+  public countries: Array<Country>;
+
   private map;
 
-  constructor(private router: Router, private route: ActivatedRoute, private locationService: LocationService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private locationService: LocationService,private countryService: CountryService) { }
 
   ngOnInit(): void {
-    this.locationService.findAllLocations().subscribe(data => {
-      console.log(data);
+    this.locationService.findAllLocations().pipe(mergeMap(data => {
       this.locations = data;
+      return this.countryService.getAllCountries();
+    })).subscribe(data => {
+      console.log(data);
+     this.countries = data;
     }, err => { console.log(err) },
       () => {
         this.initMap();
       })
-
   }
-
 
   showLocationDetails(locationId: number) {
     this.router.navigate(['locationDetails'], { queryParams: { locationId: `${locationId}` }, relativeTo: this.route.parent });
@@ -83,5 +91,15 @@ export class LocationHomeComponent implements OnInit {
       latitude: (Math.round(Number(lat) * 1000) / 1000),
       longitude: (Math.round(Number(lon) * 1000) / 1000),
     }
+  }
+
+  onSelectCountryChange(countryName: string) {
+    iif(()=> countryName !== 'all',this.locationService.findAllLocationsByCountryName(countryName),this.locationService.findAllLocations())
+    .pipe(take(1)).subscribe((data) => {
+        this.locations = data;
+        this.map.off();
+        this.map.remove();
+        this.initMap();
+      });
   }
 }
