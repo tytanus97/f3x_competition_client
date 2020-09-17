@@ -64,15 +64,8 @@ export class LocationHomeComponent implements OnInit {
       const coords = this.transformCoords(l.latitude, l.longitude);
       const marker = new L.marker([coords.longitude, coords.latitude], icon);
 
-      let popupContent = `${l.locationName}<br>`;
-      console.log(l.imageList == null);
-      if (l.imageList !== null) {
-        popupContent += "<div class='popupimages'>"
-          popupContent += `<img style="height:100px;border-radius:10px" class="popimg" src='${l.imageList[0].imageURI}'>`
-        popupContent += '</div>';
-      }
-      console.log(popupContent);
-      const popup = L.popup({ offset: [0, -30],minWidth:180}).setContent(popupContent);
+      let popupContent = `${l.locationName}`
+      const popup = L.popup({ offset: [0, -30]}).setContent(popupContent);
 
       marker.on('mouseover', (event) => {
         event.target.openPopup();
@@ -85,7 +78,11 @@ export class LocationHomeComponent implements OnInit {
     });
 
     this.map.addLayer(title);
+  }
 
+  showOnMap(location: Location) {
+    const coords = this.transformCoords(location.latitude,location.longitude);
+    this.map.setView([coords.longitude, coords.latitude],14);
   }
 
   private transformCoords(lat: string, lon: string): { latitude: number, longitude: number } {

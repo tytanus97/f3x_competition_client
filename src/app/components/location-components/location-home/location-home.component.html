@@ -7,17 +7,13 @@
           <tr>
             <th scope="col">Nazwa lokalizacji</th>
             <th scope="col">Kraj</th>
-            <th scope="col">Mapa</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let location of locations" (click)="showLocationDetails(location.locationId)">
+          <tr *ngFor="let location of locations" (click)="showOnMap(location)">
             <td scope="row">{{location.locationName}}</td>
             <td scope="row">{{location.country?.countryName}}</td>
-            <td>
-              <a href="https://www.google.pl/maps/@{{location.longitude}},{{location.latitude}},13.00z"
-                target="_blank">Pokaż</a>
-              </td>
+            <td><button mat-raised-button class="more">More</button></td>
           </tr>
         </tbody>
       </table>
