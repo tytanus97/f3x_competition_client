@@ -46,7 +46,8 @@ export class LocationHomeComponent implements OnInit {
     const iconOptions = {
       iconSize: [iconSize, iconSize],
       iconAnchor: [iconSize / 2, iconSize],
-      iconUrl: "../assets/images/location.svg"
+      iconUrl: "../assets/images/location.svg",
+      class:"marker"
     }
 
     const icon = {
@@ -57,8 +58,6 @@ export class LocationHomeComponent implements OnInit {
     const title = new L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
     }).addTo(this.map);
-
-    //const markers = new C.MarkerClusterGroup();
 
     this.locations.forEach(l => {
       const coords = this.transformCoords(l.latitude, l.longitude);

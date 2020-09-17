@@ -12,7 +12,7 @@
          <tbody>
              <tr *ngFor="let result of (resultList | sort:'total' | setPlace)  as sorted;let i = index" >
                 
-                 <td>{{i+1}} <span *ngIf = "i < 3" appMarkPosition [place] = "result.place" class="material-icons">
+                 <td>{{result.place}} <span *ngIf = "i < 3" appMarkPosition [place] = "result.place" class="material-icons">
                     emoji_events
                     </span></td>
                  <td>{{result.pilot.pilotFirstName}} {{result.pilot.pilotLastName}}</td>
