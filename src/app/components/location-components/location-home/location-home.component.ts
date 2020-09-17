@@ -64,15 +64,9 @@ export class LocationHomeComponent implements OnInit {
       const coords = this.transformCoords(l.latitude, l.longitude);
       const marker = new L.marker([coords.longitude, coords.latitude], icon);
 
-      let popupContent = `${l.locationName}`
+      let popupContent = `<center>${l.locationName}<br>Coords<br>Latitude: ${l.latitude}<br>Longitude: ${l.longitude}`
+      popupContent += `<br><a href="/locations/locationDetails?locationId=${l.locationId}">Wiecej</a></center>`
       const popup = L.popup({ offset: [0, -30]}).setContent(popupContent);
-
-      marker.on('mouseover', (event) => {
-        event.target.openPopup();
-      });
-      marker.on('mouseout', (event) => {
-      // setTimeout(() => event.target.closePopup(), 1000);
-      })
       marker.bindPopup(popup);
       marker.addTo(this.map);
     });

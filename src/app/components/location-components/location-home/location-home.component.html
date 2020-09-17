@@ -13,7 +13,6 @@
           <tr *ngFor="let location of locations" (click)="showOnMap(location)">
             <td scope="row">{{location.locationName}}</td>
             <td scope="row">{{location.country?.countryName}}</td>
-            <td><button mat-raised-button class="more">More</button></td>
           </tr>
         </tbody>
       </table>
